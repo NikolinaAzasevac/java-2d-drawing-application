@@ -6,6 +6,13 @@ public class Point {
 	private int y;
 	private boolean selected;
 	
+	public double distance(Point drugaTacka) {
+		int a = this.x-drugaTacka.getX(); // jer smo u klasi point mozemo da pristupimo i sa drugaTacka.x
+		int b = this.y-drugaTacka.y;
+		double distance = Math.sqrt(a*a+b*b);
+		return distance;
+	}
+	
 	//metode pristupa - public
 	//metoda istance
 	public int getX() {
@@ -38,7 +45,4 @@ public class Point {
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
-	
-	
-
 }
