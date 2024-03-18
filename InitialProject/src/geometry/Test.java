@@ -56,6 +56,50 @@ public class Test {
 		//9.
 		line1.getEndPoint().setX((int)(line1.length() - 
 		line1.getStartPoint().getX()
-		+line1.getStartPoint().getY()));		
+		+line1.getStartPoint().getY()));
+        //10
+		Rectangle rect1 = new Rectangle();
+		//rect1.getUpperLeftPoint().setX(10); //kod vraca null point ekspresn jer nije def upperleftpoint u mem lokaciji
+		Point upperLeftPoint = new Point();
+		rect1.setUpperLeftPoint(upperLeftPoint);
+		rect1.getUpperLeftPoint().setX(10);
+		
+		
+		//vezbe 4
+		Point novaTacka = new Point(10, 15);
+		System.out.println(novaTacka.getX());
+		System.out.println(novaTacka.isSelected());
+		Point novaTacka2=new Point(10,15,true);
+		
+		Line novaLinija = new Line(novaTacka, novaTacka2);
+		System.out.println(novaLinija.getStartPoint().getX());
+		
+		//pre redefinisanja toString() metode izbacuje referencu
+		//nakon redef vraca (10,15)
+		System.out.println(novaTacka.toString());
+		System.out.println(novaTacka);
+		//u pozadini poziva toString iz klase Object ako nije def
+		//ako jeste onda pozvima tu metodu
+		System.out.println(novaTacka);
+		//test za line
+		System.out.println(line1);
+		System.out.println(line1.toString());
+		//test ZA RECTANGLE
+		System.out.println(novaTacka==novaTacka2); //kada poredimo primitivne tipove podataka == poredi vrednosti, kod slozenih == poredi reference
+		//vraca true jer je pocetna tacka linije ustv novaTacka
+		System.out.println(novaTacka==novaLinija.getStartPoint());
+		
+		//metoda equals() poredi po vrednosti AKKO JE REDEFINISEMO U NPR U KLASI POINT  AKO NE VRACA PROVERU PO REFERENCI JER NE ZNA STA SU PROPERTY TACKE
+		//equals prihvata parametar tipa object, ja mogu da JOJ PROSLEDIM PARAMETAR TIPA POINT ZATO STO POINT NASKLEDJUJE OBJECT
+		
+		System.out.println(novaTacka.equals(novaTacka2));
+		System.out.println(novaTacka.equals(novaLinija));
+		
+		
+		
+		
+		
+		
+		
 	}
 }

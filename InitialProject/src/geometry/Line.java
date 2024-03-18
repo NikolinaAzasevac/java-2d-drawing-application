@@ -7,7 +7,18 @@ public class Line {
 	private boolean selected;
 	//zbog enkapsulacije metode su public sve ostalo je private
 	
+	public Line() {}
 	
+	public Line (Point startPoint, Point endPoint) {
+		this.startPoint = startPoint;
+		this.endPoint = endPoint;
+	}
+	
+	public Line(Point startPoint, Point endPoint, boolean selected) {
+		this(startPoint, endPoint);
+		this.selected=selected;
+
+	}
 	public double length() { //nista ne prosledjujemo jer u line ima i start i end point
 		//reusable
 		double length = startPoint.distance(endPoint);
@@ -37,4 +48,8 @@ public class Line {
 		this.selected = selected;
 	}
 	
+	public String toString() {
+		return startPoint.toString()+"-->"+endPoint+")"; // (xS, yS) --> (xE, yE)
+	}
 }
+
