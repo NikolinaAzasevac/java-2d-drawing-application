@@ -35,6 +35,11 @@ public class Point {
 		return false;
 	}
 	
+	public boolean contains(int x, int y) {
+		Point sadrziTacku = new Point(x,y);
+		return this.distance(sadrziTacku) <= 2;
+	}
+	
 	//metode pristupa - public
 	//metoda istance
 	public int getX() {

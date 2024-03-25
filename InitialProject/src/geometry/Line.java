@@ -24,6 +24,26 @@ public class Line {
 		double length = startPoint.distance(endPoint);
 		return length;
 	}
+	
+	public boolean equals(Object obj) { //primitvne poredimo sa == , a obj i jos nes sa equals
+		if (obj instanceof Line) {
+			Line pomocna = (Line)obj;
+			if(this.startPoint
+					.equals(pomocna.startPoint)
+					&& this.endPoint
+					.equals(pomocna.endPoint)) //cast obj //u nekoj od ovih boolean metoda mi fali nesto sa this i ==
+				return true;
+			else
+				return false;
+		} else
+			return false;  //ctrl shift f da formatira kod 
+	}
+	
+	public boolean contains(int x, int y) {
+		Point sadrziTacku = new Point(x,y);
+		return this.startPoint.distance(sadrziTacku) + this.endPoint.distance(sadrziTacku) - length() <= 2;
+	}
+	
 	public Point getStartPoint() {
 		return this.startPoint; // this u get metodi moze a ne mora da stoji
 	}

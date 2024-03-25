@@ -21,7 +21,34 @@ public class Rectangle {
 		this(upperLeftPoint, width, height);
 		this.selected = selected;
 	}
-
+	
+	public boolean equals(Object obj) {
+		if(obj instanceof Rectangle) {
+			Rectangle pomocna = (Rectangle) obj;
+			if (this.upperLeftPoint.equals(pomocna.upperLeftPoint) && this.width == pomocna.width 
+					&& this.height == pomocna.height)
+				return true;
+			else 
+				return false;
+		} else
+			return false;
+	}
+	
+	public boolean contains(int x, int y) {
+		return (x >= this.upperLeftPoint.getX() 
+				&& x <= this.upperLeftPoint.getX() + width
+				&& y >= this.upperLeftPoint.getY()
+				&& y <= this.upperLeftPoint.getY() + height);
+	}
+	
+	//overloading nam sluzi kad imamo konstruktore da pravimo vise metoda koje se isto zovu 
+	public boolean contains(Point sadrziTacku)
+	{
+		return (sadrziTacku.getX() >= this.upperLeftPoint.getX() 
+				&& sadrziTacku.getX()<= this.upperLeftPoint.getX() + width
+				&& sadrziTacku.getY() >= this.upperLeftPoint.getY()
+				&& sadrziTacku.getY() <= this.upperLeftPoint.getY() + height);
+	}
 
 	public int area() {
 		return width * height;

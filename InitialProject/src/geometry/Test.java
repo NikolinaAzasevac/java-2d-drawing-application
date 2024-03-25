@@ -95,11 +95,24 @@ public class Test {
 		System.out.println(novaTacka.equals(novaTacka2));
 		System.out.println(novaTacka.equals(novaLinija));
 		
+		//pete vezbe
+		novaTacka.contains(5,10);
+		novaLinija.contains(5, 15);
+		rect1.contains(novaTacka2);
+		Donut donut1  = new Donut(novaTacka, 50, true); //ja kao korisnik znam da postoji tacka radius inner radius i selected a ne da li je on krug ili nije
+		Circle donut2 = new Donut(novaTacka, 50, true); //ne buni se 
+		Object donut3 = new Donut(novaTacka, 50, true); //sa leve strane mozemo bilo sta ali desno mora Donut 
+		//Donut donut4 = newCircle() // ne moze jer Circle ne zna za Donat
+		//Donut donut4 = (Donut)circle1; // ovo moze jer smo down castovali //ovo smo zakomentarisali iz nekog razlog
+		//ne moze downcast da se uradi ipak ona je pogresila
+		Donut donut5  = new Donut(novaTacka, 50, 45, true);
+		System.out.println(donut5);
 		
 		
 		
 		
 		
 		
+
 	}
 }
