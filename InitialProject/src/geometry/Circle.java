@@ -44,9 +44,6 @@ public class Circle {
 		return (this.center.distance(sadrziTacku) <= this.radius);
 	}
 
-
-
-
 	public double area() {
 		return radius*radius*Math.PI;
 	}
