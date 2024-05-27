@@ -1,6 +1,8 @@
 package geometry;
 
-public class Point {
+import java.awt.Graphics;
+
+public class Point extends Shape {
 	// stanje/atributi klase
 	private int x;
 	private int y;
@@ -40,6 +42,12 @@ public class Point {
 		return this.distance(sadrziTacku) <= 2;
 	}
 	
+	@Override
+ 	public void draw(Graphics g) {
+ 		g.drawLine(x-2, y, x+2, y);
+ 		g.drawLine(x, y-2, x, y+2);
+ 	}
+	
 	//metode pristupa - public
 	//metoda istance
 	public int getX() {
@@ -63,14 +71,6 @@ public class Point {
 
 	public void setY(int y) {
 		this.y = y;
-	}
-
-	public boolean isSelected() {
-		return selected;
-	}
-
-	public void setSelected(boolean selected) {
-		this.selected = selected;
 	}
 	
 	//isti potpis kao i u klasi oBject

@@ -1,5 +1,7 @@
 package geometry;
 
+import java.awt.Graphics;
+
 public class Donut extends Circle {
 	// nasledjuse center, radius i selected od Circle
 	private int innerRadius;
@@ -16,15 +18,47 @@ public class Donut extends Circle {
 		// umesto usper mogu i
 		this(center, radius, selected);
 		this.innerRadius = innerRadius;
-
 	}
+	
+	public double area() {
+		return super.area() - innerRadius * innerRadius * Math.PI;
+	}
+	public double circumference() {
+		return super.circumference() + 2 * innerRadius * Math.PI;
+	}
+	public boolean equals(Object obj) {
+		if (obj instanceof Donut) {
+			Donut pomocna = (Donut) obj;
+			if (getCenter().equals(pomocna.getCenter()) && getRadius() == pomocna.getRadius()
+					&& innerRadius == pomocna.getInnerRadius())
+				return true;
+			else
+				return false;
+		} else
+			return false;
+	}
+	public boolean contains(int x, int y) {
+		return super.contains(x, y) && getCenter().distance(new Point(x, y)) >= innerRadius;
+	}
+	public boolean contains(Point p) {
+
+ 		return this.contains(p.getX(), p.getY());
+ 	}
+
+ 	@Override
+ 	public void draw(Graphics g) {
+ 		super.draw(g);
+ 		g.drawOval(getCenter().getX()-innerRadius,
+ 				getCenter().getY()-innerRadius, 2*innerRadius,
+ 				2*innerRadius);
+ 	}
 
 	// ostale get i set nasledjuse iz Circle
-	public int getInnerRadiusl() {
+	public int getInnerRadius() {
 		return innerRadius;
 	}
 
-	public void setInnerRadiusl(int innerRadiusl) {
+	public void setInnerRadius(int innerRadiusl) {
 		this.innerRadius = innerRadiusl;
 	}
 

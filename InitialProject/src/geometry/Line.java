@@ -1,10 +1,11 @@
 package geometry;
 
-public class Line {
+import java.awt.Graphics;
+
+public class Line extends Shape {
 	
 	private Point startPoint; // Point je slozeni deo podatka, to vec prethodno imam, umesto npr int double
 	private Point endPoint;
-	private boolean selected;
 	//zbog enkapsulacije metode su public sve ostalo je private
 	
 	public Line() {}
@@ -44,6 +45,12 @@ public class Line {
 		return this.startPoint.distance(sadrziTacku) + this.endPoint.distance(sadrziTacku) - length() <= 2;
 	}
 	
+	@Override
+ 	public void draw(Graphics g) {
+ 		g.drawLine(startPoint.getX(), startPoint.getY(),
+ 				endPoint.getX(), endPoint.getY());		
+ 	}
+	
 	public Point getStartPoint() {
 		return this.startPoint; // this u get metodi moze a ne mora da stoji
 	}
@@ -60,14 +67,6 @@ public class Line {
 		this.endPoint = endPoint;
 	}
 
-	public boolean isSelected() {
-		return selected;
-	}
-
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-	}
-	
 	public String toString() {
 		return startPoint.toString()+"-->"+endPoint+")"; // (xS, yS) --> (xE, yE)
 	}
