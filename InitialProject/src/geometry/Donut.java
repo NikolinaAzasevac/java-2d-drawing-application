@@ -1,6 +1,7 @@
 package geometry;
 
 import java.awt.Graphics;
+import java.awt.Color;
 
 public class Donut extends Circle {
 	// nasledjuse center, radius i selected od Circle
@@ -51,6 +52,16 @@ public class Donut extends Circle {
  		g.drawOval(getCenter().getX()-innerRadius,
  				getCenter().getY()-innerRadius, 2*innerRadius,
  				2*innerRadius);
+ 		
+ 		if (isSelected()) {
+ 			g.setColor(Color.BLUE);
+ 			g.drawRect(getCenter().getX() - 2, getCenter().getY() - 2, 4, 4);
+ 			g.drawRect(getCenter().getX() - innerRadius - 2, getCenter().getY() - 2, 4, 4);
+ 			g.drawRect(getCenter().getX() + innerRadius - 2, getCenter().getY() - 2, 4, 4);
+ 			g.drawRect(getCenter().getX() - 2, getCenter().getY() - innerRadius - 2, 4, 4);
+ 			g.drawRect(getCenter().getX() - 2, getCenter().getY() + innerRadius - 2, 4, 4);
+ 			g.setColor(Color.black);
+ 		}
  	}
  	
  	@Override

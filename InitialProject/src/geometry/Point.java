@@ -1,6 +1,7 @@
 package geometry;
 
 import java.awt.Graphics;
+import java.awt.Color;
 
 public class Point extends Shape {
 	// stanje/atributi klase
@@ -46,6 +47,11 @@ public class Point extends Shape {
  	public void draw(Graphics g) {
  		g.drawLine(x-2, y, x+2, y);
  		g.drawLine(x, y-2, x, y+2);
+ 		if(this.selected) {
+ 			g.setColor(Color.blue);
+ 			g.drawRect(x-2, y-2, 4, 4);
+ 			g.setColor(Color.black);
+ 		}
  	}
 	
 	@Override
