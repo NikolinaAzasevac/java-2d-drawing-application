@@ -56,6 +56,25 @@ public class Rectangle extends Shape{
  		g.drawRect(upperLeftPoint.getX(), upperLeftPoint.getY(),
  				width, height);
  	}
+	
+	public void moveTo(int x, int y) {
+ 		upperLeftPoint.moveTo(x, y);
+ 	}
+
+ 	@Override
+ 	public void moveBy(int x, int y) {
+ 		upperLeftPoint.moveBy(x, y);
+ 	}
+
+ 	@Override
+ 	public int compareTo(Object obj) {
+ 		if(obj instanceof Rectangle) {
+ 			Rectangle shapeToCompare = (Rectangle)obj;
+ 			return this.area() 
+ 					- shapeToCompare.area();
+ 		}
+ 		return 0;
+ 	}
 
 	public int area() {
 		return width * height;
