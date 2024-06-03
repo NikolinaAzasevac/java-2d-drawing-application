@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.JToggleButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -22,6 +24,13 @@ import javax.swing.DefaultListModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class FrmTest extends JFrame {
 
@@ -29,6 +38,8 @@ public class FrmTest extends JFrame {
 	private JPanel contentPane;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private DefaultListModel dlm= new DefaultListModel();
+	private JTextField txtUnosBoje;
+	private DlgTest dialog = new DlgTest();
 
 	/**
 	 * Launch the application.
@@ -64,7 +75,7 @@ public class FrmTest extends JFrame {
 		GridBagLayout gbl_pnlCenter = new GridBagLayout();
 		gbl_pnlCenter.columnWidths = new int[]{0, 0, 0, 0};
 		gbl_pnlCenter.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_pnlCenter.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_pnlCenter.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_pnlCenter.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		pnlCenter.setLayout(gbl_pnlCenter);
 		
@@ -84,6 +95,7 @@ public class FrmTest extends JFrame {
 		
 		JLabel lblCrvena = new JLabel("Crvena");
 		GridBagConstraints gbc_lblCrvena = new GridBagConstraints();
+		gbc_lblCrvena.anchor = GridBagConstraints.EAST;
 		gbc_lblCrvena.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCrvena.gridx = 1;
 		gbc_lblCrvena.gridy = 0;
@@ -96,6 +108,24 @@ public class FrmTest extends JFrame {
 				dlm.addElement(tglbtnPlava.getText());
 			}
 		});
+		
+		txtUnosBoje = new JTextField();
+		txtUnosBoje.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					dlm.addElement(txtUnosBoje.getText());
+					txtUnosBoje.setText("");
+				}
+			}
+		});
+		GridBagConstraints gbc_txtUnosBoje = new GridBagConstraints();
+		gbc_txtUnosBoje.insets = new Insets(0, 0, 5, 0);
+		gbc_txtUnosBoje.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtUnosBoje.gridx = 2;
+		gbc_txtUnosBoje.gridy = 0;
+		pnlCenter.add(txtUnosBoje, gbc_txtUnosBoje);
+		txtUnosBoje.setColumns(10);
 		buttonGroup.add(tglbtnPlava);
 		GridBagConstraints gbc_tglbtnPlava = new GridBagConstraints();
 		gbc_tglbtnPlava.insets = new Insets(0, 0, 5, 5);
@@ -131,6 +161,20 @@ public class FrmTest extends JFrame {
 		gbc_lblZuta.gridy = 2;
 		pnlCenter.add(lblZuta, gbc_lblZuta);
 		
+		JComboBox<String> cmbDodatneBoje = new JComboBox<String>();
+		cmbDodatneBoje.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dlm.addElement(cmbDodatneBoje.getSelectedItem().toString());
+			}
+		});
+		cmbDodatneBoje.setModel(new DefaultComboBoxModel(new String[] {"narandzasta", "ljubicasta", "zelena"}));
+		GridBagConstraints gbc_cmbDodatneBoje = new GridBagConstraints();
+		gbc_cmbDodatneBoje.insets = new Insets(0, 0, 0, 5);
+		gbc_cmbDodatneBoje.fill = GridBagConstraints.HORIZONTAL;
+		gbc_cmbDodatneBoje.gridx = 0;
+		gbc_cmbDodatneBoje.gridy = 3;
+		pnlCenter.add(cmbDodatneBoje, gbc_cmbDodatneBoje);
+		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -153,6 +197,23 @@ public class FrmTest extends JFrame {
 			}
 		});
 		pnlSouth.add(btnIspisi);
+		
+		JButton btnNovaBoja = new JButton("Dodaj boju");
+		btnNovaBoja.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dialog.setVisible(true);
+				if(dialog.isOk==true) {
+					dlm.addElement(dialog.txtRed.getText()+ " " + dialog.txtGreen.getText()+ " " + dialog.txtBlue.getText());
+					pnlSouth.setBackground(new Color(
+							Integer.parseInt(dialog.txtRed.getText()),
+							Integer.parseInt(dialog.txtGreen.getText()),
+							Integer.parseInt(dialog.txtBlue.getText())
+							));
+				}
+			}
+		});
+		pnlSouth.add(btnNovaBoja);
 		
 		
 		
