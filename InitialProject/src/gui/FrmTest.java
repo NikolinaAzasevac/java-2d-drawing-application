@@ -214,9 +214,7 @@ public class FrmTest extends JFrame {
 			}
 		});
 		pnlSouth.add(btnNovaBoja);
-		
-		
-		
+		//promena za commit 
 		
 	}
 
