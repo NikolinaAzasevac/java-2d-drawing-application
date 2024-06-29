@@ -35,7 +35,7 @@ public class DlgTest extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}//fjjdsjs
 
 	/**
 	 * Create the dialog.
