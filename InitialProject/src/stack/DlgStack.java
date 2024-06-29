@@ -1,18 +1,24 @@
 package stack;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -44,11 +50,12 @@ public class DlgStack extends JDialog {
 	 * Create the dialog.
 	 */
 	public DlgStack() {
-		setTitle("Add donut");
+		setTitle("Push donut");
 		setModal(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPanel.setBackground(new Color(255, 240, 245));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0, 0};
@@ -58,6 +65,9 @@ public class DlgStack extends JDialog {
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblX = new JLabel("X:");
+			lblX.setForeground(new Color(219, 112, 147));
+			lblX.setHorizontalAlignment(SwingConstants.CENTER);
+			lblX.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 			GridBagConstraints gbc_lblX = new GridBagConstraints();
 			gbc_lblX.insets = new Insets(0, 0, 5, 5);
 			gbc_lblX.anchor = GridBagConstraints.EAST;
@@ -67,6 +77,8 @@ public class DlgStack extends JDialog {
 		}
 		{
 			txtX = new JTextField();
+			txtX.setColumns(10);
+			txtX.setBorder(new LineBorder(new Color(219, 112, 147), 2));
 			GridBagConstraints gbc_txtX = new GridBagConstraints();
 			gbc_txtX.insets = new Insets(0, 0, 5, 0);
 			gbc_txtX.fill = GridBagConstraints.HORIZONTAL;
@@ -77,6 +89,9 @@ public class DlgStack extends JDialog {
 		}
 		{
 			JLabel lblY = new JLabel("Y:");
+			lblY.setForeground(new Color(219, 112, 147));
+			lblY.setHorizontalAlignment(SwingConstants.CENTER);
+			lblY.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 			GridBagConstraints gbc_lblY = new GridBagConstraints();
 			gbc_lblY.anchor = GridBagConstraints.EAST;
 			gbc_lblY.insets = new Insets(0, 0, 5, 5);
@@ -86,6 +101,8 @@ public class DlgStack extends JDialog {
 		}
 		{
 			txtY = new JTextField();
+			txtY.setColumns(10);
+			txtY.setBorder(new LineBorder(new Color(219, 112, 147), 2));
 			GridBagConstraints gbc_txtY = new GridBagConstraints();
 			gbc_txtY.insets = new Insets(0, 0, 5, 0);
 			gbc_txtY.fill = GridBagConstraints.HORIZONTAL;
@@ -96,6 +113,9 @@ public class DlgStack extends JDialog {
 		}
 		{
 			JLabel lblRadius = new JLabel("Outer radius:");
+			lblRadius.setForeground(new Color(219, 112, 147));
+			lblRadius.setHorizontalAlignment(SwingConstants.CENTER);
+			lblRadius.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 			GridBagConstraints gbc_lblRadius = new GridBagConstraints();
 			gbc_lblRadius.anchor = GridBagConstraints.EAST;
 			gbc_lblRadius.insets = new Insets(0, 0, 5, 5);
@@ -105,6 +125,8 @@ public class DlgStack extends JDialog {
 		}
 		{
 			txtRadius = new JTextField();
+			txtRadius.setColumns(10);
+			txtRadius.setBorder(new LineBorder(new Color(219, 112, 147), 2));
 			GridBagConstraints gbc_txtRadius = new GridBagConstraints();
 			gbc_txtRadius.insets = new Insets(0, 0, 5, 0);
 			gbc_txtRadius.fill = GridBagConstraints.HORIZONTAL;
@@ -114,16 +136,22 @@ public class DlgStack extends JDialog {
 			txtRadius.setColumns(10);
 		}
 		{
-			JLabel lblInnerRadiuss = new JLabel("Inner Radius:");
-			GridBagConstraints gbc_lblInnerRadiuss = new GridBagConstraints();
-			gbc_lblInnerRadiuss.anchor = GridBagConstraints.EAST;
-			gbc_lblInnerRadiuss.insets = new Insets(0, 0, 0, 5);
-			gbc_lblInnerRadiuss.gridx = 0;
-			gbc_lblInnerRadiuss.gridy = 3;
-			contentPanel.add(lblInnerRadiuss, gbc_lblInnerRadiuss);
+			JLabel lblInnerRadius = new JLabel("Inner radius:");
+			lblInnerRadius.setForeground(new Color(219, 112, 147));
+			lblInnerRadius.setHorizontalAlignment(SwingConstants.CENTER);
+			lblInnerRadius.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
+			GridBagConstraints gbc_lblInnerRadius = new GridBagConstraints();
+			gbc_lblInnerRadius.anchor = GridBagConstraints.EAST;
+			gbc_lblInnerRadius.insets = new Insets(0, 0, 0, 5);
+			gbc_lblInnerRadius.gridx = 0;
+			gbc_lblInnerRadius.gridy = 3;
+			contentPanel.add(lblInnerRadius, gbc_lblInnerRadius);
 		}
+		
 		{
 			txtInnerRadius = new JTextField();
+			txtInnerRadius.setColumns(10);
+			txtInnerRadius.setBorder(new LineBorder(new Color(219, 112, 147), 2));
 			GridBagConstraints gbc_txtInnerRadius = new GridBagConstraints();
 			gbc_txtInnerRadius.fill = GridBagConstraints.HORIZONTAL;
 			gbc_txtInnerRadius.gridx = 1;
@@ -133,6 +161,7 @@ public class DlgStack extends JDialog {
 		}
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(new Color(255, 240, 245));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
@@ -166,6 +195,9 @@ public class DlgStack extends JDialog {
 						
 				}
 				});
+				//okButton.setForeground(new Color(219, 112, 147));
+				okButton.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
+				//setBackground(new Color(0,0,0));
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -178,6 +210,8 @@ public class DlgStack extends JDialog {
 						dispose();
 					}
 				});
+				//cancelButton.setForeground(new Color(219, 112, 147));
+				cancelButton.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}

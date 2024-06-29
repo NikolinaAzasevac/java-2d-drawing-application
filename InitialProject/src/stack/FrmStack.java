@@ -1,9 +1,14 @@
 package stack;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
 import geometry.Donut;
 import geometry.Point;
 
@@ -23,8 +28,8 @@ public class FrmStack extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	DefaultListModel <Donut> dlm = new DefaultListModel<Donut>();
-	private JButton btnAdd = new JButton("Add");
-	private JButton btnRemove = new JButton("Remove"); 
+	private JButton btnPush = new JButton("Push");
+	private JButton btnPull = new JButton("Pull"); 
 	
 
 	/**
@@ -51,19 +56,23 @@ public class FrmStack extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 240, 245));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		
 		JLabel lblStack = new JLabel("Stack for donuts");
+		lblStack.setForeground(new Color(219, 112, 147));
+		lblStack.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		
 		JScrollPane scrlPane = new JScrollPane();
+		scrlPane.setBorder(new LineBorder(new Color(219, 112, 147), 2));
 		
 		JList<Donut> lstStack = new JList<Donut>();
 		scrlPane.setViewportView(lstStack); //lista povezana sa skrolbarom
 		lstStack.setModel(dlm); //postavlja listu na dlm model
 		
-		btnAdd.addActionListener(new ActionListener() {
+		btnPush.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DlgStack dlgStack = new DlgStack();
 				dlgStack.setVisible(true);
@@ -82,14 +91,16 @@ public class FrmStack extends JFrame {
 				}
 			}
 		});
+		btnPush.setForeground(new Color(219, 112, 147));
+		btnPush.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 		
-		btnRemove.addActionListener(new ActionListener() {
+		btnPull.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!dlm.isEmpty()) {
 			            Donut donut = dlm.getElementAt(0); 
 
 			            DlgStack dlgStack = new DlgStack();
-			            dlgStack.setTitle("Remove donut");
+			            dlgStack.setTitle("Pull donut");
 
 			            dlgStack.getTxtX().setText(Integer.toString(donut.getCenter().getX()));
 			            dlgStack.getTxtY().setText(Integer.toString(donut.getCenter().getY()));
@@ -113,13 +124,16 @@ public class FrmStack extends JFrame {
 			        }
 			    }		
 		});
+		btnPull.setForeground(new Color(219, 112, 147));
+		btnPull.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
+		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING) 
 			
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(170) //razmak
+					.addGap(143) //razmak
 					.addComponent(lblStack, GroupLayout.PREFERRED_SIZE, 305, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(170, Short.MAX_VALUE)) // da bude centralno
 				
@@ -130,9 +144,9 @@ public class FrmStack extends JFrame {
 				
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(90) 
-					.addComponent(btnRemove, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+					.addComponent(btnPull, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 					.addGap(52) //razmak izmedju dugmadi
-					.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+					.addComponent(btnPush, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 					.addGap(50))
 		);
 		
@@ -148,8 +162,8 @@ public class FrmStack extends JFrame {
 				
 				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 					.addGap(150)
-					.addComponent(btnAdd) //dodaje se btnAdd
-					.addComponent(btnRemove))
+					.addComponent(btnPush) //dodaje se btnAdd
+					.addComponent(btnPull))
 				.addContainerGap(41, Short.MAX_VALUE)) //dodatni prostor dole
 		);
 		contentPane.setLayout(gl_contentPane); // postavlja se layout na contentPane
