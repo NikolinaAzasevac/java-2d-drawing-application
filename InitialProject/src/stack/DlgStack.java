@@ -25,7 +25,6 @@ public class DlgStack extends JDialog {
 	private JTextField txtY;
 	private JTextField txtRadius;
 	private JTextField txtInnerRadius;
-	private boolean Confirmed;
 	private boolean isOk = false;
 
 	/**
@@ -45,6 +44,7 @@ public class DlgStack extends JDialog {
 	 * Create the dialog.
 	 */
 	public DlgStack() {
+		setTitle("Add donut");
 		setModal(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -223,14 +223,6 @@ public class DlgStack extends JDialog {
 
 	public void setOk(boolean isOk) {
 		this.isOk = isOk;
-	}
-
-	public boolean isConfirmed() {
-		return Confirmed;
-	}
-
-	public void setConfirmed(boolean confirmed) {
-		Confirmed = confirmed;
 	}
 	
 }

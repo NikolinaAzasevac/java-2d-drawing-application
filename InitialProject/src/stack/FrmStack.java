@@ -15,7 +15,6 @@ import javax.swing.JButton;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -61,23 +60,23 @@ public class FrmStack extends JFrame {
 		JScrollPane scrlPane = new JScrollPane();
 		
 		JList<Donut> lstStack = new JList<Donut>();
-		scrlPane.setViewportView(lstStack);
-		lstStack.setModel(dlm);
+		scrlPane.setViewportView(lstStack); //lista povezana sa skrolbarom
+		lstStack.setModel(dlm); //postavlja listu na dlm model
 		
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DlgStack dlgStack = new DlgStack();
 				dlgStack.setVisible(true);
 				
-				if(dlgStack.isConfirmed()) {
+				if(dlgStack.isOk()) {
 					try {
 						int x = Integer.parseInt(dlgStack.getTxtX().getText());
 						int y = Integer.parseInt(dlgStack.getTxtY().getText());
 						int radius = Integer.parseInt(dlgStack.getTxtRadius().getText());
 						int innerRadius = Integer.parseInt(dlgStack.getTxtInnerRadius().getText());
 						Donut donut = new Donut(new Point(x,y), radius, innerRadius, false);
-						dlm.add(0, donut);
-					} catch (NumberFormatException ex) {
+						dlm.add(0,donut);
+					} catch (NumberFormatException e2) {
 						JOptionPane.showMessageDialog(null, "Please, insert valid values!");
 					}
 				}
@@ -86,55 +85,73 @@ public class FrmStack extends JFrame {
 		
 		btnRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!dlm.isEmpty()) {
-					dlm.removeElementAt(0);
-				}else {
-					JOptionPane.showMessageDialog(null, "Stack is empty, please enter a value!", "ERROR", JOptionPane.ERROR_MESSAGE);
-				}
-			}
+				if (!dlm.isEmpty()) {
+			            Donut donut = dlm.getElementAt(0); 
+
+			            DlgStack dlgStack = new DlgStack();
+			            dlgStack.setTitle("Remove donut");
+
+			            dlgStack.getTxtX().setText(Integer.toString(donut.getCenter().getX()));
+			            dlgStack.getTxtY().setText(Integer.toString(donut.getCenter().getY()));
+			            dlgStack.getTxtRadius().setText(Integer.toString(donut.getRadius()));
+			            dlgStack.getTxtInnerRadius().setText(Integer.toString(donut.getInnerRadius()));
+
+			            dlgStack.getTxtX().setEnabled(false);
+			            dlgStack.getTxtY().setEnabled(false);
+			            dlgStack.getTxtRadius().setEnabled(false);
+			            dlgStack.getTxtInnerRadius().setEnabled(false);
+
+			            dlgStack.setVisible(true);
+
+			            if (dlgStack.isOk()) {
+			                dlm.removeElementAt(0);
+			            } else {
+			                JOptionPane.showMessageDialog(null, "Operation cancelled.");
+			            }
+			        } else {
+			            JOptionPane.showMessageDialog(null, "Stack is empty.", "ERROR", JOptionPane.ERROR_MESSAGE);
+			        }
+			    }		
 		});
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+			gl_contentPane.createParallelGroup(Alignment.LEADING) 
+			
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(339, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addComponent(scrlPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(97))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addComponent(lstStack, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
-							.addGap(33))))
+					.addGap(170) //razmak
+					.addComponent(lblStack, GroupLayout.PREFERRED_SIZE, 305, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(170, Short.MAX_VALUE)) // da bude centralno
+				
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(btnAdd)
-					.addContainerGap(317, Short.MAX_VALUE))
+					.addGap(90) 
+					.addComponent(scrlPane, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(90, Short.MAX_VALUE)) 
+				
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(btnRemove)
-					.addContainerGap(317, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(178)
-					.addComponent(lblStack)
-					.addContainerGap(201, Short.MAX_VALUE))
+					.addGap(90) 
+					.addComponent(btnRemove, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+					.addGap(52) //razmak izmedju dugmadi
+					.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+					.addGap(50))
 		);
 		
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
+					.addGap(10)
 					.addComponent(lblStack)
-					.addGap(9)
-					.addComponent(btnAdd)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lstStack, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
-					.addGap(12)
-					.addComponent(btnRemove)
-					.addGap(9)
-					.addComponent(scrlPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(141, Short.MAX_VALUE))
+					
+					.addGap(20)
+					.addComponent(scrlPane, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE) //velicina srclpane
+					.addGap(25)
+				
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+					.addGap(150)
+					.addComponent(btnAdd) //dodaje se btnAdd
+					.addComponent(btnRemove))
+				.addContainerGap(41, Short.MAX_VALUE)) //dodatni prostor dole
 		);
-		contentPane.setLayout(gl_contentPane);
+		contentPane.setLayout(gl_contentPane); // postavlja se layout na contentPane
 	}
 }
