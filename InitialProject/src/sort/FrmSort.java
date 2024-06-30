@@ -1,27 +1,36 @@
 package sort;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 //import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import geometry.Donut;
+import geometry.Point;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FrmSort extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	DefaultListModel<Donut>dlm=new DefaultListModel<Donut>();
-	ArrayList <Donut> lstSort = new ArrayList<Donut>();
+	ArrayList <Donut> listSort = new ArrayList<Donut>();
 	//private JButton btnAdd = new JButton("Add");
 	//private JButton btnSort = new JButton("Sort");
 
@@ -53,15 +62,50 @@ public class FrmSort extends JFrame {
 		setContentPane(contentPane);
 		
 		JLabel lblSort = new JLabel("List for donuts");
+		lblSort.setForeground(new Color(153, 102, 255));
+        lblSort.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		
 		JScrollPane scrlPane = new JScrollPane();
+		scrlPane.setBorder(new LineBorder(new Color(153, 102, 255), 2));
 		
 		JList <Donut>lstSort = new JList<Donut>();
 		scrlPane.setViewportView(lstSort);
 		lstSort.setModel(dlm);
 		
 		JButton btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DlgSort dlgSort = new DlgSort();
+                dlgSort.setVisible(true);
+                if (dlgSort.isOk()) {
+                    try {
+                        int x = Integer.parseInt(dlgSort.getTxtX1().getText());
+                        int y = Integer.parseInt(dlgSort.getTxtY1().getText());
+                        int radius = Integer.parseInt(dlgSort.getTxtRadius1().getText());
+                        int innerRadius = Integer.parseInt(dlgSort.getTxtInnerRadius1().getText());
+                        Donut donut = new Donut(new Point(x, y), radius, innerRadius, false);
+                        dlm.addElement(donut);
+                        listSort.add(donut);
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Please, insert valid numeric values!");
+                    }
+                }
+			}
+		});
 		JButton btnSort = new JButton("Sort");
+		btnSort.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 if (dlm.isEmpty()) {
+	                    JOptionPane.showMessageDialog(null, "List is empty, please enter values!", "ERROR", JOptionPane.WARNING_MESSAGE);
+	                } else {
+	                	
+	                	listSort.sort(Comparator.comparingDouble(Donut::area).reversed());
+	                    dlm.clear();
+	                    dlm.addAll(listSort);
+	        
+	                    }
+			}
+		});
 		
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);

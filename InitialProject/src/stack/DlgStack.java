@@ -136,6 +136,7 @@ public class DlgStack extends JDialog {
 			txtRadius.setColumns(10);
 		}
 		{
+			
 			JLabel lblInnerRadius = new JLabel("Inner radius:");
 			lblInnerRadius.setForeground(new Color(219, 112, 147));
 			lblInnerRadius.setHorizontalAlignment(SwingConstants.CENTER);
@@ -146,6 +147,7 @@ public class DlgStack extends JDialog {
 			gbc_lblInnerRadius.gridx = 0;
 			gbc_lblInnerRadius.gridy = 3;
 			contentPanel.add(lblInnerRadius, gbc_lblInnerRadius);
+			
 		}
 		
 		{
