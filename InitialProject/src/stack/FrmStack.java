@@ -28,9 +28,6 @@ public class FrmStack extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	DefaultListModel <Donut> dlm = new DefaultListModel<Donut>();
-	private JButton btnPush = new JButton("Push");
-	private JButton btnPop = new JButton("Pop"); 
-	
 
 	/**
 	 * Launch the application.
@@ -72,6 +69,7 @@ public class FrmStack extends JFrame {
 		scrlPane.setViewportView(lstStack); //lista povezana sa skrolbarom
 		lstStack.setModel(dlm); //postavlja listu na dlm model
 		
+		JButton btnPush = new JButton("Push");
 		btnPush.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DlgStack dlgStack = new DlgStack();
@@ -97,13 +95,14 @@ public class FrmStack extends JFrame {
 		btnPush.setForeground(new Color(219, 112, 147));
 		btnPush.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 		
+		JButton btnPop = new JButton("Pop"); 
 		btnPop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!dlm.isEmpty()) {
 			            Donut donut = dlm.getElementAt(0); 
 
 			            DlgStack dlgStack = new DlgStack();
-			            dlgStack.setTitle("Pull donut");
+			            dlgStack.setTitle("Pop donut");
 
 			            dlgStack.getTxtX().setText(Integer.toString(donut.getCenter().getX()));
 			            dlgStack.getTxtY().setText(Integer.toString(donut.getCenter().getY()));
