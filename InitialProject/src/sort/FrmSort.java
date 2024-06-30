@@ -24,6 +24,7 @@ import geometry.Point;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+//import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class FrmSort extends JFrame {
 
@@ -31,8 +32,6 @@ public class FrmSort extends JFrame {
 	private JPanel contentPane;
 	DefaultListModel<Donut>dlm=new DefaultListModel<Donut>();
 	ArrayList <Donut> listSort = new ArrayList<Donut>();
-	//private JButton btnAdd = new JButton("Add");
-	//private JButton btnSort = new JButton("Sort");
 
 	/**
 	 * Launch the application.
@@ -54,6 +53,7 @@ public class FrmSort extends JFrame {
 	 * Create the frame.
 	 */
 	public FrmSort() {
+		setTitle("Nikolina Azasevac IT9/2023");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -90,6 +90,9 @@ public class FrmSort extends JFrame {
                         JOptionPane.showMessageDialog(null, "Please, insert valid numeric values!");
                     }
                 }
+                else {
+	                JOptionPane.showMessageDialog(null, "Operation cancelled.", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
+	            }
 			}
 		});
 		JButton btnSort = new JButton("Sort");
@@ -106,7 +109,6 @@ public class FrmSort extends JFrame {
 	                    }
 			}
 		});
-		
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -146,6 +148,8 @@ public class FrmSort extends JFrame {
 					.addComponent(btnSort))
 				.addContainerGap(41, Short.MAX_VALUE)) //dodatni prostor dole
 		);
+		contentPane.setLayout(gl_contentPane); // postavlja se layout na contentPane
+		
 		
 	}
 }

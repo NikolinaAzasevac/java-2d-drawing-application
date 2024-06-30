@@ -130,6 +130,7 @@ public class FrmStack extends JFrame {
 		btnPop.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 		
 		
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING) 
