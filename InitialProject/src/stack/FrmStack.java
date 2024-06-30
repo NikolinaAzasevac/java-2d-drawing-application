@@ -123,7 +123,7 @@ public class FrmStack extends JFrame {
 			                JOptionPane.showMessageDialog(null, "Operation cancelled.", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 			            }
 			        } else {
-			            JOptionPane.showMessageDialog(null, "Stack is empty.", "ERROR", JOptionPane.ERROR_MESSAGE);
+			            JOptionPane.showMessageDialog(null, "Stack is empty.", "INF0RMATION", JOptionPane.INFORMATION_MESSAGE);
 			        }
 			    }		
 		});
