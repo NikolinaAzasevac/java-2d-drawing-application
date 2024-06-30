@@ -170,7 +170,7 @@ public class DlgStack extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						try {
 				            if (txtX.getText().isEmpty() || txtY.getText().isEmpty() || txtRadius.getText().isEmpty() || txtInnerRadius.getText().isEmpty()) {
-				                JOptionPane.showMessageDialog(null, "Please enter a value for all fields.", "Error message", JOptionPane.INFORMATION_MESSAGE);
+				                JOptionPane.showMessageDialog(null, "Please enter a value for all fields.", "ERROR", JOptionPane.INFORMATION_MESSAGE);
 				            } else {
 				                int radius = Integer.parseInt(txtRadius.getText());
 				                int innerRadius = Integer.parseInt(txtInnerRadius.getText());
@@ -179,14 +179,14 @@ public class DlgStack extends JDialog {
 				                    if (innerRadius < radius) {
 				                        isOk = true; 
 				                    } else {
-				                        JOptionPane.showMessageDialog(null, "Outer radius must be greater than the inner radius!", "Error message", JOptionPane.INFORMATION_MESSAGE);
+				                        JOptionPane.showMessageDialog(null, "Outer radius must be greater than the inner radius!", "Error message", JOptionPane.ERROR_MESSAGE);
 				                    }
 				                } else {
-				                    JOptionPane.showMessageDialog(null, "Outer and inner radius must be greater than 0.", "Error message", JOptionPane.INFORMATION_MESSAGE);
+				                    JOptionPane.showMessageDialog(null, "Outer and inner radius must be greater than 0.", "Error message", JOptionPane.ERROR_MESSAGE);
 				                }
 				            }
 				        } catch (NumberFormatException e1) {
-				            JOptionPane.showMessageDialog(null, "Values must be integers!", "Error message", JOptionPane.INFORMATION_MESSAGE);
+				            JOptionPane.showMessageDialog(null, "Values must be integers!", "Error message", JOptionPane.ERROR_MESSAGE);
 				        }
 				        
 				        if (isOk) {

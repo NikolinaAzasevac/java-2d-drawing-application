@@ -29,7 +29,7 @@ public class FrmStack extends JFrame {
 	private JPanel contentPane;
 	DefaultListModel <Donut> dlm = new DefaultListModel<Donut>();
 	private JButton btnPush = new JButton("Push");
-	private JButton btnPull = new JButton("Pull"); 
+	private JButton btnPop = new JButton("Pop"); 
 	
 
 	/**
@@ -86,15 +86,18 @@ public class FrmStack extends JFrame {
 						Donut donut = new Donut(new Point(x,y), radius, innerRadius, false);
 						dlm.add(0,donut);
 					} catch (NumberFormatException e2) {
-						JOptionPane.showMessageDialog(null, "Please, insert valid values!");
+						JOptionPane.showMessageDialog(null, "Please, insert valid values!", "ERROR", JOptionPane.ERROR_MESSAGE);
 					}
 				}
+				else {
+	                JOptionPane.showMessageDialog(null, "Operation cancelled.", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
+	            }
 			}
 		});
 		btnPush.setForeground(new Color(219, 112, 147));
 		btnPush.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 		
-		btnPull.addActionListener(new ActionListener() {
+		btnPop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!dlm.isEmpty()) {
 			            Donut donut = dlm.getElementAt(0); 
@@ -117,15 +120,15 @@ public class FrmStack extends JFrame {
 			            if (dlgStack.isOk()) {
 			                dlm.removeElementAt(0);
 			            } else {
-			                JOptionPane.showMessageDialog(null, "Operation cancelled.");
+			                JOptionPane.showMessageDialog(null, "Operation cancelled.", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 			            }
 			        } else {
 			            JOptionPane.showMessageDialog(null, "Stack is empty.", "ERROR", JOptionPane.ERROR_MESSAGE);
 			        }
 			    }		
 		});
-		btnPull.setForeground(new Color(219, 112, 147));
-		btnPull.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
+		btnPop.setForeground(new Color(219, 112, 147));
+		btnPop.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -144,7 +147,7 @@ public class FrmStack extends JFrame {
 				
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(90) 
-					.addComponent(btnPull, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+					.addComponent(btnPop, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 					.addGap(52) //razmak izmedju dugmadi
 					.addComponent(btnPush, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 					.addGap(50))
@@ -163,7 +166,7 @@ public class FrmStack extends JFrame {
 				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 					.addGap(150)
 					.addComponent(btnPush) //dodaje se btnAdd
-					.addComponent(btnPull))
+					.addComponent(btnPop))
 				.addContainerGap(41, Short.MAX_VALUE)) //dodatni prostor dole
 		);
 		contentPane.setLayout(gl_contentPane); // postavlja se layout na contentPane
