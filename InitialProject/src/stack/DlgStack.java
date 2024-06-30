@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -78,7 +77,6 @@ public class DlgStack extends JDialog {
 		{
 			txtX = new JTextField();
 			txtX.setColumns(10);
-			txtX.setBorder(new LineBorder(new Color(219, 112, 147), 2));
 			GridBagConstraints gbc_txtX = new GridBagConstraints();
 			gbc_txtX.insets = new Insets(0, 0, 5, 0);
 			gbc_txtX.fill = GridBagConstraints.HORIZONTAL;
@@ -102,7 +100,6 @@ public class DlgStack extends JDialog {
 		{
 			txtY = new JTextField();
 			txtY.setColumns(10);
-			txtY.setBorder(new LineBorder(new Color(219, 112, 147), 2));
 			GridBagConstraints gbc_txtY = new GridBagConstraints();
 			gbc_txtY.insets = new Insets(0, 0, 5, 0);
 			gbc_txtY.fill = GridBagConstraints.HORIZONTAL;
@@ -126,7 +123,6 @@ public class DlgStack extends JDialog {
 		{
 			txtRadius = new JTextField();
 			txtRadius.setColumns(10);
-			txtRadius.setBorder(new LineBorder(new Color(219, 112, 147), 2));
 			GridBagConstraints gbc_txtRadius = new GridBagConstraints();
 			gbc_txtRadius.insets = new Insets(0, 0, 5, 0);
 			gbc_txtRadius.fill = GridBagConstraints.HORIZONTAL;
@@ -153,7 +149,6 @@ public class DlgStack extends JDialog {
 		{
 			txtInnerRadius = new JTextField();
 			txtInnerRadius.setColumns(10);
-			txtInnerRadius.setBorder(new LineBorder(new Color(219, 112, 147), 2));
 			GridBagConstraints gbc_txtInnerRadius = new GridBagConstraints();
 			gbc_txtInnerRadius.fill = GridBagConstraints.HORIZONTAL;
 			gbc_txtInnerRadius.gridx = 1;
@@ -163,7 +158,7 @@ public class DlgStack extends JDialog {
 		}
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setBackground(new Color(255, 240, 245));
+			buttonPane.setBackground(new Color(219, 112, 147));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{

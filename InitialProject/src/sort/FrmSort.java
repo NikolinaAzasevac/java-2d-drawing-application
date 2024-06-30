@@ -17,14 +17,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-//import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import geometry.Donut;
 import geometry.Point;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-//import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class FrmSort extends JFrame {
 
@@ -57,6 +55,7 @@ public class FrmSort extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(230, 230, 250));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -64,6 +63,7 @@ public class FrmSort extends JFrame {
 		JLabel lblSort = new JLabel("List for donuts");
 		lblSort.setForeground(new Color(153, 102, 255));
         lblSort.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
+        
 		
 		JScrollPane scrlPane = new JScrollPane();
 		scrlPane.setBorder(new LineBorder(new Color(153, 102, 255), 2));
@@ -73,6 +73,8 @@ public class FrmSort extends JFrame {
 		lstSort.setModel(dlm);
 		
 		JButton btnAdd = new JButton("Add");
+		btnAdd.setForeground(new Color(153, 102, 255));
+		btnAdd.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DlgSort dlgSort = new DlgSort();
@@ -95,11 +97,14 @@ public class FrmSort extends JFrame {
 	            }
 			}
 		});
+	
 		JButton btnSort = new JButton("Sort");
+		btnSort.setForeground(new Color(153, 102, 255));
+		btnSort.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		btnSort.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 if (dlm.isEmpty()) {
-	                    JOptionPane.showMessageDialog(null, "List is empty, please enter values!", "ERROR", JOptionPane.WARNING_MESSAGE);
+	                    JOptionPane.showMessageDialog(null, "List is empty, please enter values!", "ERROR", JOptionPane.ERROR_MESSAGE);
 	                } else {
 	                	
 	                	listSort.sort(Comparator.comparingDouble(Donut::area).reversed());
