@@ -8,10 +8,12 @@ public class Point extends Shape {
 	private int x;
 	private int y;
 	private boolean selected;
+	private Color color;
 	
 	public Point() {
 		
 	}
+	
 	public Point(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -20,6 +22,11 @@ public class Point extends Shape {
 	public Point(int x, int y, boolean selected) {
 		this(x,y);
 		this.selected=selected;
+	}
+	
+	public Point(int x, int y,  Color color) {
+		this(x, y);
+		setColor(color);
 	}
 	
 	public double distance(Point drugaTacka) {
@@ -103,9 +110,16 @@ public class Point extends Shape {
 		this.y = y;
 	}
 	
+	public Color getColor() {
+		return color;
+	}
+	public void setColor(Color color) {
+		this.color = color;
+	}
 	//isti potpis kao i u klasi oBject
 	//nakon redefinisanja vraca (10,15).
 	public String toString() {
 		return "("+this.x+","+this.y+")";
 	}
+
 }
