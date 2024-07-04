@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
+//import java.awt.Color;
+
 import javax.swing.JToggleButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -21,7 +23,9 @@ public class FrmDrawing extends JFrame {
 	private static FrmDrawing frame; // cuva instancu FrmDrawing
 	private PnlDrawing pnlDrawing = new PnlDrawing();
 	private final ButtonGroup buttonGroup = new ButtonGroup(); // kako bi se iskljucilo medjusobno iskljucivanje dugmadi
+	private String choice = ""; // cuvace mi izbor
     private DlgPoint dlgPoint = new DlgPoint();
+    private DlgLine dlgLine = new DlgLine();
 
 	/**
 	 * Launch the application.
@@ -65,6 +69,9 @@ public class FrmDrawing extends JFrame {
 		JToggleButton tglbtnPoint = new JToggleButton("Point");
 		tglbtnPoint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				choice = "point"; 
+				pnlDrawing.clearSelection();
+				
 				if (pnlDrawing.getSelectedShape() != null) {         // proverava jel postoji selektovan obj
 					pnlDrawing.getSelectedShape().setSelected(false); // ako postoji skida se 
 					pnlDrawing.setSelectedShape(null);
@@ -78,6 +85,17 @@ public class FrmDrawing extends JFrame {
 		pnlNorth.add(tglbtnPoint);
 		
 		JToggleButton tglbtnLine = new JToggleButton("Line");
+		tglbtnLine.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				choice = "line";
+				pnlDrawing.clearSelection();
+				if (pnlDrawing.getSelectedShape() != null) {
+					pnlDrawing.getSelectedShape().setSelected(false);
+					pnlDrawing.setSelectedShape(null);
+					pnlDrawing.repaint();
+				}
+			}
+		});
 		buttonGroup.add(tglbtnLine);
 		pnlNorth.add(tglbtnLine);
 		
@@ -110,18 +128,15 @@ public class FrmDrawing extends JFrame {
         }
         
         private void initializePnlCenter() {
-		//JPanel pnlCenter = new JPanel();
-        	
         	pnlDrawing.addMouseListener((MouseListener) new MouseAdapter() {  // kastovano jer nije moglo raditi
     			@Override
     			public void mouseClicked(MouseEvent e) {
     				pnlDrawing.draw(e, frame);
+    				//setBackground(Color.WHITE);
     			}
     		});
     		
-    		contentPane.add(pnlDrawing, BorderLayout.CENTER);
-		//getContentPane().add(pnlDrawing, BorderLayout.CENTER);
-        }
+    		contentPane.add(pnlDrawing, BorderLayout.CENTER);        }
 
 		public static FrmDrawing getFrame() {
 			return frame;
@@ -137,7 +152,24 @@ public class FrmDrawing extends JFrame {
 
 		public void setDlgPoint(DlgPoint dlgPoint) {
 			this.dlgPoint = dlgPoint;
-		}    
+		}
+
+		public DlgLine getDlgLine() {
+			return dlgLine;
+		}
+
+		public void setDlgLine(DlgLine dlgLine) {
+			this.dlgLine = dlgLine;
+		}
+
+		public String getChoice() {
+			return choice;
+		}
+
+		public void setChoice(String choice) {
+			this.choice = choice;
+		}   
+		
         
 	}
 

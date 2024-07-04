@@ -116,5 +116,10 @@ public class Rectangle extends Shape{
 	public String toString() {
 		return "Upper left point: " + upperLeftPoint + ", width = " + width +", height = " + height;
 	}
+	@Override
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

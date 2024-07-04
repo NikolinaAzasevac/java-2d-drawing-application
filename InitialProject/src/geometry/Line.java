@@ -7,6 +7,7 @@ public class Line extends Shape {
 	
 	private Point startPoint; // Point je slozeni deo podatka, to vec prethodno imam, umesto npr int double
 	private Point endPoint;
+	private Color color;
 	//zbog enkapsulacije metode su public sve ostalo je private
 	
 	public Line() {}
@@ -19,7 +20,11 @@ public class Line extends Shape {
 	public Line(Point startPoint, Point endPoint, boolean selected) {
 		this(startPoint, endPoint);
 		this.selected=selected;
-
+	}
+	
+	public Line(Point startPoint, Point endPoint, Color color) {
+		this(startPoint, endPoint);
+		setColor(color);
 	}
 	public double length() { //nista ne prosledjujemo jer u line ima i start i end point
 		//reusable
@@ -94,6 +99,15 @@ public class Line extends Shape {
 
 	public void setEndPoint(Point endPoint) {
 		this.endPoint = endPoint;
+	}
+	
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	public String toString() {

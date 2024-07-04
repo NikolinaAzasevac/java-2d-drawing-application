@@ -126,8 +126,8 @@ public class DlgPoint extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-									ok = true;
-									setVisible(false);
+						ok = true;
+						setVisible(false);
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -149,15 +149,18 @@ public class DlgPoint extends JDialog {
 	}
 	
 
-	public void writePoint(Point p) {
-		txtX.setText(String.valueOf(p.getX()));
-		txtY.setText(String.valueOf(p.getY()));
+	public void writePoint(Point point) {
+		txtX.setText(String.valueOf(point.getX()));
+		txtY.setText(String.valueOf(point.getY()));
 	}
 	
 	public Point drawPoint() {
 		int x = Integer.parseInt(txtX.getText());
 		int y = Integer.parseInt(txtY.getText());
 		Point point = new Point(x,y, color);
+		if (color == null) {
+	        color = Color.BLACK; // podrazumevana boja ako nije izabrana
+	    }
 		return point;
 	}
 	public JTextField getTxtX() {

@@ -109,4 +109,10 @@ public class Circle extends Shape{
  		return "Center: " + center + ", radius = " + radius;
 	}
 
+	@Override
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
