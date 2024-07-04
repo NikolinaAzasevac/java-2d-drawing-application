@@ -26,6 +26,7 @@ public class FrmDrawing extends JFrame {
 	private String choice = ""; // cuvace mi izbor
     private DlgPoint dlgPoint = new DlgPoint();
     private DlgLine dlgLine = new DlgLine();
+    private JToggleButton tglbtnPoint;
 
 	/**
 	 * Launch the application.
@@ -36,6 +37,7 @@ public class FrmDrawing extends JFrame {
 				try {
 					frame = new FrmDrawing(); //kreira instancu frmDrawing
 					frame.setVisible(true);
+					frame.getTglbtnPoint().setSelected(false); //dugme Point na neizabrano
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -82,6 +84,7 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		buttonGroup.add(tglbtnPoint);
+		//buttonGroup.clearSelection();
 		pnlNorth.add(tglbtnPoint);
 		
 		JToggleButton tglbtnLine = new JToggleButton("Line");
@@ -97,6 +100,7 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		buttonGroup.add(tglbtnLine);
+		//buttonGroup.clearSelection();
 		pnlNorth.add(tglbtnLine);
 		
 		JToggleButton tglbtnRectangle = new JToggleButton("Rectangle");
@@ -168,7 +172,17 @@ public class FrmDrawing extends JFrame {
 
 		public void setChoice(String choice) {
 			this.choice = choice;
+		}
+
+		public JToggleButton getTglbtnPoint() {
+			return tglbtnPoint;
+		}
+
+		public void setTglbtnPoint(JToggleButton tglbtnPoint) {
+			this.tglbtnPoint = tglbtnPoint;
 		}   
+		
+		
 		
         
 	}
