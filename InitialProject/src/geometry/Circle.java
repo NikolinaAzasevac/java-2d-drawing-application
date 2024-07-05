@@ -115,4 +115,16 @@ public class Circle extends Shape{
 		return null;
 	}
 
+	@Override
+	public Color getInnerColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Color getBorderColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

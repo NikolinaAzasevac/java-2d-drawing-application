@@ -52,16 +52,17 @@ public class Line extends Shape {
 	}
 	
 	@Override
- 	public void draw(Graphics g) {
- 		g.drawLine(startPoint.getX(), startPoint.getY(),
- 				endPoint.getX(), endPoint.getY());	
- 		
- 		if(isSelected()) {
- 			g.setColor(Color.BLUE);
- 			g.drawRect(startPoint.getX()-2, startPoint.getY()-2, 4, 4);
- 			g.drawRect(endPoint.getX()-2, endPoint.getY()-2, 4, 4);
- 			g.setColor(Color.black);}
- 	}
+	public void draw(Graphics g) {
+		g.setColor(color);
+		g.drawLine(startPoint.getX(), startPoint.getY(),
+				endPoint.getX(), endPoint.getY());
+		
+		if(isSelected()) {
+			g.setColor(Color.BLUE);
+			g.drawRect(startPoint.getX()-2, startPoint.getY()-2, 4, 4);
+			g.drawRect(endPoint.getX()-2, endPoint.getY()-2, 4, 4);
+			g.setColor(Color.black);}
+	}
 	
 	public void moveTo(int x, int y) {
  		//ako bismo je implementirali 
@@ -112,6 +113,18 @@ public class Line extends Shape {
 
 	public String toString() {
 		return startPoint.toString()+"-->"+endPoint+")"; // (xS, yS) --> (xE, yE)
+	}
+
+	@Override
+	public Color getInnerColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Color getBorderColor() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

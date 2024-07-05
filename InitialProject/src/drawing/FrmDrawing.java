@@ -26,6 +26,7 @@ public class FrmDrawing extends JFrame {
 	private String choice = ""; // cuvace mi izbor
     private DlgPoint dlgPoint = new DlgPoint();
     private DlgLine dlgLine = new DlgLine();
+    private DlgRectangle dlgRectangle = new DlgRectangle();
     private JToggleButton tglbtnPoint;
 
 	/**
@@ -104,6 +105,19 @@ public class FrmDrawing extends JFrame {
 		pnlNorth.add(tglbtnLine);
 		
 		JToggleButton tglbtnRectangle = new JToggleButton("Rectangle");
+		tglbtnRectangle.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				choice = "rectangle";
+				pnlDrawing.clearSelection();
+				
+				if (pnlDrawing.getSelectedShape() != null) {
+					pnlDrawing.getSelectedShape().setSelected(false);
+					pnlDrawing.setSelectedShape(null);
+					pnlDrawing.repaint();
+			}
+		}});
+		
 		buttonGroup.add(tglbtnRectangle);
 		pnlNorth.add(tglbtnRectangle);
 		
@@ -164,6 +178,14 @@ public class FrmDrawing extends JFrame {
 
 		public void setDlgLine(DlgLine dlgLine) {
 			this.dlgLine = dlgLine;
+		}
+
+		public DlgRectangle getDlgRectangle() {
+			return dlgRectangle;
+		}
+
+		public void setDlgRectangle(DlgRectangle dlgRectangle) {
+			this.dlgRectangle = dlgRectangle;
 		}
 
 		public String getChoice() {

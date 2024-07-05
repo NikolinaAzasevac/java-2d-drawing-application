@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 //import java.util.Iterator;
+//import java.util.Iterator;
+import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -14,6 +16,7 @@ import javax.swing.border.Border;
 
 import geometry.Line;
 import geometry.Point;
+import geometry.Rectangle;
 import geometry.Shape;
 
 public class PnlDrawing extends JPanel {
@@ -81,10 +84,26 @@ public class PnlDrawing extends JPanel {
 			}
 
 		}repaint(); break;
-}
+		
+		case "rectangle": {
+			DlgRectangle dlgRectangle = frame.getDlgRectangle(); 
+
+			dlgRectangle.getTxtX().setText(String.valueOf(click.getX()));
+			dlgRectangle.getTxtY().setText(String.valueOf(click.getY()));
+			dlgRectangle.getTxtWidth().setText(String.valueOf("")); // da nista ne bi ostalo od proslog crtanja
+			dlgRectangle.getTxtHeight().setText(String.valueOf(""));
 			
-		//repaint();
-}
+			dlgRectangle.getTxtX().setEnabled(false);
+			dlgRectangle.getTxtY().setEnabled(false);
+			
+			dlgRectangle.setVisible(true);
+			if (dlgRectangle.isOk()) {
+				Rectangle rectangle = dlgRectangle.drawRectangle();
+				shapes.add(rectangle);
+			}
+			}break;
+		}}
+	
 	public void clearSelection() {
 	    if (selectedShape != null) {
 	        selectedShape.setSelected(false);
@@ -93,42 +112,10 @@ public class PnlDrawing extends JPanel {
 	    }
 	}
 	
+	
 	@Override
-	public void paint(Graphics g) { 
-	    super.paint(g);
-	    Graphics2D g2d = (Graphics2D) g;
-	    for (Shape shape : shapes) {
-	        g2d.setColor(shape.getColor()); // Postavi boju za svaki oblik
-	        shape.draw(g2d); //// pozivam draw metodu za svaki oblik
-	    }
-	}
-	/*
-	public void paint(Graphics g) { 
-	    super.paint(g);
-	    Graphics2D g2d = (Graphics2D) g;
-	    for (Shape shape : shapes) {
-	        if (shape instanceof Line) {
-	            Line line = (Line) shape;
-	            g2d.setColor(line.getColor());
-	            line.draw(g2d);
-	        } else {
-	            shape.draw(g2d);
-	        }
-	    }
-	}*/
-	/*
-	public void paint1(Graphics g1) { 
-		super.paint(g1);
-		Iterator<Shape> iterator = shapes.iterator();
-		while (iterator.hasNext())
-			iterator.next().draw(g1);	
-
-	}
-	*/
-	/*
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	public void paint(Graphics g) {
+		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 		Iterator<Shape> iterator = shapes.iterator();
 		while (iterator.hasNext()) {
@@ -136,7 +123,7 @@ public class PnlDrawing extends JPanel {
 			shape.draw(g2d);
 		}
 	}
-	*/
+	
 
 	public Shape getSelectedShape() {
 		return selectedShape;

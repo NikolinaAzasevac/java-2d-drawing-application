@@ -27,6 +27,9 @@ public abstract class Shape implements Moveable,Comparable{
  	public void setSelected(boolean selected) {
  		this.selected = selected;
  	}
-
+ 	
 	public abstract Color getColor();
+	public abstract Color getInnerColor();
+	public abstract Color getBorderColor();
+	
 }

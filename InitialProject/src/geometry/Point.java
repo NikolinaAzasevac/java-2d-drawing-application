@@ -61,6 +61,7 @@ public class Point extends Shape {
  		}
  	}
 	
+	
 	@Override
  	public void moveTo(int x, int y) {
  		this.x=x;
@@ -120,6 +121,18 @@ public class Point extends Shape {
 	//nakon redefinisanja vraca (10,15).
 	public String toString() {
 		return "("+this.x+","+this.y+")";
+	}
+
+	@Override
+	public Color getInnerColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Color getBorderColor() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
