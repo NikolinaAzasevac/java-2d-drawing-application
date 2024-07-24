@@ -4,10 +4,9 @@ import java.awt.Graphics;
 import java.awt.Color;
 
 public class Line extends Shape {
-	
+
 	private Point startPoint; // Point je slozeni deo podatka, to vec prethodno imam, umesto npr int double
 	private Point endPoint;
-	private Color color;
 	//zbog enkapsulacije metode su public sve ostalo je private
 	
 	public Line() {}
@@ -20,11 +19,6 @@ public class Line extends Shape {
 	public Line(Point startPoint, Point endPoint, boolean selected) {
 		this(startPoint, endPoint);
 		this.selected=selected;
-	}
-	
-	public Line(Point startPoint, Point endPoint, Color color) {
-		this(startPoint, endPoint);
-		setColor(color);
 	}
 	public double length() { //nista ne prosledjujemo jer u line ima i start i end point
 		//reusable
@@ -51,30 +45,26 @@ public class Line extends Shape {
 		return this.startPoint.distance(sadrziTacku) + this.endPoint.distance(sadrziTacku) - length() <= 2;
 	}
 	
-	@Override
 	public void draw(Graphics g) {
-		g.setColor(color);
-		g.drawLine(startPoint.getX(), startPoint.getY(),
-				endPoint.getX(), endPoint.getY());
-		
-		if(isSelected()) {
-			g.setColor(Color.BLUE);
-			g.drawRect(startPoint.getX()-2, startPoint.getY()-2, 4, 4);
-			g.drawRect(endPoint.getX()-2, endPoint.getY()-2, 4, 4);
-			g.setColor(Color.black);}
-	}
-	
+ 		g.drawLine(startPoint.getX(), startPoint.getY(),
+ 				endPoint.getX(), endPoint.getY());		
+
+ 		if(isSelected()) {
+ 			g.setColor(Color.BLUE);
+ 			g.drawRect(startPoint.getX()-2, startPoint.getY()-2, 4, 4);
+ 			g.drawRect(endPoint.getX()-2, endPoint.getY()-2, 4, 4);
+ 			g.setColor(Color.black);}
+ 	}
+
 	public void moveTo(int x, int y) {
  		//ako bismo je implementirali 
  		//od linije bismo dobili tacku
  	}
-
  	@Override
  	public void moveBy(int x, int y) {
  		startPoint.moveBy(x, y);
  		endPoint.moveBy(x, y);
  	}
-
  	@Override
  	public int compareTo(Object obj) {
  		if(obj instanceof Line) {
@@ -84,7 +74,6 @@ public class Line extends Shape {
  		}
  		return 0;
  	}
-
 	
 	public Point getStartPoint() {
 		return this.startPoint; // this u get metodi moze a ne mora da stoji
@@ -93,38 +82,13 @@ public class Line extends Shape {
 	public void setStartPoint(Point startPoint) {
 		this.startPoint = startPoint; //ovde je this neophodno
 	}
-
 	public Point getEndPoint() {
 		return endPoint;
 	}
-
 	public void setEndPoint(Point endPoint) {
 		this.endPoint = endPoint;
 	}
-	
-
-	public Color getColor() {
-		return color;
-	}
-
-	public void setColor(Color color) {
-		this.color = color;
-	}
-
 	public String toString() {
 		return startPoint.toString()+"-->"+endPoint+")"; // (xS, yS) --> (xE, yE)
 	}
-
-	@Override
-	public Color getInnerColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Color getBorderColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
-

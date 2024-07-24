@@ -1,7 +1,6 @@
 package geometry;
 
 import java.awt.Graphics;
-//import java.awt.Graphics2D;
 import java.awt.Color;
 
 public class Rectangle extends Shape{
@@ -9,8 +8,6 @@ public class Rectangle extends Shape{
 	private Point upperLeftPoint;
 	private int width;
 	private int height;
-	private Color innerColor;
-	private Color borderColor;
 	
 	public Rectangle () {
 		
@@ -20,17 +17,10 @@ public class Rectangle extends Shape{
 		this.width = width;
 		this.height = height;
 	}
-
 	
 	public Rectangle(Point upperLeftPoint, int width, int height, boolean selected) {
 		this(upperLeftPoint, width, height);
 		this.selected = selected;
-	}
-	
-	public Rectangle(Point upperLeftpoint, int width, int height, Color color, Color borderColor) {
-		this(upperLeftpoint, width, height);
-		this.innerColor = color;
-		this.borderColor = borderColor;
 	}
 	
 	public boolean equals(Object obj) {
@@ -62,30 +52,10 @@ public class Rectangle extends Shape{
 	}
 	
 	@Override
-	public void draw(Graphics g) {
-		g.setColor(borderColor);
-		g.drawRect(upperLeftPoint.getX(),
-				upperLeftPoint.getY(), width, height);
-		g.setColor(innerColor);
-		g.fillRect(upperLeftPoint.getX(),
-				upperLeftPoint.getY(), width, height);
-		
-		if (isSelected()) {
-			g.setColor(Color.blue);
-			g.drawRect(upperLeftPoint.getX() - 2, upperLeftPoint.getY() - 2, 4, 4);
-			g.drawRect(upperLeftPoint.getX() + width - 2, upperLeftPoint.getY() - 2, 4, 4);
-			g.drawRect(upperLeftPoint.getX() - 2, upperLeftPoint.getY() + height - 2, 4, 4);
-			g.drawRect(upperLeftPoint.getX() + width - 2, upperLeftPoint.getY() 
-					+ height - 2, 4, 4);
-			g.setColor(Color.black);
-		}
-	}
-	/*
-	@Override
  	public void draw(Graphics g) {
  		g.drawRect(upperLeftPoint.getX(), upperLeftPoint.getY(),
  				width, height);
- 		
+
  		if (isSelected()) {
  			g.setColor(Color.blue);
  			g.drawRect(upperLeftPoint.getX() - 2, upperLeftPoint.getY() - 2, 4, 4);
@@ -95,17 +65,15 @@ public class Rectangle extends Shape{
  					+ height - 2, 4, 4);
  			g.setColor(Color.black);
  		}
- 	}*/
-	
+ 	}
+
 	public void moveTo(int x, int y) {
  		upperLeftPoint.moveTo(x, y);
  	}
-
  	@Override
  	public void moveBy(int x, int y) {
  		upperLeftPoint.moveBy(x, y);
  	}
-
  	@Override
  	public int compareTo(Object obj) {
  		if(obj instanceof Rectangle) {
@@ -115,7 +83,6 @@ public class Rectangle extends Shape{
  		}
  		return 0;
  	}
-
 	public int area() {
 		return width * height;
 	}
@@ -142,26 +109,8 @@ public class Rectangle extends Shape{
 		this.height = height;
 	}
 	
-	public Color getBorderColor() {
-		return borderColor;
-	}
-	public void setBorderColor(Color borderColor) {
-		this.borderColor = borderColor;
-	}
-	
-	public Color getInnerColor() {
-		return innerColor;
-	}
-	public void setInnerColor(Color innerColor) {
-		this.innerColor = innerColor;
-	}
 	public String toString() {
 		return "Upper left point: " + upperLeftPoint + ", width = " + width +", height = " + height;
-	}
-	@Override
-	public Color getColor() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 }

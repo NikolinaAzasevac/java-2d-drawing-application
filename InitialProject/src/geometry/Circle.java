@@ -18,7 +18,6 @@ public class Circle extends Shape{
 	}
 	
 	
-
 	public Circle(Point center, int radius, boolean selected) {
 		this(center, radius);
 		this.selected = selected;
@@ -50,7 +49,7 @@ public class Circle extends Shape{
  	public void draw(Graphics g) {
  		g.drawOval(center.getX()-radius,
  				center.getY()-radius, 2*radius, 2*radius);
- 		
+
  		if (isSelected()) {
  			g.setColor(Color.BLUE);
  			g.drawRect(center.getX() - 2, center.getY() - 2, 4, 4);
@@ -61,16 +60,14 @@ public class Circle extends Shape{
  			g.setColor(Color.black);
  		}
  	}
-	
+
 	public void moveTo(int x, int y) {
  		center.moveTo(x, y);
  	}
-
  	@Override
  	public void moveBy(int x, int y) {
  		center.moveBy(x, y);
  	}
-
  	@Override
  	public int compareTo(Object obj) {
  		if(obj instanceof Circle) {
@@ -80,7 +77,6 @@ public class Circle extends Shape{
  		}
  		return 0;
  	}
-
 	public double area() {
 		return radius*radius*Math.PI;
 	}
@@ -97,34 +93,14 @@ public class Circle extends Shape{
 	public int getRadius() {
 		return radius;
 	}
-	
 	public void setRadius(int radius) throws Exception{
 	 	if(radius < 0) {
 	 		throw new Exception("Radius ne sme "
 	 					+ "biti negativna vrednost");
 	 		}
 	}
-	
+
 	public String toString() {
  		return "Center: " + center + ", radius = " + radius;
 	}
-
-	@Override
-	public Color getColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Color getInnerColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Color getBorderColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
