@@ -9,25 +9,33 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import geometry.Point;
+
 import javax.swing.JToggleButton;
 import javax.swing.ButtonGroup;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
 
 public class FrmDrawing extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private PnlDrawing pnlDrawing = new PnlDrawing(); // instancira PnlDrawing koji ce biti panel na kojem moze da se crta
-	private JToggleButton tglbtnPoint = new JToggleButton("Point"); 
+	private PnlDrawing pnlDrawing = new PnlDrawing(); // instancira PnlDrawing koji ce biti panel na kojem moze da se
+														// crta
+	private JToggleButton tglbtnPoint = new JToggleButton("Point");
 	private JToggleButton tglbtnLine = new JToggleButton("Line");
 	private JToggleButton tglbtnRectangle = new JToggleButton("Rectangle");
 	private JToggleButton tglbtnCircle = new JToggleButton("Circle");
 	private JToggleButton tglbtnDonut = new JToggleButton("Donut");
-
+	ButtonGroup btnGroup = new ButtonGroup();
 	private JToggleButton tglbtnSelect = new JToggleButton("Select");
 	private JToggleButton tglbtnModify = new JToggleButton("Modify");
 	private JToggleButton tglbtnDelete = new JToggleButton("Delete");
-	
-
+	private String choice = "";
+	private static FrmDrawing frame;
+	private DlgPoint dlgPoint = new DlgPoint();
 
 	/**
 	 * Launch the application.
@@ -36,7 +44,7 @@ public class FrmDrawing extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrmDrawing frame = new FrmDrawing();
+					/*FrmDrawing*/ frame = new FrmDrawing();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +52,6 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 	}
-
 
 	/**
 	 * Create the frame.
@@ -59,38 +66,71 @@ public class FrmDrawing extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
-		//dodat panel u center
-		pnlDrawing.setBackground(Color.WHITE);
-		contentPane.add(pnlDrawing, BorderLayout.CENTER);
-
 		JPanel pnlNorth = new JPanel();
 		pnlNorth.setBackground(Color.LIGHT_GRAY);
 		contentPane.add(pnlNorth, BorderLayout.NORTH);
 
+		btnGroup.add(tglbtnPoint);
+		btnGroup.add(tglbtnLine);
+		btnGroup.add(tglbtnRectangle);
+		btnGroup.add(tglbtnCircle);
+		btnGroup.add(tglbtnDonut);
+
+		tglbtnPoint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				choice = "Point";
+				if (pnlDrawing.getSelectedShape() != null) {
+					// ako je objekat selektovan deselektovace se
+					pnlDrawing.getSelectedShape().setSelected(false);
+					pnlDrawing.setSelectedShape(null);
+					pnlDrawing.repaint();
+				}
+			}
+		});
 		pnlNorth.add(tglbtnPoint);
+
 		pnlNorth.add(tglbtnLine);
 		pnlNorth.add(tglbtnCircle);
 		pnlNorth.add(tglbtnDonut);
 		pnlNorth.add(tglbtnRectangle);
 
-		ButtonGroup btnGroup = new ButtonGroup(); // kako bi dugmad bila iskljuciva
-
-		btnGroup.add(tglbtnPoint);
-		btnGroup.add(tglbtnLine);
-		btnGroup.add(tglbtnCircle);
-		btnGroup.add(tglbtnDonut);
-		btnGroup.add(tglbtnRectangle);
-
 		JPanel pnlSouth = new JPanel();
 		pnlSouth.setBackground(Color.LIGHT_GRAY);
 		contentPane.add(pnlSouth, BorderLayout.SOUTH);
+
 		pnlSouth.add(tglbtnSelect);
 		pnlSouth.add(tglbtnModify);
 		pnlSouth.add(tglbtnDelete);
 
+		/*
+		pnlDrawing.addMouseListener(new MouseAdapter() { // metoda bez koje se ne bi mogla izabrati tacka klikom
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				pnlDrawing.drawing(e, frame);
+			}
+		});
+		contentPane.add(pnlDrawing, BorderLayout.CENTER);
+		pnlDrawing.setBackground(Color.WHITE);*/
+
+		pnlDrawing.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (choice.equals("Point")) {
+					dlgPoint.setVisible(true);
+					if (dlgPoint.isConfirm()) {
+						int x = e.getX();
+						int y = e.getY();
+						Color color = dlgPoint.getColor() != null ? dlgPoint.getColor() : Color.BLACK;
+						Point point = new Point(x, y, color);
+						pnlDrawing.getShapes().add(point);
+						pnlDrawing.repaint();
+					}
+				}
+			}
+		});
+		contentPane.add(pnlDrawing, BorderLayout.CENTER);
+		pnlDrawing.setBackground(Color.WHITE);
 	}
-
-
 
 	public PnlDrawing getPnlDrawing() {
 		return pnlDrawing;
@@ -146,6 +186,30 @@ public class FrmDrawing extends JFrame {
 
 	public void setTglbtnSelect(JToggleButton tglbtnSelect) {
 		this.tglbtnSelect = tglbtnSelect;
+	}
+
+	public String getChoice() {
+		return choice;
+	}
+
+	public void setChoice(String choice) {
+		this.choice = choice;
+	}
+
+	public DlgPoint getDlgPoint() {
+		return dlgPoint;
+	}
+
+	public void setDlgPoint(DlgPoint dlgPoint) {
+		this.dlgPoint = dlgPoint;
+	}
+
+	public static FrmDrawing getFrame() {
+		return frame;
+	}
+
+	public static void setFrame(FrmDrawing frame) {
+		FrmDrawing.frame = frame;
 	}
 
 }

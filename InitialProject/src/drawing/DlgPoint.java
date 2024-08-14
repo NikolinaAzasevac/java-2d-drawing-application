@@ -9,6 +9,9 @@ import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import geometry.Point;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -24,8 +27,9 @@ public class DlgPoint extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtX;
 	private JTextField txtY;
-	private Color color;
+	private Color color = Color.BLACK;
 	private boolean confirm;
+	private Point point;
 
 	/**
 	 * Launch the application.
@@ -50,10 +54,10 @@ public class DlgPoint extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWidths = new int[] { 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblX = new JLabel("X coordinate:");
@@ -73,6 +77,7 @@ public class DlgPoint extends JDialog {
 			gbc_txtX.gridy = 0;
 			contentPanel.add(txtX, gbc_txtX);
 			txtX.setColumns(10);
+			txtX.setEnabled(false);
 		}
 		{
 			JLabel lblY = new JLabel("Y coordinate:");
@@ -92,6 +97,7 @@ public class DlgPoint extends JDialog {
 			gbc_txtY.gridy = 1;
 			contentPanel.add(txtY, gbc_txtY);
 			txtY.setColumns(10);
+			txtX.setEnabled(false);
 		}
 		{
 			JLabel lblChoose = new JLabel("Choose:");
@@ -105,9 +111,11 @@ public class DlgPoint extends JDialog {
 			JToggleButton tglbtnColor = new JToggleButton("COLOR");
 			tglbtnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					color = JColorChooser.showDialog(null, "Choose color of point", Color.black);
-					if (color != null)
+					Color selectedColor = JColorChooser.showDialog(null, "Choose color of point", color);
+					if (selectedColor != null) {
+						color = selectedColor;
 						tglbtnColor.setBackground(color);
+					}
 				}
 			});
 			GridBagConstraints gbc_tglbtnColor = new GridBagConstraints();
@@ -136,14 +144,29 @@ public class DlgPoint extends JDialog {
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						dispose();
+						confirm = false;
+		                setVisible(false);
+						//dispose();
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}
-		
+
+	}
+
+	public void writePoint(Point point) {
+		txtX.setText(String.valueOf(point.getX()));
+		txtY.setText(String.valueOf(point.getY()));
+		color = point.getColor();
+	}
+
+	public Point makePoint() {
+		int x = Integer.parseInt(txtX.getText());
+		int y = Integer.parseInt(txtY.getText());
+		Point point = new Point(x, y, color);
+		return point;
 	}
 
 	public JTextField getTxtX() {
@@ -176,6 +199,14 @@ public class DlgPoint extends JDialog {
 
 	public void setConfirm(boolean confirm) {
 		this.confirm = confirm;
+	}
+
+	public Point getPoint() {
+		return point;
+	}
+
+	public void setPoint(Point point) {
+		this.point = point;
 	}
 
 }

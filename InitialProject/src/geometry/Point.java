@@ -8,99 +8,117 @@ public class Point extends Shape {
 	private int x;
 	private int y;
 	private boolean selected;
-	
+	private Color color = Color.BLACK;
+
 	public Point() {
-		
+
 	}
+
 	public Point(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public Point(int x, int y, boolean selected) {
-		this(x,y);
-		this.selected=selected;
+		this(x, y);
+		this.selected = selected;
 	}
-	
+
+	public Point(int x, int y, Color color) {
+		this(x, y);
+		this.color = color;
+	}
+
 	public double distance(Point drugaTacka) {
-		int a = this.x-drugaTacka.getX(); // jer smo u klasi point mozemo da pristupimo i sa drugaTacka.x
-		int b = this.y-drugaTacka.y;
-		double distance = Math.sqrt(a*a+b*b);
+		int a = this.x - drugaTacka.getX(); // jer smo u klasi point mozemo da pristupimo i sa drugaTacka.x
+		int b = this.y - drugaTacka.y;
+		double distance = Math.sqrt(a * a + b * b);
 		return distance;
 	}
-	
+
 	public boolean equals(Object obj) {
 		if (obj instanceof Point) {
-			if(this.x==((Point)obj).x && this.y == ((Point)obj).y && this.selected == ((Point)obj).selected) //cast obj
+			if (this.x == ((Point) obj).x && this.y == ((Point) obj).y && this.selected == ((Point) obj).selected) // cast
+																													// obj
 				return true;
 			return false;
 		}
 		return false;
 	}
-	
+
 	public boolean contains(int x, int y) {
-		Point sadrziTacku = new Point(x,y);
+		Point sadrziTacku = new Point(x, y);
 		return this.distance(sadrziTacku) <= 2;
 	}
-	
-	@Override
- 	public void draw(Graphics g) {
- 		g.drawLine(x-2, y, x+2, y);
- 		g.drawLine(x, y-2, x, y+2);
- 		if(this.selected) {
- 			g.setColor(Color.blue);
- 			g.drawRect(x-2, y-2, 4, 4);
- 			g.setColor(Color.black);
- 		}
- 	}
 
 	@Override
- 	public void moveTo(int x, int y) {
- 		this.x=x;
- 		this.y=y;
- 	}
- 	@Override
- 	public void moveBy(int x, int y) {
- 		this.x+=x;
- 		this.y+=y;
- 	}
- 	@Override
- 	public int compareTo(Object o) {
- 		if(o instanceof Point) {
- 			Point shapeToCompare = (Point)o;
- 			return (int)this.distance(new Point(0,0))
- 					- (int)shapeToCompare
- 					.distance(new Point(0,0));
- 		}
- 		return 0;
- 	}
-	
-	//metode pristupa - public
-	//metoda istance
+	public void draw(Graphics g) {
+		g.setColor(color);
+		g.drawLine(x - 2, y, x + 2, y);
+		g.drawLine(x, y - 2, x, y + 2);
+		if (this.selected) {
+			g.setColor(Color.blue);
+			g.drawRect(x - 2, y - 2, 4, 4);
+			g.setColor(color);
+		}
+	}
+
+	@Override
+	public void moveTo(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	@Override
+	public void moveBy(int x, int y) {
+		this.x += x;
+		this.y += y;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if (o instanceof Point) {
+			Point shapeToCompare = (Point) o;
+			return (int) this.distance(new Point(0, 0)) - (int) shapeToCompare.distance(new Point(0, 0));
+		}
+		return 0;
+	}
+
+	// metode pristupa - public
+	// metoda istance
 	public int getX() {
-		//return x;
+		// return x;
 		return this.x;
 	}
-	//prvi nacin - onaj koji nije ispravavan
+	// prvi nacin - onaj koji nije ispravavan
 	/*
-	public void setX(int xKoordinate) {
-		x=xKoordinate;
-	}
-	*/
-	
+	 * public void setX(int xKoordinate) { x=xKoordinate; }
+	 */
+
 	public void setX(int x) {
-		this.x=x;
+		this.x = x;
 	}
+
 	public int getY() {
 		return y;
 	}
+
 	public void setY(int y) {
 		this.y = y;
 	}
 	
-	//isti potpis kao i u klasi oBject
-	//nakon redefinisanja vraca (10,15).
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	// isti potpis kao i u klasi oBject
+	// nakon redefinisanja vraca (10,15).
 	public String toString() {
-		return "("+this.x+","+this.y+")";
+		return "(" + this.x + "," + this.y + ")";
 	}
 }
