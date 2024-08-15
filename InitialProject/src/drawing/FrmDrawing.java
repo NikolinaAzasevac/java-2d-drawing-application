@@ -29,13 +29,18 @@ public class FrmDrawing extends JFrame {
 	private JToggleButton tglbtnRectangle = new JToggleButton("Rectangle");
 	private JToggleButton tglbtnCircle = new JToggleButton("Circle");
 	private JToggleButton tglbtnDonut = new JToggleButton("Donut");
+
 	ButtonGroup btnGroup = new ButtonGroup();
+
 	private JToggleButton tglbtnSelect = new JToggleButton("Select");
 	private JToggleButton tglbtnModify = new JToggleButton("Modify");
 	private JToggleButton tglbtnDelete = new JToggleButton("Delete");
+
 	private String choice = "";
 	private static FrmDrawing frame;
+
 	private DlgPoint dlgPoint = new DlgPoint();
+	private DlgLine dlgLine = new DlgLine();
 
 	/**
 	 * Launch the application.
@@ -44,7 +49,7 @@ public class FrmDrawing extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					/*FrmDrawing*/ frame = new FrmDrawing();
+					/* FrmDrawing */ frame = new FrmDrawing();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -78,7 +83,7 @@ public class FrmDrawing extends JFrame {
 
 		tglbtnPoint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				choice = "Point";
+				choice = "point";
 				if (pnlDrawing.getSelectedShape() != null) {
 					// ako je objekat selektovan deselektovace se
 					pnlDrawing.getSelectedShape().setSelected(false);
@@ -88,8 +93,18 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlNorth.add(tglbtnPoint);
-
+		
+		tglbtnLine.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				choice = "line"; 
+				if (pnlDrawing.getSelectedShape() != null) { 
+					pnlDrawing.getSelectedShape().setSelected(false); 
+					pnlDrawing.setSelectedShape(null);
+					pnlDrawing.repaint(); }
+			}
+		});
 		pnlNorth.add(tglbtnLine);
+		
 		pnlNorth.add(tglbtnCircle);
 		pnlNorth.add(tglbtnDonut);
 		pnlNorth.add(tglbtnRectangle);
@@ -102,7 +117,7 @@ public class FrmDrawing extends JFrame {
 		pnlSouth.add(tglbtnModify);
 		pnlSouth.add(tglbtnDelete);
 
-		/*
+		
 		pnlDrawing.addMouseListener(new MouseAdapter() { // metoda bez koje se ne bi mogla izabrati tacka klikom
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -110,26 +125,6 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		contentPane.add(pnlDrawing, BorderLayout.CENTER);
-		pnlDrawing.setBackground(Color.WHITE);*/
-
-		pnlDrawing.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (choice.equals("Point")) {
-					dlgPoint.setVisible(true);
-					if (dlgPoint.isConfirm()) {
-						int x = e.getX();
-						int y = e.getY();
-						Color color = dlgPoint.getColor() != null ? dlgPoint.getColor() : Color.BLACK;
-						Point point = new Point(x, y, color);
-						pnlDrawing.getShapes().add(point);
-						pnlDrawing.repaint();
-					}
-				}
-			}
-		});
-		contentPane.add(pnlDrawing, BorderLayout.CENTER);
-		pnlDrawing.setBackground(Color.WHITE);
 	}
 
 	public PnlDrawing getPnlDrawing() {
@@ -210,6 +205,14 @@ public class FrmDrawing extends JFrame {
 
 	public static void setFrame(FrmDrawing frame) {
 		FrmDrawing.frame = frame;
+	}
+
+	public DlgLine getDlgLine() {
+		return dlgLine;
+	}
+
+	public void setDlgLine(DlgLine dlgLine) {
+		this.dlgLine = dlgLine;
 	}
 
 }

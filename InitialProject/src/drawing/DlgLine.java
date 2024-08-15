@@ -265,11 +265,11 @@ public class DlgLine extends JDialog {
 		this.color = color;
 	}
 
-	public boolean isOk() {
+	public boolean isConfirm() {
 		return confirm;
 	}
 
-	public void setOk(boolean ok) {
+	public void setConfirm(boolean ok) {
 		this.confirm = ok;
 	}
 }
