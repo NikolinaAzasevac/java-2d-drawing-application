@@ -56,6 +56,7 @@ public class Line extends Shape {
 	}
 
 	public void draw(Graphics g) {
+		g.setColor(color);
 		g.drawLine(startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY());
 
 		if (isSelected()) {
