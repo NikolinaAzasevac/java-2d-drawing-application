@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import geometry.Point;
+//import geometry.Point;
 
 import javax.swing.JToggleButton;
 import javax.swing.ButtonGroup;
@@ -41,6 +41,7 @@ public class FrmDrawing extends JFrame {
 
 	private DlgPoint dlgPoint = new DlgPoint();
 	private DlgLine dlgLine = new DlgLine();
+	private DlgRectangle dlgRectangle = new DlgRectangle();
 
 	/**
 	 * Launch the application.
@@ -93,21 +94,35 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlNorth.add(tglbtnPoint);
-		
+
 		tglbtnLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				choice = "line"; 
-				if (pnlDrawing.getSelectedShape() != null) { 
-					pnlDrawing.getSelectedShape().setSelected(false); 
+				choice = "line";
+				if (pnlDrawing.getSelectedShape() != null) {
+					pnlDrawing.getSelectedShape().setSelected(false);
 					pnlDrawing.setSelectedShape(null);
-					pnlDrawing.repaint(); }
+					pnlDrawing.repaint();
+				}
 			}
 		});
 		pnlNorth.add(tglbtnLine);
+
+		//pnlNorth.add(tglbtnRectangle);
+
+		tglbtnRectangle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				choice = "rect";
+				if (pnlDrawing.getSelectedShape() != null) {
+					pnlDrawing.getSelectedShape().setSelected(false);
+					pnlDrawing.setSelectedShape(null);
+					pnlDrawing.repaint();
+				}
+			}
+		});
+		pnlNorth.add(tglbtnRectangle);
 		
 		pnlNorth.add(tglbtnCircle);
 		pnlNorth.add(tglbtnDonut);
-		pnlNorth.add(tglbtnRectangle);
 
 		JPanel pnlSouth = new JPanel();
 		pnlSouth.setBackground(Color.LIGHT_GRAY);
@@ -117,7 +132,6 @@ public class FrmDrawing extends JFrame {
 		pnlSouth.add(tglbtnModify);
 		pnlSouth.add(tglbtnDelete);
 
-		
 		pnlDrawing.addMouseListener(new MouseAdapter() { // metoda bez koje se ne bi mogla izabrati tacka klikom
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -213,6 +227,14 @@ public class FrmDrawing extends JFrame {
 
 	public void setDlgLine(DlgLine dlgLine) {
 		this.dlgLine = dlgLine;
+	}
+
+	public DlgRectangle getDlgRectangle() {
+		return dlgRectangle;
+	}
+
+	public void setDlgRectangle(DlgRectangle dlgRectangle) {
+		this.dlgRectangle = dlgRectangle;
 	}
 
 }

@@ -13,6 +13,7 @@ import javax.swing.border.Border;
 
 import geometry.Line;
 import geometry.Point;
+import geometry.Rectangle;
 import geometry.Shape;
 
 public class PnlDrawing extends JPanel {
@@ -33,6 +34,7 @@ public class PnlDrawing extends JPanel {
 		Border blackLine = BorderFactory.createLineBorder(Color.black);
 		setBorder(blackLine);
 	}
+
 	public void drawing(MouseEvent e, FrmDrawing frame) {
 		Point click = new Point(e.getX(), e.getY());
 		switch (frame.getChoice()) {
@@ -74,10 +76,28 @@ public class PnlDrawing extends JPanel {
 				startPoint = null;
 			}
 			repaint();
-		}
 			break;
 
 		}
+
+		case "rectangle": {
+			DlgRectangle dlgRectangle = frame.getDlgRectangle();
+			dlgRectangle.getTxtX().setText(String.valueOf(click.getX()));
+			dlgRectangle.getTxtY().setText(String.valueOf(click.getY()));
+			dlgRectangle.getTxtWidth().setText(""); // da nista ne bi ostalo od proslog crtanja
+			dlgRectangle.getTxtHeight().setText("");
+			dlgRectangle.getTxtX().setEnabled(false);
+			dlgRectangle.getTxtY().setEnabled(false);
+			dlgRectangle.setVisible(true);
+			if (dlgRectangle.isConfirm()) {
+				Rectangle rectangle = dlgRectangle.makeRectangle();
+				shapes.add(rectangle);
+			}
+		}
+			repaint();
+			break;
+		}
+
 	}
 
 	@Override
