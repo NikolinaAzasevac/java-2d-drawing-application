@@ -2,12 +2,14 @@ package drawing;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
+//import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import geometry.Point;
 import geometry.Shape;
@@ -33,8 +35,10 @@ public class PnlDrawing extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				handleMouseClick(e);
-			}
-		});*/
+			}*/
+			Border blackLine = BorderFactory.createLineBorder(Color.black);
+        setBorder(blackLine);
+		//});
 	}
 /*
 	public PnlDrawing(FrmDrawing frame) { // konstruktor koji prima instancu FrmDrawing kao parametar da PnlDrawing zna
