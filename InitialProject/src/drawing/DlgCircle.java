@@ -30,10 +30,9 @@ public class DlgCircle extends JDialog {
 	private JTextField txtRadius;
 	private Circle circle;
 	private boolean confirm;
-	private Color innerColor = Color.BLACK;
-	private Color borderColor = Color.BLACK;
-	//private JButton btnInnerColor;
-	//private JButton btnBorderColor;
+	private Color color; 
+	private Color borderColor; 
+
 
 	/**
 	 * Launch the application.
@@ -140,10 +139,7 @@ public class DlgCircle extends JDialog {
 			JButton btnInnerColor = new JButton("COLOR");
 			btnInnerColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Color innerColor = JColorChooser.showDialog(null, "Choose inner color",
-							btnInnerColor.getBackground());
-					if (innerColor != null)
-						btnInnerColor.setBackground(innerColor);
+					color = JColorChooser.showDialog(null, "Choose inner color", btnInnerColor.getBackground());
 				}
 			});
 			GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
@@ -165,10 +161,8 @@ public class DlgCircle extends JDialog {
 			JButton btnBorderColor = new JButton("COLOR");
 			btnBorderColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Color borderColor = JColorChooser.showDialog(null, "Choose border color",
-							btnBorderColor.getBackground());
-					 //if (borderColor != null)
-					//borderColor.setBackground(borderColor);
+					borderColor = JColorChooser.showDialog(null, "Choose border color", btnBorderColor.getBackground());
+				
 				}
 			});
 			GridBagConstraints gbc_btnBorderColor = new GridBagConstraints();
@@ -204,6 +198,20 @@ public class DlgCircle extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	
+	public void write(Circle circle) { // za ispis vrednosti
+		txtX.setText(String.valueOf(circle.getCenter().getX()));
+		txtY.setText(String.valueOf(circle.getCenter().getY()));
+		txtRadius.setText(String.valueOf(circle.getRadius()));
+	}
+
+	public Circle makeCircle() { // pravljenje obj pomoci prethodnih vrednosti
+		int x = Integer.parseInt(txtX.getText());
+		int y = Integer.parseInt(txtY.getText());
+		int radius = Integer.parseInt(txtRadius.getText());
+		Circle circle = new Circle(new Point(x, y), radius, color, borderColor);
+		return circle;
 	}
 
 	public JTextField getTxtX() {

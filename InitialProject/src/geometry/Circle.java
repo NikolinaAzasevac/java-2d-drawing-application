@@ -25,21 +25,12 @@ public class Circle extends Shape{
 		this.selected = selected;
 	}
 	
-	public Circle(Point center, int radius, boolean selected, Color borderColor) {
-		this(center, radius, selected);
-		setColor(borderColor);
+	public Circle(Point center, int radius, Color color, Color borederColor) {
+		this(center, radius);
+		this.color = (color != null) ? color : Color.BLACK;
+		this.borderColor = (borderColor != null) ? borderColor : Color.BLACK;
 	}
 	
-	public Circle(Point center, int radius, Color color, Color innerColor) {
-		this(center, radius);
-		setColor(color);
-		setColor(innerColor);
-	} 
-
-	public Circle(Point center, int radius, boolean selected, Color borderColor, Color color) {
-		this(center, radius, selected, color);
-		setColor(color);
-	} 
 	
 	public boolean equals(Object obj) {
 		if (obj instanceof Circle) {
@@ -113,13 +104,17 @@ public class Circle extends Shape{
 	public int getRadius() {
 		return radius;
 	}
+	/*
 	public void setRadius(int radius) throws Exception{
 	 	if(radius < 0) {
 	 		throw new Exception("Radius ne sme "
 	 					+ "biti negativna vrednost");
 	 		}
-	}
+	}*/
 	
+	public void setRadius(int radius)  {
+		this.radius = radius;
+	}
 	
 	public Color getBorderColor() {
 		return borderColor;

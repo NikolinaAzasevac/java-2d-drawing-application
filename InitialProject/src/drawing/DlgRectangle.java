@@ -33,8 +33,6 @@ public class DlgRectangle extends JDialog {
 	private Color color; // innerColor = Color.BLACK;
 	private Color borderColor; // = Color.BLACK;
 	private boolean confirm;
-	private JButton btnInnerColor;
-	private JButton btnBorderColor;
 
 	/**
 	 * Launch the application.
@@ -220,9 +218,7 @@ public class DlgRectangle extends JDialog {
 		txtWidth.setText(String.valueOf(rectangle.getWidth()));
 		txtHeight.setText(String.valueOf(rectangle.getHeight()));
 		color = rectangle.getColor();
-		btnInnerColor.setBackground(color);
 		borderColor = rectangle.getBorderColor();
-		btnBorderColor.setBackground(borderColor);
 	}
 
 	public Rectangle makeRectangle() {

@@ -80,32 +80,31 @@ public class PnlDrawing extends JPanel {
 			break;
 
 		}
-		
-		case "rectangle": {
-		    if (startPoint == null) {
-		        startPoint = click;  // postavlja pocetnu tacku
-		    } else {
-		        // kreira pravougaonik
-		        DlgRectangle dialog = frame.getDlgRectangle();
-		        dialog.getTxtX().setText(String.valueOf(startPoint.getX())); // postavi x pocetku tacku
-		        dialog.getTxtY().setText(String.valueOf(startPoint.getY())); // postavi y
-		        dialog.getTxtWidth().setText("");  // prazno polje za sirinu
-		        dialog.getTxtHeight().setText(""); //  za visinu
-		        dialog.getTxtX().setEnabled(false); // onemogui unos X
-		        dialog.getTxtY().setEnabled(false); // onemogući unos Y
-		        dialog.setVisible(true);  
-		        
-		        if (dialog.isConfirm()) {
-		            // kada je korisnik potvrdio unos
-		            Rectangle rectangle = dialog.makeRectangle();  //kreira pravougaonik iz dijaloga
-		            shapes.add(rectangle);  // doda pravougaonik u listu
-		        }
-		        startPoint = null;  // resetuje pocetnu tacku
-		    }
-		    repaint();  // osvezi panel
-		    break;
-		}
 
+		case "rectangle": {
+			if (startPoint == null) {
+				startPoint = click; // postavlja pocetnu tacku
+			} else {
+				// kreira pravougaonik
+				DlgRectangle dialog = frame.getDlgRectangle();
+				dialog.getTxtX().setText(String.valueOf(startPoint.getX())); // postavi x pocetku tacku
+				dialog.getTxtY().setText(String.valueOf(startPoint.getY())); // postavi y
+				dialog.getTxtWidth().setText(""); // prazno polje za sirinu
+				dialog.getTxtHeight().setText(""); // za visinu
+				dialog.getTxtX().setEnabled(false); // onemogui unos X
+				dialog.getTxtY().setEnabled(false); // onemogući unos Y
+				dialog.setVisible(true);
+
+				if (dialog.isConfirm()) {
+					// kada je korisnik potvrdio unos
+					Rectangle rectangle = dialog.makeRectangle(); // kreira pravougaonik iz dijaloga
+					shapes.add(rectangle); // doda pravougaonik u listu
+				}
+				startPoint = null; // resetuje pocetnu tacku
+			}
+			repaint(); // osvezi panel
+			break;
+		}
 
 		case "circle": {
 			DlgCircle dlgCircle = frame.getDlgCircle();
@@ -119,9 +118,10 @@ public class PnlDrawing extends JPanel {
 				Circle circle = dlgCircle.makeCircle();
 				shapes.add(circle);
 			}
-		}
+
 			repaint();
 			break;
+		}
 		}
 
 	}
