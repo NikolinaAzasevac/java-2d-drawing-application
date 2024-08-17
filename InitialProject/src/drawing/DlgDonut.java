@@ -1,12 +1,18 @@
 package drawing;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import geometry.Donut;
+import geometry.Point;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -24,6 +30,9 @@ public class DlgDonut extends JDialog {
 	private JTextField txtOuterRadius;
 	private JTextField txtInnerRadius;
 	private boolean confirm;
+	public Donut donut;
+	private Color color;
+	private Color borderColor;
 
 	/**
 	 * Launch the application.
@@ -42,15 +51,16 @@ public class DlgDonut extends JDialog {
 	 * Create the dialog.
 	 */
 	public DlgDonut() {
+		setModal(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWidths = new int[] { 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblCenter = new JLabel("Center of the donut:");
@@ -146,6 +156,11 @@ public class DlgDonut extends JDialog {
 		}
 		{
 			JButton btnInnerColor = new JButton("COLOR");
+			btnInnerColor.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					color = JColorChooser.showDialog(null, "Choose inner color", Color.black);
+				}
+			});
 			GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
 			gbc_btnInnerColor.insets = new Insets(0, 0, 5, 0);
 			gbc_btnInnerColor.anchor = GridBagConstraints.WEST;
@@ -163,6 +178,11 @@ public class DlgDonut extends JDialog {
 		}
 		{
 			JButton btnBorderColor = new JButton("COLOR");
+			btnBorderColor.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					borderColor = JColorChooser.showDialog(null, "Choose border color", Color.black);
+				}
+			});
 			GridBagConstraints gbc_btnBorderColor = new GridBagConstraints();
 			gbc_btnBorderColor.anchor = GridBagConstraints.WEST;
 			gbc_btnBorderColor.gridx = 1;
@@ -196,6 +216,22 @@ public class DlgDonut extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+
+	public void write(Donut donut) {
+		txtX.setText(String.valueOf(donut.getCenter().getX()));
+		txtY.setText(String.valueOf(donut.getCenter().getY()));
+		txtOuterRadius.setText(String.valueOf(donut.getRadius()));
+		txtInnerRadius.setText(String.valueOf(donut.getInnerRadius()));
+	}
+
+	public Donut takeDonut() {
+		int x = Integer.parseInt(txtX.getText());
+		int y = Integer.parseInt(txtY.getText());
+		int radius = Integer.parseInt(txtOuterRadius.getText());
+		int innerRadius = Integer.parseInt(txtInnerRadius.getText());
+		Donut donut = new Donut(new Point(x, y), radius, innerRadius, color, borderColor);
+		return donut;
 	}
 
 	public JTextField getTxtX() {
@@ -237,6 +273,5 @@ public class DlgDonut extends JDialog {
 	public void setConfirm(boolean confirm) {
 		this.confirm = confirm;
 	}
-	
 
 }

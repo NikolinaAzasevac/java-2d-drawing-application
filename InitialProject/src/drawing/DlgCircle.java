@@ -200,7 +200,7 @@ public class DlgCircle extends JDialog {
 		}
 	}
 	
-	public void write(Circle circle) { // za ispis vrednosti
+	public void writeCircle(Circle circle) { // za ispis vrednosti
 		txtX.setText(String.valueOf(circle.getCenter().getX()));
 		txtY.setText(String.valueOf(circle.getCenter().getY()));
 		txtRadius.setText(String.valueOf(circle.getRadius()));

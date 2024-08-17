@@ -41,6 +41,7 @@ public class FrmDrawing extends JFrame {
 	private DlgLine dlgLine = new DlgLine();
 	private DlgRectangle dlgRectangle = new DlgRectangle();
 	private DlgCircle dlgCircle = new DlgCircle();
+	private DlgDonut dlgDonut= new DlgDonut();
 
 	/**
 	 * Launch the application.
@@ -129,7 +130,17 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlNorth.add(tglbtnCircle);
-
+		
+		tglbtnDonut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				choice = "donut";
+				if (pnlDrawing.getSelectedShape() != null) {
+					pnlDrawing.getSelectedShape().setSelected(false);
+					pnlDrawing.setSelectedShape(null);
+					pnlDrawing.repaint();
+				}
+			}
+		});
 		pnlNorth.add(tglbtnDonut);
 
 		JPanel pnlSouth = new JPanel();
@@ -252,5 +263,14 @@ public class FrmDrawing extends JFrame {
 	public void setDlgCircle(DlgCircle dlgCircle) {
 		this.dlgCircle = dlgCircle;
 	}
+
+	public DlgDonut getDlgDonut() {
+		return dlgDonut;
+	}
+
+	public void setDlgDonut(DlgDonut dlgDonut) {
+		this.dlgDonut = dlgDonut;
+	}
+	
 
 }

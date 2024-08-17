@@ -6,9 +6,17 @@ import java.awt.Color;
 public class Donut extends Circle {
 	// nasledjuse center, radius i selected od Circle
 	private int innerRadius;
+	private Color color;
+	private Color borderColor;
 
 	public Donut() {
 	}
+	
+	public Donut(Point center, int radius,  int innerRadius) {
+		super(center, radius);
+			this.innerRadius=innerRadius;
+	}
+
 
 	// ovaj prvi je vise asamo demostramncije radi
 	public Donut(Point center, int radius, boolean selected) {
@@ -19,6 +27,12 @@ public class Donut extends Circle {
 		// umesto usper mogu i
 		this(center, radius, selected);
 		this.innerRadius = innerRadius;
+	}
+	
+	public Donut(Point center, int radius, int innerRadius,  Color color, Color borderColor) { 
+		this(center, radius, innerRadius);
+		this.color = (color != null) ? color : Color.white;
+		this.borderColor = (borderColor != null) ? borderColor : Color.BLACK;
 	}
 	
 	public double area() {
@@ -91,5 +105,22 @@ public class Donut extends Circle {
 		// zato treba reci super.toString
 		return super.toString() + ", innerRadius = " + innerRadius;
 	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public Color getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(Color borderColor) {
+		this.borderColor = borderColor;
+	}
+	
 
 }

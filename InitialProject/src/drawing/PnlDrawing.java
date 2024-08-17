@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import geometry.Circle;
+import geometry.Donut;
 import geometry.Line;
 import geometry.Point;
 import geometry.Rectangle;
@@ -107,24 +108,43 @@ public class PnlDrawing extends JPanel {
 		}
 
 		case "circle": {
-			DlgCircle dlgCircle = frame.getDlgCircle();
-			dlgCircle.getTxtX().setText(String.valueOf(click.getX()));
-			dlgCircle.getTxtY().setText(String.valueOf(click.getY()));
-			dlgCircle.getTxtRadius().setText(String.valueOf(""));
-			dlgCircle.getTxtX().setEnabled(false);
-			dlgCircle.getTxtY().setEnabled(false);
-			dlgCircle.setVisible(true);
-			if (dlgCircle.isConfirm()) {
-				Circle circle = dlgCircle.makeCircle();
+			DlgCircle dialog = frame.getDlgCircle();
+			dialog.getTxtX().setText(String.valueOf(click.getX()));
+			dialog.getTxtY().setText(String.valueOf(click.getY()));
+			dialog.getTxtRadius().setText(String.valueOf(""));
+			dialog.getTxtX().setEnabled(false);
+			dialog.getTxtY().setEnabled(false);
+			dialog.setVisible(true);
+			if (dialog.isConfirm()) {
+				Circle circle = dialog.makeCircle();
 				shapes.add(circle);
 			}
 
 			repaint();
 			break;
 		}
+
+		case "donut": {
+			DlgDonut dialog = frame.getDlgDonut();
+			dialog.getTxtX().setText(String.valueOf(click.getX()));
+			dialog.getTxtY().setText(String.valueOf(click.getY()));
+			dialog.getTxtOuterRadius().setText(String.valueOf("")); // da ne ostaje od proslog crtanja
+			dialog.getTxtInnerRadius().setText(String.valueOf(""));
+			dialog.getTxtX().setEnabled(false);
+			dialog.getTxtY().setEnabled(false);
+			dialog.setVisible(true);
+			if (dialog.isConfirm()) {
+				Donut donut = dialog.takeDonut();
+				shapes.add(donut);
+			}
+			repaint();
+			break;
+		}
+			
 		}
 
 	}
+
 
 	@Override
 	public void paint(Graphics g) {
