@@ -9,37 +9,29 @@ public class Rectangle extends Shape {
 	private int width;
 	private int height;
 	private Color borderColor;
-	private Color innerColor;
+	private Color color;
 
 	public Rectangle() {
 
 	}
 
-	public Rectangle(Point upperLeftPoint, int width, int height) {
-		this.upperLeftPoint = upperLeftPoint;
+	public Rectangle(Point upperLeftpoint, int width, int height) {
+		this.upperLeftPoint = upperLeftpoint;
 		this.width = width;
 		this.height = height;
 	}
 
-	public Rectangle(Point upperLeftPoint, int width, int height, boolean selected) {
-		this(upperLeftPoint, width, height);
+	public Rectangle(Point upperLeftpoint, int width, int height, boolean selected) {
+		this(upperLeftpoint, width, height);
 		this.selected = selected;
 	}
 
-	public Rectangle(Point upperLeftPoint, int height, int width, boolean selected, Color innerColor) {
-		this(upperLeftPoint, height, width, selected);
-		setBorderColor(borderColor);
-	}
-
-	public Rectangle(Point upperLeftPoint, int height, int width, boolean selected, Color innerColor, Color BorderColor) {
-		this(upperLeftPoint, height, width, selected, innerColor);
-		setInnerColor(innerColor);
-	}
-
-	public Rectangle(Point upperLeftPoint, int height, int width, Color color, Color innerColor) {
-		this(upperLeftPoint, height, width);
-		setBorderColor(borderColor);
-		setInnerColor(innerColor);
+	public Rectangle(Point upperLeftpoint, int width, int height, Color color, Color borderColor) {
+		this(upperLeftpoint, width, height);
+		this.color = (color != null) ? color : Color.BLACK;
+		this.borderColor = (borderColor != null) ? borderColor : Color.BLACK;
+		// this.color = color;
+		// this.borderColor = borderColor;
 	}
 
 	public boolean equals(Object obj) {
@@ -70,10 +62,13 @@ public class Rectangle extends Shape {
 
 	@Override
 	public void draw(Graphics g) {
+
+		g.setColor(borderColor);
 		g.drawRect(upperLeftPoint.getX(), upperLeftPoint.getY(), width, height);
+		g.setColor(color);
+		g.fillRect(upperLeftPoint.getX(), upperLeftPoint.getY(), width, height);
 
 		if (isSelected()) {
-			g.setColor(Color.blue);
 			g.drawRect(upperLeftPoint.getX() - 2, upperLeftPoint.getY() - 2, 4, 4);
 			g.drawRect(upperLeftPoint.getX() + width - 2, upperLeftPoint.getY() - 2, 4, 4);
 			g.drawRect(upperLeftPoint.getX() - 2, upperLeftPoint.getY() + height - 2, 4, 4);
@@ -140,12 +135,12 @@ public class Rectangle extends Shape {
 		this.borderColor = borderColor;
 	}
 
-	public Color getInnerColor() {
-		return innerColor;
+	public Color getColor() {
+		return color;
 	}
 
-	public void setInnerColor(Color innerColor) {
-		this.innerColor = innerColor;
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	public String toString() {

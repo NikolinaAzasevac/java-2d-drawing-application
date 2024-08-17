@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import geometry.Circle;
 import geometry.Line;
 import geometry.Point;
 import geometry.Rectangle;
@@ -79,19 +80,44 @@ public class PnlDrawing extends JPanel {
 			break;
 
 		}
-
+		
 		case "rectangle": {
-			DlgRectangle dlgRectangle = frame.getDlgRectangle();
-			dlgRectangle.getTxtX().setText(String.valueOf(click.getX()));
-			dlgRectangle.getTxtY().setText(String.valueOf(click.getY()));
-			dlgRectangle.getTxtWidth().setText(""); // da nista ne bi ostalo od proslog crtanja
-			dlgRectangle.getTxtHeight().setText("");
-			dlgRectangle.getTxtX().setEnabled(false);
-			dlgRectangle.getTxtY().setEnabled(false);
-			dlgRectangle.setVisible(true);
-			if (dlgRectangle.isConfirm()) {
-				Rectangle rectangle = dlgRectangle.makeRectangle();
-				shapes.add(rectangle);
+		    if (startPoint == null) {
+		        startPoint = click;  // postavlja pocetnu tacku
+		    } else {
+		        // kreira pravougaonik
+		        DlgRectangle dialog = frame.getDlgRectangle();
+		        dialog.getTxtX().setText(String.valueOf(startPoint.getX())); // postavi x pocetku tacku
+		        dialog.getTxtY().setText(String.valueOf(startPoint.getY())); // postavi y
+		        dialog.getTxtWidth().setText("");  // prazno polje za sirinu
+		        dialog.getTxtHeight().setText(""); //  za visinu
+		        dialog.getTxtX().setEnabled(false); // onemogui unos X
+		        dialog.getTxtY().setEnabled(false); // onemogući unos Y
+		        dialog.setVisible(true);  
+		        
+		        if (dialog.isConfirm()) {
+		            // kada je korisnik potvrdio unos
+		            Rectangle rectangle = dialog.makeRectangle();  //kreira pravougaonik iz dijaloga
+		            shapes.add(rectangle);  // doda pravougaonik u listu
+		        }
+		        startPoint = null;  // resetuje pocetnu tacku
+		    }
+		    repaint();  // osvezi panel
+		    break;
+		}
+
+
+		case "circle": {
+			DlgCircle dlgCircle = frame.getDlgCircle();
+			dlgCircle.getTxtX().setText(String.valueOf(click.getX()));
+			dlgCircle.getTxtY().setText(String.valueOf(click.getY()));
+			dlgCircle.getTxtRadius().setText(String.valueOf(""));
+			dlgCircle.getTxtX().setEnabled(false);
+			dlgCircle.getTxtY().setEnabled(false);
+			dlgCircle.setVisible(true);
+			if (dlgCircle.isConfirm()) {
+				Circle circle = dlgCircle.makeCircle();
+				shapes.add(circle);
 			}
 		}
 			repaint();
@@ -104,18 +130,9 @@ public class PnlDrawing extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g); // Poziva paint metode nadklase
 		Iterator<Shape> iterator = shapes.iterator();
-		while (iterator.hasNext()) {
-			Shape shape = iterator.next();
-			shape.draw(g);
-		}
-	}
+		while (iterator.hasNext())
+			iterator.next().draw(g);
 
-	public ArrayList<Shape> getShapes() {
-		return shapes;
-	}
-
-	public void setShapes(ArrayList<Shape> shapes) {
-		this.shapes = shapes;
 	}
 
 	public Point getStartPoint() {

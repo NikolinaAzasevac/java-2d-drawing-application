@@ -8,7 +8,7 @@ public class Point extends Shape {
 	private int x;
 	private int y;
 	private boolean selected;
-	private Color color = Color.BLACK;
+	private Color color;
 
 	public Point() {
 
@@ -26,7 +26,7 @@ public class Point extends Shape {
 
 	public Point(int x, int y, Color color) {
 		this(x, y);
-		this.color = color;
+		setColor(color);
 	}
 
 	public double distance(Point drugaTacka) {
@@ -56,10 +56,10 @@ public class Point extends Shape {
 		g.setColor(color);
 		g.drawLine(x - 2, y, x + 2, y);
 		g.drawLine(x, y - 2, x, y + 2);
-		if (this.selected) {
+		if (this.selected==true) {
 			g.setColor(Color.blue);
 			g.drawRect(x - 2, y - 2, 4, 4);
-			g.setColor(color);
+			g.setColor(Color.black);
 		}
 	}
 

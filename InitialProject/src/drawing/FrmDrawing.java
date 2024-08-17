@@ -9,8 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-//import geometry.Point;
-
 import javax.swing.JToggleButton;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
@@ -42,6 +40,7 @@ public class FrmDrawing extends JFrame {
 	private DlgPoint dlgPoint = new DlgPoint();
 	private DlgLine dlgLine = new DlgLine();
 	private DlgRectangle dlgRectangle = new DlgRectangle();
+	private DlgCircle dlgCircle = new DlgCircle();
 
 	/**
 	 * Launch the application.
@@ -50,7 +49,7 @@ public class FrmDrawing extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					/* FrmDrawing */ frame = new FrmDrawing();
+					frame = new FrmDrawing();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -107,11 +106,9 @@ public class FrmDrawing extends JFrame {
 		});
 		pnlNorth.add(tglbtnLine);
 
-		//pnlNorth.add(tglbtnRectangle);
-
 		tglbtnRectangle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				choice = "rect";
+				choice = "rectangle";
 				if (pnlDrawing.getSelectedShape() != null) {
 					pnlDrawing.getSelectedShape().setSelected(false);
 					pnlDrawing.setSelectedShape(null);
@@ -120,8 +117,19 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlNorth.add(tglbtnRectangle);
-		
+
+		tglbtnCircle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				choice = "circle";
+				if (pnlDrawing.getSelectedShape() != null) {
+					pnlDrawing.getSelectedShape().setSelected(false);
+					pnlDrawing.setSelectedShape(null);
+					pnlDrawing.repaint();
+				}
+			}
+		});
 		pnlNorth.add(tglbtnCircle);
+
 		pnlNorth.add(tglbtnDonut);
 
 		JPanel pnlSouth = new JPanel();
@@ -235,6 +243,14 @@ public class FrmDrawing extends JFrame {
 
 	public void setDlgRectangle(DlgRectangle dlgRectangle) {
 		this.dlgRectangle = dlgRectangle;
+	}
+
+	public DlgCircle getDlgCircle() {
+		return dlgCircle;
+	}
+
+	public void setDlgCircle(DlgCircle dlgCircle) {
+		this.dlgCircle = dlgCircle;
 	}
 
 }

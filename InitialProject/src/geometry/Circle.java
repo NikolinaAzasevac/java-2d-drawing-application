@@ -7,6 +7,8 @@ public class Circle extends Shape{
 
 	private Point center;
 	private int radius; 
+	private Color color;
+	private Color borderColor;
 	
 	public Circle() {
 	}
@@ -22,6 +24,22 @@ public class Circle extends Shape{
 		this(center, radius);
 		this.selected = selected;
 	}
+	
+	public Circle(Point center, int radius, boolean selected, Color borderColor) {
+		this(center, radius, selected);
+		setColor(borderColor);
+	}
+	
+	public Circle(Point center, int radius, Color color, Color innerColor) {
+		this(center, radius);
+		setColor(color);
+		setColor(innerColor);
+	} 
+
+	public Circle(Point center, int radius, boolean selected, Color borderColor, Color color) {
+		this(center, radius, selected, color);
+		setColor(color);
+	} 
 	
 	public boolean equals(Object obj) {
 		if (obj instanceof Circle) {
@@ -47,8 +65,10 @@ public class Circle extends Shape{
 	
 	@Override
  	public void draw(Graphics g) {
- 		g.drawOval(center.getX()-radius,
- 				center.getY()-radius, 2*radius, 2*radius);
+		g.setColor(borderColor);
+ 		g.drawOval(center.getX()-radius,center.getY()-radius, 2*radius, 2*radius);
+ 		g.setColor(color);
+		g.fillOval(center.getX()-radius,center.getY()-radius , radius*2, radius*2); //fill za unutrasnjost
 
  		if (isSelected()) {
  			g.setColor(Color.BLUE);
@@ -98,6 +118,23 @@ public class Circle extends Shape{
 	 		throw new Exception("Radius ne sme "
 	 					+ "biti negativna vrednost");
 	 		}
+	}
+	
+	
+	public Color getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(Color borderColor) {
+		this.borderColor = borderColor;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	public String toString() {
