@@ -81,6 +81,7 @@ public class FrmDrawing extends JFrame {
 		btnGroup.add(tglbtnRectangle);
 		btnGroup.add(tglbtnCircle);
 		btnGroup.add(tglbtnDonut);
+		btnGroup.add(tglbtnSelect);
 
 		tglbtnPoint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -146,8 +147,14 @@ public class FrmDrawing extends JFrame {
 		JPanel pnlSouth = new JPanel();
 		pnlSouth.setBackground(Color.LIGHT_GRAY);
 		contentPane.add(pnlSouth, BorderLayout.SOUTH);
-
+		tglbtnSelect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				choice = "select";
+				pnlDrawing.repaint();
+			}
+		});
 		pnlSouth.add(tglbtnSelect);
+		
 		pnlSouth.add(tglbtnModify);
 		pnlSouth.add(tglbtnDelete);
 
@@ -271,6 +278,8 @@ public class FrmDrawing extends JFrame {
 	public void setDlgDonut(DlgDonut dlgDonut) {
 		this.dlgDonut = dlgDonut;
 	}
+	
+	
 	
 
 }

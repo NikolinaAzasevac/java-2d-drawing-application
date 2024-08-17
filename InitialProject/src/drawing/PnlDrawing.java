@@ -2,7 +2,6 @@ package drawing;
 
 import java.awt.Color;
 import java.awt.Graphics;
-//import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,7 +28,6 @@ public class PnlDrawing extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	// public PnlDrawing() {}
 
 	public PnlDrawing() {
 		setBackground(new Color(255, 255, 255));
@@ -140,11 +138,26 @@ public class PnlDrawing extends JPanel {
 			repaint();
 			break;
 		}
-			
+
+		case "select": {
+			Iterator<Shape> itShape = shapes.iterator(); // kreiram iterator koji prolazi kroz sve oblike u listi
+			while (itShape.hasNext()) {
+				Shape temporary = itShape.next(); // uzima sledeci oblik iz liste
+				if (temporary.contains(e.getX(), e.getY())) { // proverava se da li je tacka gde je stisnbuto tacka
+																// nekog oblika
+					System.out.println(temporary.toString());
+					temporary.setSelected(true); // jeste seleektujemo
+					selectedShape = temporary; // trenutno selektovani oblik je selected shape
+				} else if (temporary.isSelected()) {
+					temporary.setSelected(false); // deselektujemo, kako bi samo jedan oblik bio selektovan
+				}
+			}
+			break;
+		}
+
 		}
 
 	}
-
 
 	@Override
 	public void paint(Graphics g) {
@@ -169,6 +182,14 @@ public class PnlDrawing extends JPanel {
 
 	public void setSelectedShape(Shape selectedShape) {
 		this.selectedShape = selectedShape;
+	}
+
+	public ArrayList<Shape> getShapes() {
+		return shapes;
+	}
+
+	public void setShapes(ArrayList<Shape> shapes) {
+		this.shapes = shapes;
 	}
 
 }

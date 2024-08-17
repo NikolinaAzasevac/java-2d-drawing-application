@@ -69,6 +69,7 @@ public class Rectangle extends Shape {
 		g.fillRect(upperLeftPoint.getX(), upperLeftPoint.getY(), width, height);
 
 		if (isSelected()) {
+			g.setColor(Color.BLUE);
 			g.drawRect(upperLeftPoint.getX() - 2, upperLeftPoint.getY() - 2, 4, 4);
 			g.drawRect(upperLeftPoint.getX() + width - 2, upperLeftPoint.getY() - 2, 4, 4);
 			g.drawRect(upperLeftPoint.getX() - 2, upperLeftPoint.getY() + height - 2, 4, 4);
