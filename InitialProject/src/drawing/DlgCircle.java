@@ -30,9 +30,8 @@ public class DlgCircle extends JDialog {
 	private JTextField txtRadius;
 	private Circle circle;
 	private boolean confirm;
-	private Color color; 
-	private Color borderColor; 
-
+	private Color color;
+	private Color borderColor;
 
 	/**
 	 * Launch the application.
@@ -139,7 +138,7 @@ public class DlgCircle extends JDialog {
 			JButton btnInnerColor = new JButton("COLOR");
 			btnInnerColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					color = JColorChooser.showDialog(null, "Choose inner color", btnInnerColor.getBackground());
+					color = JColorChooser.showDialog(null, "Choose inner color", Color.black);
 				}
 			});
 			GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
@@ -161,8 +160,8 @@ public class DlgCircle extends JDialog {
 			JButton btnBorderColor = new JButton("COLOR");
 			btnBorderColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					borderColor = JColorChooser.showDialog(null, "Choose border color", btnBorderColor.getBackground());
-				
+					borderColor = JColorChooser.showDialog(null, "Choose border color", Color.black);
+
 				}
 			});
 			GridBagConstraints gbc_btnBorderColor = new GridBagConstraints();
@@ -199,11 +198,13 @@ public class DlgCircle extends JDialog {
 			}
 		}
 	}
-	
+
 	public void writeCircle(Circle circle) { // za ispis vrednosti
 		txtX.setText(String.valueOf(circle.getCenter().getX()));
 		txtY.setText(String.valueOf(circle.getCenter().getY()));
 		txtRadius.setText(String.valueOf(circle.getRadius()));
+		color = circle.getColor();
+		borderColor = circle.getBorderColor();
 	}
 
 	public Circle makeCircle() { // pravljenje obj pomoci prethodnih vrednosti
@@ -253,5 +254,4 @@ public class DlgCircle extends JDialog {
 	public void setConfirm(boolean confirm) {
 		this.confirm = confirm;
 	}
-
 }

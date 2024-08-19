@@ -269,5 +269,6 @@ public class DlgRectangle extends JDialog {
 	public void setTxtWidth(JTextField txtWidth) {
 		this.txtWidth = txtWidth;
 	}
+	
 
 }

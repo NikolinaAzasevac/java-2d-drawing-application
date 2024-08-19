@@ -214,11 +214,28 @@ public class PnlDrawing extends JPanel {
 				((Rectangle) selectedShape).setHeight(dialog.makeRectangle().getHeight());
 				((Rectangle) selectedShape).setWidth(dialog.makeRectangle().getWidth());
 				((Rectangle) selectedShape).setColor(dialog.makeRectangle().getColor());
-				((Rectangle) selectedShape).setColor(dialog.makeRectangle().getBorderColor());
+				((Rectangle) selectedShape).setBorderColor(dialog.makeRectangle().getBorderColor());
 			} else {
 				selectedShape.setSelected(false);
 				selectedShape = null;
 			}
+		} else if (selectedShape instanceof Circle) {
+			DlgCircle dialog = frame.getDlgCircle();
+			dialog.writeCircle((Circle) selectedShape);
+			dialog.getTxtX().setEnabled(true);
+			dialog.getTxtY().setEnabled(true);
+			dialog.setVisible(true);
+			if (dialog.isConfirm()) {
+				((Circle) selectedShape).getCenter().setX(dialog.makeCircle().getCenter().getX());
+				((Circle) selectedShape).getCenter().setY(dialog.makeCircle().getCenter().getY());
+				((Circle) selectedShape).setRadius(dialog.makeCircle().getRadius());
+				((Circle) selectedShape).setColor(dialog.makeCircle().getColor());
+				((Circle) selectedShape).setBorderColor(dialog.makeCircle().getBorderColor());
+			} else {
+				selectedShape.setSelected(false);
+				selectedShape = null;
+			}
+			repaint();
 		}
 
 		repaint();
@@ -233,28 +250,12 @@ public class PnlDrawing extends JPanel {
 
 	}
 
-	public Point getStartPoint() {
-		return startPoint;
-	}
-
-	public void setStartPoint(Point startPoint) {
-		this.startPoint = startPoint;
-	}
-
 	public Shape getSelectedShape() {
 		return selectedShape;
 	}
 
 	public void setSelectedShape(Shape selectedShape) {
 		this.selectedShape = selectedShape;
-	}
-
-	public ArrayList<Shape> getShapes() {
-		return shapes;
-	}
-
-	public void setShapes(ArrayList<Shape> shapes) {
-		this.shapes = shapes;
 	}
 
 }

@@ -28,8 +28,8 @@ public class Rectangle extends Shape {
 
 	public Rectangle(Point upperLeftpoint, int width, int height, Color color, Color borderColor) {
 		this(upperLeftpoint, width, height);
-		this.color = (color != null) ? color : Color.BLACK;
-		this.borderColor = (borderColor != null) ? borderColor : Color.BLACK;
+		this.color = color;
+		this.borderColor = borderColor;
 		// this.color = color;
 		// this.borderColor = borderColor;
 	}
