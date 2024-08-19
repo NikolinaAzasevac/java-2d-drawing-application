@@ -33,6 +33,7 @@ public class DlgDonut extends JDialog {
 	public Donut donut;
 	private Color color;
 	private Color borderColor;
+	private Color innerColor;
 
 	/**
 	 * Launch the application.
@@ -58,9 +59,9 @@ public class DlgDonut extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[] { 0, 0, 0 };
-		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_contentPanel.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
-		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblCenter = new JLabel("Center of the donut:");
@@ -158,7 +159,7 @@ public class DlgDonut extends JDialog {
 			JButton btnInnerColor = new JButton("COLOR");
 			btnInnerColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					color = JColorChooser.showDialog(null, "Choose inner color", Color.black);
+					innerColor = JColorChooser.showDialog(null, "Choose inner color", Color.black);
 				}
 			});
 			GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
@@ -169,11 +170,33 @@ public class DlgDonut extends JDialog {
 			contentPanel.add(btnInnerColor, gbc_btnInnerColor);
 		}
 		{
+			JLabel lblChooseOutline = new JLabel("Choose outline:");
+			GridBagConstraints gbc_lblChooseOutline = new GridBagConstraints();
+			gbc_lblChooseOutline.insets = new Insets(0, 0, 5, 5);
+			gbc_lblChooseOutline.gridx = 0;
+			gbc_lblChooseOutline.gridy = 6;
+			contentPanel.add(lblChooseOutline, gbc_lblChooseOutline);
+		}
+		{
+			JButton btnOutlineColor = new JButton("COLOR");
+			btnOutlineColor.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					color = JColorChooser.showDialog(null, "Choose outline color", Color.black);
+				}
+			});
+			GridBagConstraints gbc_btnOutlineColor = new GridBagConstraints();
+			gbc_btnOutlineColor.anchor = GridBagConstraints.WEST;
+			gbc_btnOutlineColor.insets = new Insets(0, 0, 5, 0);
+			gbc_btnOutlineColor.gridx = 1;
+			gbc_btnOutlineColor.gridy = 6;
+			contentPanel.add(btnOutlineColor, gbc_btnOutlineColor);
+		}
+		{
 			JLabel lblChooseBorder = new JLabel("Choose border:");
 			GridBagConstraints gbc_lblChooseBorder = new GridBagConstraints();
 			gbc_lblChooseBorder.insets = new Insets(0, 0, 0, 5);
 			gbc_lblChooseBorder.gridx = 0;
-			gbc_lblChooseBorder.gridy = 6;
+			gbc_lblChooseBorder.gridy = 7;
 			contentPanel.add(lblChooseBorder, gbc_lblChooseBorder);
 		}
 		{
@@ -186,7 +209,7 @@ public class DlgDonut extends JDialog {
 			GridBagConstraints gbc_btnBorderColor = new GridBagConstraints();
 			gbc_btnBorderColor.anchor = GridBagConstraints.WEST;
 			gbc_btnBorderColor.gridx = 1;
-			gbc_btnBorderColor.gridy = 6;
+			gbc_btnBorderColor.gridy = 7;
 			contentPanel.add(btnBorderColor, gbc_btnBorderColor);
 		}
 		{
@@ -218,19 +241,23 @@ public class DlgDonut extends JDialog {
 		}
 	}
 
-	public void write(Donut donut) {
+	public void writeDonut(Donut donut) {
 		txtX.setText(String.valueOf(donut.getCenter().getX()));
 		txtY.setText(String.valueOf(donut.getCenter().getY()));
 		txtOuterRadius.setText(String.valueOf(donut.getRadius()));
 		txtInnerRadius.setText(String.valueOf(donut.getInnerRadius()));
+		color = donut.getColor();
+		innerColor = donut.getColor();
+		borderColor = donut.getBorderColor();
+		
 	}
 
-	public Donut takeDonut() {
+	public Donut makeDonut() {
 		int x = Integer.parseInt(txtX.getText());
 		int y = Integer.parseInt(txtY.getText());
 		int radius = Integer.parseInt(txtOuterRadius.getText());
 		int innerRadius = Integer.parseInt(txtInnerRadius.getText());
-		Donut donut = new Donut(new Point(x, y), radius, innerRadius, color, borderColor);
+		Donut donut = new Donut(new Point(x, y), radius, innerRadius, color, borderColor, innerColor);
 		return donut;
 	}
 

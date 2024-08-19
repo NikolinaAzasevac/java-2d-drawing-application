@@ -132,7 +132,7 @@ public class PnlDrawing extends JPanel {
 			dialog.getTxtY().setEnabled(false);
 			dialog.setVisible(true);
 			if (dialog.isConfirm()) {
-				Donut donut = dialog.takeDonut();
+				Donut donut = dialog.makeDonut();
 				shapes.add(donut);
 			}
 			repaint();
@@ -235,7 +235,6 @@ public class PnlDrawing extends JPanel {
 				selectedShape.setSelected(false);
 				selectedShape = null;
 			}
-			repaint();
 		}
 
 		repaint();
