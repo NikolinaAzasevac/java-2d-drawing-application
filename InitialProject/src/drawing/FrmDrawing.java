@@ -176,7 +176,18 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlSouth.add(tglbtnModify);
-
+		tglbtnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				choice = "delete";
+				if (pnlDrawing.getSelectedShape() != null)
+					pnlDrawing.delete();
+				else
+					JOptionPane.showMessageDialog(null, "There is no selected shape. Select the shape you want to delete.", "Error Message",
+							JOptionPane.INFORMATION_MESSAGE);
+				tglbtnSelect.setSelected(true);
+				choice = "select";
+			}
+		});
 		pnlSouth.add(tglbtnDelete);
 
 		pnlDrawing.addMouseListener(new MouseAdapter() { // metoda bez koje se ne bi mogla izabrati tacka klikom

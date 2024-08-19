@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -152,10 +153,24 @@ public class PnlDrawing extends JPanel {
 					temporary.setSelected(false); // deselektujemo, kako bi samo jedan oblik bio selektovan
 				}
 			}
+			repaint();
 			break;
 		}
 
+		case "delete": {
+			if (selectedShape == null)
+				JOptionPane.showMessageDialog(null, "You have to select shape.", "Error Message",
+						JOptionPane.INFORMATION_MESSAGE);
 		}
+			break;
+
+		default:
+			JOptionPane.showMessageDialog(null, "Choose one of the options", "Error Message",
+					JOptionPane.INFORMATION_MESSAGE);
+
+		}
+
+		repaint();
 
 	}
 
@@ -219,7 +234,10 @@ public class PnlDrawing extends JPanel {
 				selectedShape.setSelected(false);
 				selectedShape = null;
 			}
-		} else if (selectedShape instanceof Circle && !(selectedShape instanceof Donut)) {
+		} else if (selectedShape instanceof Circle && !(selectedShape instanceof Donut)) { // dodato da je razlicito od
+																							// instance donuta jer mi je
+																							// prilikom modifikacije
+																							// donuta izbacivao circle
 			DlgCircle dialog = frame.getDlgCircle();
 			dialog.writeCircle((Circle) selectedShape);
 			dialog.getTxtX().setEnabled(true);
@@ -235,26 +253,31 @@ public class PnlDrawing extends JPanel {
 				selectedShape.setSelected(false);
 				selectedShape = null;
 			}
-		}
-		else if (selectedShape instanceof Donut) { 
-			DlgDonut dialog = frame.getDlgDonut(); 
-			dialog.writeDonut((Donut)selectedShape); 
-			dialog.getTxtX().setEnabled(true); 
+		} else if (selectedShape instanceof Donut) {
+			DlgDonut dialog = frame.getDlgDonut();
+			dialog.writeDonut((Donut) selectedShape);
+			dialog.getTxtX().setEnabled(true);
 			dialog.getTxtY().setEnabled(true);
 			dialog.setVisible(true);
-			if (dialog.isConfirm()) { 
+			if (dialog.isConfirm()) {
 				((Donut) selectedShape).getCenter().setX(dialog.makeDonut().getCenter().getX());
-				((Donut) selectedShape).getCenter().setY(dialog.makeDonut().getCenter().getY()); 
-				((Donut) selectedShape).setInnerRadius(dialog.makeDonut().getInnerRadius()); 
-				((Donut) selectedShape).setRadius(dialog.makeDonut().getRadius()); 
+				((Donut) selectedShape).getCenter().setY(dialog.makeDonut().getCenter().getY());
+				((Donut) selectedShape).setInnerRadius(dialog.makeDonut().getInnerRadius());
+				((Donut) selectedShape).setRadius(dialog.makeDonut().getRadius());
 				((Donut) selectedShape).setColor(dialog.makeDonut().getColor());
 				((Donut) selectedShape).setInnerColor(dialog.makeDonut().getInnerColor());
 				((Donut) selectedShape).setBorderColor(dialog.makeDonut().getBorderColor());
-				}else{ 
-					selectedShape.setSelected(false); 
-					selectedShape = null; 
-					} }
+			} else {
+				selectedShape.setSelected(false);
+				selectedShape = null;
+			}
+		}
 
+		repaint();
+	}
+
+	public void delete() { // metoda za uklanjanje
+		shapes.remove(selectedShape);
 		repaint();
 	}
 
