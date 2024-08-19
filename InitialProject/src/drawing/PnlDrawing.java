@@ -219,7 +219,7 @@ public class PnlDrawing extends JPanel {
 				selectedShape.setSelected(false);
 				selectedShape = null;
 			}
-		} else if (selectedShape instanceof Circle) {
+		} else if (selectedShape instanceof Circle && !(selectedShape instanceof Donut)) {
 			DlgCircle dialog = frame.getDlgCircle();
 			dialog.writeCircle((Circle) selectedShape);
 			dialog.getTxtX().setEnabled(true);
@@ -236,6 +236,24 @@ public class PnlDrawing extends JPanel {
 				selectedShape = null;
 			}
 		}
+		else if (selectedShape instanceof Donut) { 
+			DlgDonut dialog = frame.getDlgDonut(); 
+			dialog.writeDonut((Donut)selectedShape); 
+			dialog.getTxtX().setEnabled(true); 
+			dialog.getTxtY().setEnabled(true);
+			dialog.setVisible(true);
+			if (dialog.isConfirm()) { 
+				((Donut) selectedShape).getCenter().setX(dialog.makeDonut().getCenter().getX());
+				((Donut) selectedShape).getCenter().setY(dialog.makeDonut().getCenter().getY()); 
+				((Donut) selectedShape).setInnerRadius(dialog.makeDonut().getInnerRadius()); 
+				((Donut) selectedShape).setRadius(dialog.makeDonut().getRadius()); 
+				((Donut) selectedShape).setColor(dialog.makeDonut().getColor());
+				((Donut) selectedShape).setInnerColor(dialog.makeDonut().getInnerColor());
+				((Donut) selectedShape).setBorderColor(dialog.makeDonut().getBorderColor());
+				}else{ 
+					selectedShape.setSelected(false); 
+					selectedShape = null; 
+					} }
 
 		repaint();
 	}
