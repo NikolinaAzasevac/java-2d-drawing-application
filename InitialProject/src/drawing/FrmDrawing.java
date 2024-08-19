@@ -81,6 +81,10 @@ public class FrmDrawing extends JFrame {
 		btnGroup.add(tglbtnRectangle);
 		btnGroup.add(tglbtnCircle);
 		btnGroup.add(tglbtnDonut);
+		btnGroup.add(tglbtnSelect);
+		btnGroup.add(tglbtnModify);
+		btnGroup.add(tglbtnDelete);
+		
 
 		tglbtnPoint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

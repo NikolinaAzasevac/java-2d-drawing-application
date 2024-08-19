@@ -184,26 +184,44 @@ public class PnlDrawing extends JPanel {
 				selectedShape.setSelected(false);
 				selectedShape = null;
 			}
-		}
-		else {
-			DlgLine dlg = frame.getDlgLine();
-			dlg.writeLine((Line) selectedShape);
-			dlg.getTxtX1().setEnabled(true);
-			dlg.getTxtY1().setEnabled(true);
-			dlg.getTxtX2().setEnabled(true);
-			dlg.getTxtY2().setEnabled(true);
-			dlg.setVisible(true);
-			if (dlg.isConfirm()) {
-				((Line) selectedShape).getStartPoint().setX(dlg.makeLine().getStartPoint().getX());
-				((Line) selectedShape).getStartPoint().setY(dlg.makeLine().getStartPoint().getY());
-				((Line) selectedShape).getEndPoint().setX(dlg.makeLine().getEndPoint().getX());
-				((Line) selectedShape).getEndPoint().setY(dlg.makeLine().getEndPoint().getY());
-				((Line) selectedShape).setColor(dlg.getColor());
+		} else if ((selectedShape instanceof Line)) {
+			DlgLine dialog = frame.getDlgLine();
+			dialog.writeLine((Line) selectedShape);
+			dialog.getTxtX1().setEnabled(true);
+			dialog.getTxtY1().setEnabled(true);
+			dialog.getTxtX2().setEnabled(true);
+			dialog.getTxtY2().setEnabled(true);
+			dialog.setVisible(true);
+			if (dialog.isConfirm()) {
+				((Line) selectedShape).getStartPoint().setX(dialog.makeLine().getStartPoint().getX());
+				((Line) selectedShape).getStartPoint().setY(dialog.makeLine().getStartPoint().getY());
+				((Line) selectedShape).getEndPoint().setX(dialog.makeLine().getEndPoint().getX());
+				((Line) selectedShape).getEndPoint().setY(dialog.makeLine().getEndPoint().getY());
+				((Line) selectedShape).setColor(dialog.getColor());
+			} else {
+				selectedShape.setSelected(false);
+				selectedShape = null;
+			}
+		} else if (selectedShape instanceof Rectangle) {
+			DlgRectangle dialog = frame.getDlgRectangle();
+			dialog.writeRectangle((Rectangle) selectedShape);
+			dialog.getTxtX().setEnabled(true);
+			dialog.getTxtY().setEnabled(true);
+			dialog.setVisible(true);
+			if (dialog.isConfirm()) {
+				((Rectangle) selectedShape).getUpperLeftPoint().setX(dialog.makeRectangle().getUpperLeftPoint().getX());
+				((Rectangle) selectedShape).getUpperLeftPoint().setY(dialog.makeRectangle().getUpperLeftPoint().getY());
+				((Rectangle) selectedShape).setHeight(dialog.makeRectangle().getHeight());
+				((Rectangle) selectedShape).setWidth(dialog.makeRectangle().getWidth());
+				((Rectangle) selectedShape).setColor(dialog.makeRectangle().getColor());
+				((Rectangle) selectedShape).setColor(dialog.makeRectangle().getBorderColor());
 			} else {
 				selectedShape.setSelected(false);
 				selectedShape = null;
 			}
 		}
+
+		repaint();
 	}
 
 	@Override
