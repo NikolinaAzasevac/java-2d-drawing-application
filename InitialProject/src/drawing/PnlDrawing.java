@@ -185,6 +185,25 @@ public class PnlDrawing extends JPanel {
 				selectedShape = null;
 			}
 		}
+		else {
+			DlgLine dlg = frame.getDlgLine();
+			dlg.writeLine((Line) selectedShape);
+			dlg.getTxtX1().setEnabled(true);
+			dlg.getTxtY1().setEnabled(true);
+			dlg.getTxtX2().setEnabled(true);
+			dlg.getTxtY2().setEnabled(true);
+			dlg.setVisible(true);
+			if (dlg.isConfirm()) {
+				((Line) selectedShape).getStartPoint().setX(dlg.makeLine().getStartPoint().getX());
+				((Line) selectedShape).getStartPoint().setY(dlg.makeLine().getStartPoint().getY());
+				((Line) selectedShape).getEndPoint().setX(dlg.makeLine().getEndPoint().getX());
+				((Line) selectedShape).getEndPoint().setY(dlg.makeLine().getEndPoint().getY());
+				((Line) selectedShape).setColor(dlg.getColor());
+			} else {
+				selectedShape.setSelected(false);
+				selectedShape = null;
+			}
+		}
 	}
 
 	@Override
