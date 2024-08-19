@@ -15,6 +15,8 @@ import geometry.Point;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
@@ -50,6 +52,7 @@ public class DlgLine extends JDialog {
 	 */
 	public DlgLine() {
 		setModal(true);
+		setTitle("Add or modify line");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -183,8 +186,33 @@ public class DlgLine extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						confirm = true;
-						setVisible(false);
+
+						if (txtX1.getText().isEmpty() || txtY1.getText().isEmpty() || txtX2.getText().isEmpty()
+								|| txtY2.getText().isEmpty()) {
+							confirm = false;
+							JOptionPane.showMessageDialog(null, "All fields are required!", "Error message",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							try {
+								if (Integer.parseInt(txtX1.getText()) < 0 || Integer.parseInt(txtY1.getText()) < 0
+										|| Integer.parseInt(txtX2.getText()) < 0
+										|| Integer.parseInt(txtY2.getText()) < 0) {
+									JOptionPane.showMessageDialog(null, "Insert values greater than 0!",
+											"Error message", JOptionPane.ERROR_MESSAGE);
+
+								} else {
+
+									confirm = true;
+									setVisible(false);
+
+								}
+
+							} catch (Exception e2) {
+								JOptionPane.showMessageDialog(null, "Enter numbers only!", "Error",
+										JOptionPane.ERROR_MESSAGE);
+							}
+
+						}
 					}
 				});
 				okButton.setActionCommand("OK");

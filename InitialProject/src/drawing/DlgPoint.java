@@ -14,6 +14,8 @@ import geometry.Point;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
@@ -49,6 +51,7 @@ public class DlgPoint extends JDialog {
 	 */
 	public DlgPoint() {
 		setModal(true);
+		setTitle("Add or modify point");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -131,9 +134,29 @@ public class DlgPoint extends JDialog {
 			{
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
+
 					public void actionPerformed(ActionEvent e) {
-						confirm = true;
-						setVisible(false);
+						if (txtX.getText().isEmpty() || txtY.getText().isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Please enter coordinates!", "Error message",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+
+							try {
+								if (Integer.parseInt(txtX.getText()) < 0 || Integer.parseInt(txtY.getText()) < 0) {
+									JOptionPane.showMessageDialog(null, "Please enter number greater than 0!",
+											"Error message", JOptionPane.ERROR_MESSAGE);
+								} else {
+									confirm = true;
+									setVisible(false);
+
+								}
+							} catch (Exception e1) {
+								JOptionPane.showMessageDialog(null, "Please enter only numbers!", "Error message",
+										JOptionPane.ERROR_MESSAGE);
+
+							}
+						}
+
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -144,9 +167,7 @@ public class DlgPoint extends JDialog {
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						confirm = false;
-		                setVisible(false);
-						//dispose();
+						dispose();
 					}
 				});
 				cancelButton.setActionCommand("Cancel");

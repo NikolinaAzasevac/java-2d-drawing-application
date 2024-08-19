@@ -15,6 +15,8 @@ import geometry.Point;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
@@ -53,6 +55,7 @@ public class DlgDonut extends JDialog {
 	 */
 	public DlgDonut() {
 		setModal(true);
+		setTitle("Add or modify donut");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -220,8 +223,38 @@ public class DlgDonut extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						setConfirm(true);
-						setVisible(false);
+
+						if (txtX.getText().isEmpty() || txtY.getText().isEmpty() || txtOuterRadius.getText().isEmpty()
+								|| txtInnerRadius.getText().isEmpty()) {
+							setConfirm(false);
+							JOptionPane.showMessageDialog(null, "Please, enter values.All fields are required!",
+									"Error message", JOptionPane.ERROR_MESSAGE);
+
+						} else {
+							try {
+								if (Integer.parseInt(txtInnerRadius.getText()) <= 0
+										|| Integer.parseInt(txtOuterRadius.getText()) <= 0
+										|| Integer.parseInt(txtX.getText()) < 0 || Integer.parseInt(txtY.getText()) < 0)
+									JOptionPane.showMessageDialog(null, "Values must be greater then 0!",
+											"Error message", JOptionPane.ERROR_MESSAGE);
+								else {
+									if (Integer.parseInt(txtInnerRadius.getText()) < Integer.parseInt(txtOuterRadius.getText())) {
+										setConfirm(true);
+										setVisible(false);
+									} else {
+										JOptionPane.showMessageDialog(null,
+												"Please insert inner radius less than outher radius!", "Error message",
+												JOptionPane.ERROR_MESSAGE);
+									}
+
+								}
+							} catch (Exception e2) {
+								JOptionPane.showMessageDialog(null,
+										"All fields must be numbers.Please, enter numbers only!", "Error message",
+										JOptionPane.ERROR_MESSAGE);
+							}
+
+						}
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -249,7 +282,7 @@ public class DlgDonut extends JDialog {
 		color = donut.getColor();
 		innerColor = donut.getColor();
 		borderColor = donut.getBorderColor();
-		
+
 	}
 
 	public Donut makeDonut() {

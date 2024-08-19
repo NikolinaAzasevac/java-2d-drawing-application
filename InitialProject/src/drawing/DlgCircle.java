@@ -15,6 +15,8 @@ import geometry.Point;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
@@ -51,6 +53,7 @@ public class DlgCircle extends JDialog {
 	 */
 	public DlgCircle() {
 		setModal(true);
+		setTitle("Add or modify circle");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -178,8 +181,27 @@ public class DlgCircle extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						setConfirm(true);
-						setVisible(false);
+						if (txtX.getText().isEmpty() || txtY.getText().isEmpty() || txtRadius.getText().isEmpty()) {
+							setConfirm(false);
+							JOptionPane.showMessageDialog(null, "Please, enter values.All fields are required!",
+									"Error message", JOptionPane.ERROR_MESSAGE);
+						} else {
+							try {
+								if (Integer.parseInt(txtRadius.getText()) <= 0 || Integer.parseInt(txtX.getText()) < 0
+										|| Integer.parseInt(txtY.getText()) < 0) {
+									JOptionPane.showMessageDialog(null, "Enter a number greater than 0!",
+											"Error message", JOptionPane.ERROR_MESSAGE);
+								} else {
+									setConfirm(true);
+									setVisible(false);
+								}
+							} catch (Exception e2) {
+								JOptionPane.showMessageDialog(null, "Enter numbers!", "Error",
+										JOptionPane.ERROR_MESSAGE);
+							}
+
+						}
+
 					}
 				});
 				okButton.setActionCommand("OK");

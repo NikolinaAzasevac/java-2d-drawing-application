@@ -15,6 +15,7 @@ import geometry.Rectangle;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
@@ -52,6 +53,7 @@ public class DlgRectangle extends JDialog {
 	 */
 	public DlgRectangle() {
 		setModal(true);
+		setTitle("Add or modify rectangle");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -191,8 +193,29 @@ public class DlgRectangle extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						setConfirm(true);
-						setVisible(false);
+						try {
+							if (txtX.getText().isEmpty() || txtY.getText().isEmpty() || txtHeight.getText().isEmpty()
+									|| txtWidth.getText().isEmpty()) {
+								setConfirm(false);
+								JOptionPane.showMessageDialog(null, "Please, enter values.All values are required!",
+										"Error message", JOptionPane.ERROR_MESSAGE);
+							} else {
+								if (Integer.parseInt(txtWidth.getText()) <= 0
+										|| Integer.parseInt(txtHeight.getText()) <= 0
+										|| Integer.parseInt(txtX.getText()) < 0
+										|| Integer.parseInt(txtY.getText()) < 0) {
+									JOptionPane.showMessageDialog(null, "Values must be greater than 0!",
+											"Error message", JOptionPane.ERROR_MESSAGE);
+
+								} else {
+									setConfirm(true);
+									setVisible(false);
+								}
+							}
+						} catch (NumberFormatException e1) {
+							JOptionPane.showMessageDialog(null, "Enter numbers only!", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -269,6 +292,5 @@ public class DlgRectangle extends JDialog {
 	public void setTxtWidth(JTextField txtWidth) {
 		this.txtWidth = txtWidth;
 	}
-	
 
 }
