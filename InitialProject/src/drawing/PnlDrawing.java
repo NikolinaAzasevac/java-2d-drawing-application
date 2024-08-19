@@ -159,6 +159,34 @@ public class PnlDrawing extends JPanel {
 
 	}
 
+	public void modify(FrmDrawing frame) {
+		// proverava da li je selektovani oblik instanca klase point
+		if (selectedShape instanceof Point) {
+
+			// kreira dijalog za unos podataka o tacki
+			DlgPoint dialog = frame.getDlgPoint();
+			// postavlja trenutne vrednosti oblika u dlg
+			dialog.writePoint((Point) selectedShape);
+			// omogucava korisniku da menja koordinate
+			dialog.getTxtX().setEnabled(true);
+			dialog.getTxtY().setEnabled(true);
+			// prikazuje dijalog korisniku
+			dialog.setVisible(true);
+
+			// proverava da li su promene potvrdjene
+			if (dialog.isConfirm()) {
+				// azurira koordinate i boju oblika sa novim vrednostima iz dlg
+				((Point) selectedShape).setX(dialog.makePoint().getX());
+				((Point) selectedShape).setY(dialog.makePoint().getY());
+				((Point) selectedShape).setColor(dialog.makePoint().getColor());
+			} else {
+				// deselectuje oblik i postavlja selectedShape na null
+				selectedShape.setSelected(false);
+				selectedShape = null;
+			}
+		}
+	}
+
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g); // Poziva paint metode nadklase

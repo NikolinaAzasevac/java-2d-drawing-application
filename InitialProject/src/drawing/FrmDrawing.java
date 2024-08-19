@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -41,7 +41,7 @@ public class FrmDrawing extends JFrame {
 	private DlgLine dlgLine = new DlgLine();
 	private DlgRectangle dlgRectangle = new DlgRectangle();
 	private DlgCircle dlgCircle = new DlgCircle();
-	private DlgDonut dlgDonut= new DlgDonut();
+	private DlgDonut dlgDonut = new DlgDonut();
 
 	/**
 	 * Launch the application.
@@ -81,7 +81,6 @@ public class FrmDrawing extends JFrame {
 		btnGroup.add(tglbtnRectangle);
 		btnGroup.add(tglbtnCircle);
 		btnGroup.add(tglbtnDonut);
-		btnGroup.add(tglbtnSelect);
 
 		tglbtnPoint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -131,7 +130,7 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlNorth.add(tglbtnCircle);
-		
+
 		tglbtnDonut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				choice = "donut";
@@ -154,8 +153,26 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlSouth.add(tglbtnSelect);
-		
+
+		tglbtnModify.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// proverava da li je selektovan oblik u pnlDrawing 
+				if (pnlDrawing.getSelectedShape() != null) {
+					// Ako je selektovano, poziva se modify
+					pnlDrawing.modify(frame);
+				} else {
+					// ako oblik nije selektovan prikazuje se greska
+					JOptionPane.showMessageDialog(null,
+							"There is no selected shape! Please, select the shape you want to modify.", "Error Message",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				// postavlja tglbtnSelect kao selektovano i azurira izbor na select
+				tglbtnSelect.setSelected(true);
+				choice = "select";
+			}
+		});
 		pnlSouth.add(tglbtnModify);
+
 		pnlSouth.add(tglbtnDelete);
 
 		pnlDrawing.addMouseListener(new MouseAdapter() { // metoda bez koje se ne bi mogla izabrati tacka klikom
@@ -278,8 +295,5 @@ public class FrmDrawing extends JFrame {
 	public void setDlgDonut(DlgDonut dlgDonut) {
 		this.dlgDonut = dlgDonut;
 	}
-	
-	
-	
 
 }
