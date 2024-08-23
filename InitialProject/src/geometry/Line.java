@@ -25,7 +25,7 @@ public class Line extends Shape {
 
 	public Line(Point startPoint, Point endPoint, Color color) {
 		this(startPoint, endPoint);
-		setColor(color);
+		this.color = color;
 	}
 
 	public double length() { // nista ne prosledjujemo jer u line ima i start i end point
@@ -52,7 +52,7 @@ public class Line extends Shape {
 
 	public boolean contains(int x, int y) {
 		Point sadrziTacku = new Point(x, y);
-		return this.startPoint.distance(sadrziTacku) + this.endPoint.distance(sadrziTacku) - length() <= 2;
+		return (this.startPoint.distance(sadrziTacku) + this.endPoint.distance(sadrziTacku)) - length() <= 2;
 	}
 
 	public void draw(Graphics g) {

@@ -19,7 +19,6 @@ import javax.swing.JOptionPane;
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
-import javax.swing.JToggleButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -111,21 +110,17 @@ public class DlgPoint extends JDialog {
 			contentPanel.add(lblChoose, gbc_lblChoose);
 		}
 		{
-			JToggleButton tglbtnColor = new JToggleButton("COLOR");
-			tglbtnColor.addActionListener(new ActionListener() {
+			JButton btnColor = new JButton("COLOR");
+			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Color selectedColor = JColorChooser.showDialog(null, "Choose color of point", color);
-					if (selectedColor != null) {
-						color = selectedColor;
-						tglbtnColor.setBackground(color);
-					}
+					color = JColorChooser.showDialog(null, "Choose color of line", Color.black);
 				}
 			});
-			GridBagConstraints gbc_tglbtnColor = new GridBagConstraints();
-			gbc_tglbtnColor.anchor = GridBagConstraints.WEST;
-			gbc_tglbtnColor.gridx = 1;
-			gbc_tglbtnColor.gridy = 2;
-			contentPanel.add(tglbtnColor, gbc_tglbtnColor);
+			GridBagConstraints gbc_btnColor = new GridBagConstraints();
+			gbc_btnColor.anchor = GridBagConstraints.WEST;
+			gbc_btnColor.gridx = 1;
+			gbc_btnColor.gridy = 2;
+			contentPanel.add(btnColor, gbc_btnColor);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -137,6 +132,7 @@ public class DlgPoint extends JDialog {
 
 					public void actionPerformed(ActionEvent e) {
 						if (txtX.getText().isEmpty() || txtY.getText().isEmpty()) {
+							setConfirm(false);
 							JOptionPane.showMessageDialog(null, "Please enter coordinates!", "Error message",
 									JOptionPane.ERROR_MESSAGE);
 						} else {

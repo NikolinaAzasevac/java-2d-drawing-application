@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
@@ -71,7 +72,6 @@ public class PnlDrawing extends JPanel {
 				dialog.setVisible(true);
 				if (dialog.isConfirm()) {
 					line.setColor(dialog.getColor());
-					System.out.println(line.getColor().toString());
 					shapes.add(line);
 				}
 				startPoint = null;
@@ -141,16 +141,19 @@ public class PnlDrawing extends JPanel {
 		}
 
 		case "select": {
-			Iterator<Shape> itShape = shapes.iterator(); // kreiram iterator koji prolazi kroz sve oblike u listi
-			while (itShape.hasNext()) {
-				Shape temporary = itShape.next(); // uzima sledeci oblik iz liste
-				if (temporary.contains(e.getX(), e.getY())) { // proverava se da li je tacka gde je stisnbuto tacka
-																// nekog oblika
+
+			ListIterator<Shape> itShape = shapes.listIterator(shapes.size()); // kreiramo list iterator koji prolazi
+																				// unazad kroz listu
+			boolean shapeSelected = false; // promenljiva koja prati da li je neki oblik selektovan
+			while (itShape.hasPrevious()) {
+				Shape temporary = itShape.previous(); // uzima sledeci (zapravo prethodni) oblik iz liste
+				if (temporary.contains(e.getX(), e.getY()) && !shapeSelected) {
 					System.out.println(temporary.toString());
-					temporary.setSelected(true); // jeste seleektujemo
+					temporary.setSelected(true); // selektujemo oblik
 					selectedShape = temporary; // trenutno selektovani oblik je selected shape
+					shapeSelected = true; // postavljamo da je oblik selektovan
 				} else if (temporary.isSelected()) {
-					temporary.setSelected(false); // deselektujemo, kako bi samo jedan oblik bio selektovan
+					temporary.setSelected(false); // deselektujemo sve ostale oblike
 				}
 			}
 			repaint();
@@ -194,11 +197,11 @@ public class PnlDrawing extends JPanel {
 				((Point) selectedShape).setX(dialog.makePoint().getX());
 				((Point) selectedShape).setY(dialog.makePoint().getY());
 				((Point) selectedShape).setColor(dialog.makePoint().getColor());
-			} else {
-				// deselectuje oblik i postavlja selectedShape na null
-				selectedShape.setSelected(false);
-				selectedShape = null;
 			}
+			// deselectuje oblik i postavlja selectedShape na null
+			selectedShape.setSelected(false);
+			selectedShape = null;
+
 		} else if ((selectedShape instanceof Line)) {
 			DlgLine dialog = frame.getDlgLine();
 			dialog.writeLine((Line) selectedShape);
@@ -213,10 +216,10 @@ public class PnlDrawing extends JPanel {
 				((Line) selectedShape).getEndPoint().setX(dialog.makeLine().getEndPoint().getX());
 				((Line) selectedShape).getEndPoint().setY(dialog.makeLine().getEndPoint().getY());
 				((Line) selectedShape).setColor(dialog.getColor());
-			} else {
-				selectedShape.setSelected(false);
-				selectedShape = null;
 			}
+			selectedShape.setSelected(false);
+			selectedShape = null;
+
 		} else if (selectedShape instanceof Rectangle) {
 			DlgRectangle dialog = frame.getDlgRectangle();
 			dialog.writeRectangle((Rectangle) selectedShape);
@@ -230,10 +233,10 @@ public class PnlDrawing extends JPanel {
 				((Rectangle) selectedShape).setWidth(dialog.makeRectangle().getWidth());
 				((Rectangle) selectedShape).setColor(dialog.makeRectangle().getColor());
 				((Rectangle) selectedShape).setBorderColor(dialog.makeRectangle().getBorderColor());
-			} else {
-				selectedShape.setSelected(false);
-				selectedShape = null;
 			}
+			selectedShape.setSelected(false);
+			selectedShape = null;
+
 		} else if (selectedShape instanceof Circle && !(selectedShape instanceof Donut)) { // dodato da je razlicito od
 																							// instance donuta jer mi je
 																							// prilikom modifikacije
@@ -249,10 +252,10 @@ public class PnlDrawing extends JPanel {
 				((Circle) selectedShape).setRadius(dialog.makeCircle().getRadius());
 				((Circle) selectedShape).setColor(dialog.makeCircle().getColor());
 				((Circle) selectedShape).setBorderColor(dialog.makeCircle().getBorderColor());
-			} else {
-				selectedShape.setSelected(false);
-				selectedShape = null;
 			}
+			selectedShape.setSelected(false);
+			selectedShape = null;
+
 		} else if (selectedShape instanceof Donut) {
 			DlgDonut dialog = frame.getDlgDonut();
 			dialog.writeDonut((Donut) selectedShape);
@@ -267,10 +270,10 @@ public class PnlDrawing extends JPanel {
 				((Donut) selectedShape).setColor(dialog.makeDonut().getColor());
 				((Donut) selectedShape).setInnerColor(dialog.makeDonut().getInnerColor());
 				((Donut) selectedShape).setBorderColor(dialog.makeDonut().getBorderColor());
-			} else {
-				selectedShape.setSelected(false);
-				selectedShape = null;
 			}
+			selectedShape.setSelected(false);
+			selectedShape = null;
+
 		}
 
 		repaint();

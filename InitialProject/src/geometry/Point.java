@@ -56,11 +56,12 @@ public class Point extends Shape {
 		g.setColor(color);
 		g.drawLine(x - 2, y, x + 2, y);
 		g.drawLine(x, y - 2, x, y + 2);
-		if (this.selected==true) {
-			g.setColor(Color.blue);
+		if (this.selected == true) {
+			g.setColor(Color.BLUE);
 			g.drawRect(x - 2, y - 2, 4, 4);
-			g.setColor(Color.black);
 		}
+		g.setColor(Color.black);
+
 	}
 
 	@Override
@@ -106,7 +107,6 @@ public class Point extends Shape {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
 
 	public Color getColor() {
 		return color;
@@ -114,6 +114,14 @@ public class Point extends Shape {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 
 	// isti potpis kao i u klasi oBject

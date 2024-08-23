@@ -197,7 +197,7 @@ public class DlgRectangle extends JDialog {
 							if (txtX.getText().isEmpty() || txtY.getText().isEmpty() || txtHeight.getText().isEmpty()
 									|| txtWidth.getText().isEmpty()) {
 								setConfirm(false);
-								JOptionPane.showMessageDialog(null, "Please, enter values.All values are required!",
+								JOptionPane.showMessageDialog(null, "Please, enter values. All values are required!",
 										"Error message", JOptionPane.ERROR_MESSAGE);
 							} else {
 								if (Integer.parseInt(txtWidth.getText()) <= 0
