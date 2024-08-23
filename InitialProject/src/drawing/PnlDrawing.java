@@ -280,8 +280,20 @@ public class PnlDrawing extends JPanel {
 	}
 
 	public void delete() { // metoda za uklanjanje
-		shapes.remove(selectedShape);
-		repaint();
+		if (selectedShape != null) {
+			int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the selected shape?",
+					"Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (confirm == JOptionPane.YES_OPTION) {
+				shapes.remove(selectedShape); // uklanja selektovani oblik iz liste
+				selectedShape = null; // resetuje selektovani oblik
+				repaint(); // osvezava panela
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "There is no selected shape. Select the shape you want to delete.",
+					"Error Message", JOptionPane.INFORMATION_MESSAGE);
+		}
+
 	}
 
 	@Override

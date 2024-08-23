@@ -170,7 +170,7 @@ public class DlgLine extends JDialog {
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					color = JColorChooser.showDialog(null, "Choose color of line", Color.black);
-					
+
 				}
 			});
 			GridBagConstraints gbc_btnColor = new GridBagConstraints();
@@ -190,7 +190,6 @@ public class DlgLine extends JDialog {
 
 						if (txtX1.getText().isEmpty() || txtY1.getText().isEmpty() || txtX2.getText().isEmpty()
 								|| txtY2.getText().isEmpty()) {
-							setConfirm(false);
 							JOptionPane.showMessageDialog(null, "All fields are required!", "Error message",
 									JOptionPane.ERROR_MESSAGE);
 						} else {
@@ -224,7 +223,12 @@ public class DlgLine extends JDialog {
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						dispose();
+						int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?",
+								"Confirm Cancel", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+						if (confirm == JOptionPane.YES_OPTION) {
+							dispose();
+						}
+
 					}
 				});
 				cancelButton.setActionCommand("Cancel");

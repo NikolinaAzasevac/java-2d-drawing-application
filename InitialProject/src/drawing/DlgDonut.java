@@ -226,7 +226,6 @@ public class DlgDonut extends JDialog {
 
 						if (txtX.getText().isEmpty() || txtY.getText().isEmpty() || txtOuterRadius.getText().isEmpty()
 								|| txtInnerRadius.getText().isEmpty()) {
-							setConfirm(false);
 							JOptionPane.showMessageDialog(null, "Please, enter values.All fields are required!",
 									"Error message", JOptionPane.ERROR_MESSAGE);
 
@@ -238,7 +237,8 @@ public class DlgDonut extends JDialog {
 									JOptionPane.showMessageDialog(null, "Values must be greater then 0!",
 											"Error message", JOptionPane.ERROR_MESSAGE);
 								else {
-									if (Integer.parseInt(txtInnerRadius.getText()) < Integer.parseInt(txtOuterRadius.getText())) {
+									if (Integer.parseInt(txtInnerRadius.getText()) < Integer
+											.parseInt(txtOuterRadius.getText())) {
 										setConfirm(true);
 										setVisible(false);
 									} else {
@@ -265,7 +265,12 @@ public class DlgDonut extends JDialog {
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						dispose();
+						int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?",
+								"Confirm Cancel", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+						if (confirm == JOptionPane.YES_OPTION) {
+							dispose(); // Zatvorite dijalog ako korisnik potvrdi
+						}
+						// Ako korisnik izabere "No", dijalog ostaje otvoren
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
