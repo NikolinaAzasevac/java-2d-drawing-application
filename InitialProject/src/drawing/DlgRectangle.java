@@ -31,8 +31,8 @@ public class DlgRectangle extends JDialog {
 	private JTextField txtY;
 	private JTextField txtHeight;
 	private JTextField txtWidth;
-	private Color color; // innerColor = Color.BLACK;
-	private Color borderColor; // = Color.BLACK;
+	private Color color;
+	private Color borderColor;
 	private boolean confirm;
 
 	/**
@@ -153,7 +153,11 @@ public class DlgRectangle extends JDialog {
 			JButton btnInnerColor = new JButton("COLOR");
 			btnInnerColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					color = JColorChooser.showDialog(null, "Choose inner color", Color.black);
+					color = JColorChooser.showDialog(null, "Choose inner color", Color.white);
+					if (color != null) {
+						btnInnerColor.setBackground(color);
+						btnInnerColor.setOpaque(true);
+					}
 				}
 			});
 			GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
@@ -176,6 +180,10 @@ public class DlgRectangle extends JDialog {
 			btnBorderColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					borderColor = JColorChooser.showDialog(null, "Choose border color", Color.black);
+					if (borderColor != null) {
+						btnBorderColor.setBackground(borderColor);
+						btnBorderColor.setOpaque(true);
+					}
 				}
 			});
 			GridBagConstraints gbc_btnBorderColor = new GridBagConstraints();
@@ -226,7 +234,7 @@ public class DlgRectangle extends JDialog {
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?",
-								"Confirm Cancel", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+								"Confirm or cancel", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 						if (confirm == JOptionPane.YES_OPTION) {
 							dispose();
 						}
@@ -244,8 +252,7 @@ public class DlgRectangle extends JDialog {
 		txtY.setText(String.valueOf(rectangle.getUpperLeftPoint().getY()));
 		txtWidth.setText(String.valueOf(rectangle.getWidth()));
 		txtHeight.setText(String.valueOf(rectangle.getHeight()));
-		color = rectangle.getColor();
-		borderColor = rectangle.getBorderColor();
+
 	}
 
 	public Rectangle makeRectangle() {

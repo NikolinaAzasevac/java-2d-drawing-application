@@ -29,7 +29,7 @@ public class DlgSort extends JDialog {
 	private JTextField txtY1;
 	private JTextField txtRadius1;
 	private JTextField txtInnerRadius1;
-	private boolean isOk=false;
+	private boolean isOk = false;
 
 	/**
 	 * Launch the application.
@@ -56,10 +56,10 @@ public class DlgSort extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWidths = new int[] { 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblX = new JLabel("X:");
@@ -157,36 +157,43 @@ public class DlgSort extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				
+
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try {
-				            if (txtX1.getText().isEmpty() || txtY1.getText().isEmpty() || txtRadius1.getText().isEmpty() || txtInnerRadius1.getText().isEmpty()) {
-				                JOptionPane.showMessageDialog(null, "Please enter a value for all fields.", "ERROR", JOptionPane.INFORMATION_MESSAGE);
-				            } else {
-				                int radius = Integer.parseInt(txtRadius1.getText());
-				                int innerRadius = Integer.parseInt(txtInnerRadius1.getText());
-				                
-				                if (innerRadius > 0 && radius > 0) {
-				                    if (innerRadius < radius) {
-				                        isOk = true; 
-				                    } else {
-				                        JOptionPane.showMessageDialog(null, "Outer radius must be greater than the inner radius!", "Error message", JOptionPane.ERROR_MESSAGE);
-				                    }
-				                } else {
-				                    JOptionPane.showMessageDialog(null, "Outer and inner radius must be greater than 0.", "Error message", JOptionPane.ERROR_MESSAGE);
-				                }
-				            }
-				        } catch (NumberFormatException e1) {
-				            JOptionPane.showMessageDialog(null, "Values must be integers!", "Error message", JOptionPane.ERROR_MESSAGE);
-				        }
-				        
-				        if (isOk) {
-				            setVisible(false); 
-				        }
-						
-				}
+							if (txtX1.getText().isEmpty() || txtY1.getText().isEmpty() || txtRadius1.getText().isEmpty()
+									|| txtInnerRadius1.getText().isEmpty()) {
+								JOptionPane.showMessageDialog(null, "Please enter a value for all fields.", "ERROR",
+										JOptionPane.INFORMATION_MESSAGE);
+							} else {
+								int radius = Integer.parseInt(txtRadius1.getText());
+								int innerRadius = Integer.parseInt(txtInnerRadius1.getText());
+
+								if (innerRadius > 0 && radius > 0) {
+									if (innerRadius < radius) {
+										isOk = true;
+									} else {
+										JOptionPane.showMessageDialog(null,
+												"Outer radius must be greater than the inner radius!", "Error message",
+												JOptionPane.ERROR_MESSAGE);
+									}
+								} else {
+									JOptionPane.showMessageDialog(null,
+											"Outer and inner radius must be greater than 0.", "Error message",
+											JOptionPane.ERROR_MESSAGE);
+								}
+							}
+						} catch (NumberFormatException e1) {
+							JOptionPane.showMessageDialog(null, "Values must be integers!", "Error message",
+									JOptionPane.ERROR_MESSAGE);
+						}
+
+						if (isOk) {
+							setVisible(false);
+						}
+
+					}
 				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
@@ -204,13 +211,8 @@ public class DlgSort extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
-		
-		
+
 	}
-	
-	
-	
-	
 
 	public JTextField getTxtX1() {
 		return txtX1;
@@ -251,7 +253,5 @@ public class DlgSort extends JDialog {
 	public void setOk(boolean isOk) {
 		this.isOk = isOk;
 	}
-	
-	
 
 }

@@ -114,8 +114,11 @@ public class DlgPoint extends JDialog {
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					color = JColorChooser.showDialog(null, "Choose color of point", Color.black);
-					//if (color != null)
-						//btnColor.setBackground(color); ne radi na bilo koji nacin pozadina
+					if (color != null) {
+						btnColor.setBackground(color); // postavlja pozadinsku boju dugmeta
+						btnColor.setOpaque(true); // omogućava prikaz pozadinske boje
+					}
+
 				}
 			});
 			GridBagConstraints gbc_btnColor = new GridBagConstraints();
@@ -164,12 +167,12 @@ public class DlgPoint extends JDialog {
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?", "Confirm Cancel",
-				                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				        if (confirm == JOptionPane.YES_OPTION) {
-				            dispose(); // zatvori dijalog ako korisnik potvrdi
-				        }
-				        // Ako korisnik izabere no dijalog ostaje otvoren
+						int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?",
+								"Confirm  or cancel", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+						if (confirm == JOptionPane.YES_OPTION) {
+							dispose(); // zatvori dijalog ako korisnik potvrdi
+						}
+						// Ako korisnik izabere no dijalog ostaje otvoren
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
@@ -182,7 +185,6 @@ public class DlgPoint extends JDialog {
 	public void writePoint(Point point) {
 		txtX.setText(String.valueOf(point.getX()));
 		txtY.setText(String.valueOf(point.getY()));
-		color = point.getColor();
 	}
 
 	public Point makePoint() {

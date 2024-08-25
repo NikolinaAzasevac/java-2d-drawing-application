@@ -141,7 +141,11 @@ public class DlgCircle extends JDialog {
 			JButton btnInnerColor = new JButton("COLOR");
 			btnInnerColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					color = JColorChooser.showDialog(null, "Choose inner color", Color.black);
+					color = JColorChooser.showDialog(null, "Choose inner color", Color.white);
+					if (color != null) {
+						btnInnerColor.setBackground(color); 
+						btnInnerColor.setOpaque(true); 
+					}
 				}
 			});
 			GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
@@ -164,6 +168,10 @@ public class DlgCircle extends JDialog {
 			btnBorderColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					borderColor = JColorChooser.showDialog(null, "Choose border color", Color.black);
+					if (borderColor != null) {
+						btnBorderColor.setBackground(borderColor); 
+						btnBorderColor.setOpaque(true); 
+					}
 
 				}
 			});
@@ -212,11 +220,11 @@ public class DlgCircle extends JDialog {
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?",
-								"Confirm Cancel", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+								"Confirm or cancel", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 						if (confirm == JOptionPane.YES_OPTION) {
-							dispose(); // Zatvorite dijalog ako korisnik potvrdi
+							dispose(); 
 						}
-						// Ako korisnik izabere "No", dijalog ostaje otvoren
+						
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
@@ -229,8 +237,6 @@ public class DlgCircle extends JDialog {
 		txtX.setText(String.valueOf(circle.getCenter().getX()));
 		txtY.setText(String.valueOf(circle.getCenter().getY()));
 		txtRadius.setText(String.valueOf(circle.getRadius()));
-		color = circle.getColor();
-		borderColor = circle.getBorderColor();
 	}
 
 	public Circle makeCircle() { // pravljenje obj pomoci prethodnih vrednosti

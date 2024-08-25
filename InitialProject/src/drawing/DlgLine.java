@@ -170,7 +170,10 @@ public class DlgLine extends JDialog {
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					color = JColorChooser.showDialog(null, "Choose color of line", Color.black);
-
+					if (color != null) {
+						btnColor.setBackground(color); 
+						btnColor.setOpaque(true); 
+					}
 				}
 			});
 			GridBagConstraints gbc_btnColor = new GridBagConstraints();
@@ -224,7 +227,7 @@ public class DlgLine extends JDialog {
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?",
-								"Confirm Cancel", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+								"Confirm or cancel", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 						if (confirm == JOptionPane.YES_OPTION) {
 							dispose();
 						}

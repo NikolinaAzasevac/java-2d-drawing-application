@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import javax.swing.JToggleButton;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
@@ -35,7 +34,7 @@ public class FrmDrawing extends JFrame {
 	private JToggleButton tglbtnDelete = new JToggleButton("Delete");
 
 	private String choice = "";
-	private static FrmDrawing frame;
+	private static FrmDrawing frame; // static jer pripada klasi a ne objektu, onda je svi objekti mogu imati i ona cuva referencu na tren objekat
 
 	private DlgPoint dlgPoint = new DlgPoint();
 	private DlgLine dlgLine = new DlgLine();
@@ -73,7 +72,7 @@ public class FrmDrawing extends JFrame {
 		setContentPane(contentPane);
 
 		JPanel pnlNorth = new JPanel();
-		pnlNorth.setBackground(Color.LIGHT_GRAY);
+		pnlNorth.setBackground(new Color(255, 224, 250));
 		contentPane.add(pnlNorth, BorderLayout.NORTH);
 
 		btnGroup.add(tglbtnPoint);
@@ -98,6 +97,8 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlNorth.add(tglbtnPoint);
+		tglbtnPoint.setForeground(Color.PINK);
+		
 
 		tglbtnLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -110,6 +111,7 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlNorth.add(tglbtnLine);
+		tglbtnLine.setForeground(Color.PINK);
 
 		tglbtnRectangle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -122,6 +124,7 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlNorth.add(tglbtnRectangle);
+		tglbtnRectangle.setForeground(Color.PINK);
 
 		tglbtnCircle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,6 +137,7 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlNorth.add(tglbtnCircle);
+		tglbtnCircle.setForeground(Color.PINK);
 
 		tglbtnDonut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -146,9 +150,10 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlNorth.add(tglbtnDonut);
+		tglbtnDonut.setForeground(Color.PINK);
 
 		JPanel pnlSouth = new JPanel();
-		pnlSouth.setBackground(Color.LIGHT_GRAY);
+		pnlSouth.setBackground(new Color(255, 224, 250));
 		contentPane.add(pnlSouth, BorderLayout.SOUTH);
 		tglbtnSelect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -157,6 +162,7 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlSouth.add(tglbtnSelect);
+		tglbtnSelect.setForeground(Color.PINK);
 
 		tglbtnModify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -176,6 +182,8 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlSouth.add(tglbtnModify);
+		tglbtnModify.setForeground(Color.PINK);
+		
 		tglbtnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				choice = "delete";
@@ -189,6 +197,7 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 		pnlSouth.add(tglbtnDelete);
+		tglbtnDelete.setForeground(Color.PINK);
 
 		pnlDrawing.addMouseListener(new MouseAdapter() { // metoda bez koje se ne bi mogla izabrati tacka klikom
 			@Override

@@ -162,7 +162,11 @@ public class DlgDonut extends JDialog {
 			JButton btnInnerColor = new JButton("COLOR");
 			btnInnerColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					innerColor = JColorChooser.showDialog(null, "Choose inner color", Color.black);
+					innerColor = JColorChooser.showDialog(null, "Choose inner color", Color.white);
+					if (innerColor != null) {
+						btnInnerColor.setBackground(innerColor);
+						btnInnerColor.setOpaque(true);
+					}
 				}
 			});
 			GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
@@ -184,7 +188,11 @@ public class DlgDonut extends JDialog {
 			JButton btnOutlineColor = new JButton("COLOR");
 			btnOutlineColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					color = JColorChooser.showDialog(null, "Choose outline color", Color.black);
+					color = JColorChooser.showDialog(null, "Choose outline color", Color.gray);
+					if (color != null) {
+						btnOutlineColor.setBackground(color);
+						btnOutlineColor.setOpaque(true);
+					}
 				}
 			});
 			GridBagConstraints gbc_btnOutlineColor = new GridBagConstraints();
@@ -207,6 +215,10 @@ public class DlgDonut extends JDialog {
 			btnBorderColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					borderColor = JColorChooser.showDialog(null, "Choose border color", Color.black);
+					if (borderColor != null) {
+						btnBorderColor.setBackground(borderColor);
+						btnBorderColor.setOpaque(true);
+					}
 				}
 			});
 			GridBagConstraints gbc_btnBorderColor = new GridBagConstraints();
@@ -266,11 +278,10 @@ public class DlgDonut extends JDialog {
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?",
-								"Confirm Cancel", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+								"Confirm or cancel", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 						if (confirm == JOptionPane.YES_OPTION) {
-							dispose(); // Zatvorite dijalog ako korisnik potvrdi
+							dispose();
 						}
-						// Ako korisnik izabere "No", dijalog ostaje otvoren
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
@@ -284,10 +295,6 @@ public class DlgDonut extends JDialog {
 		txtY.setText(String.valueOf(donut.getCenter().getY()));
 		txtOuterRadius.setText(String.valueOf(donut.getRadius()));
 		txtInnerRadius.setText(String.valueOf(donut.getInnerRadius()));
-		color = donut.getColor();
-		innerColor = donut.getColor();
-		borderColor = donut.getBorderColor();
-
 	}
 
 	public Donut makeDonut() {

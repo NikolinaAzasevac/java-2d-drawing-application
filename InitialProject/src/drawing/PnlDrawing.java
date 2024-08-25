@@ -22,7 +22,6 @@ import geometry.Shape;
 public class PnlDrawing extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	// private FrmDrawing frame;
 	private ArrayList<Shape> shapes = new ArrayList<Shape>();
 	private Point startPoint;
 	private Shape selectedShape;
@@ -33,8 +32,8 @@ public class PnlDrawing extends JPanel {
 
 	public PnlDrawing() {
 		setBackground(new Color(255, 255, 255));
-		Border blackLine = BorderFactory.createLineBorder(Color.black);
-		setBorder(blackLine);
+		Border pinkLine = BorderFactory.createLineBorder(Color.pink);
+		setBorder(pinkLine);
 	}
 
 	public void drawing(MouseEvent e, FrmDrawing frame) {
@@ -42,7 +41,7 @@ public class PnlDrawing extends JPanel {
 		switch (frame.getChoice()) {
 		case "point": {
 			DlgPoint dialog = frame.getDlgPoint();
-			dialog.writePoint(click); // prosledi kliknu tačku u dijalog
+			dialog.writePoint(click); // prosledi kliknu tacku u dijalog
 			dialog.getTxtX().setEnabled(false);
 			dialog.getTxtY().setEnabled(false);
 
@@ -64,11 +63,11 @@ public class PnlDrawing extends JPanel {
 				Point p2 = new Point(e.getX(), e.getY());
 				Line line = new Line(p1, p2);
 				DlgLine dialog = frame.getDlgLine();
+				dialog.writeLine(line);
 				dialog.getTxtX1().setEnabled(false);
 				dialog.getTxtY1().setEnabled(false);
 				dialog.getTxtX2().setEnabled(false);
 				dialog.getTxtY2().setEnabled(false);
-				dialog.writeLine(line);
 				dialog.setVisible(true);
 				if (dialog.isConfirm()) {
 					line.setColor(dialog.getColor());
@@ -82,26 +81,21 @@ public class PnlDrawing extends JPanel {
 		}
 
 		case "rectangle": {
-			if (startPoint == null) {
-				startPoint = click; // postavlja pocetnu tacku
-			} else {
-				// kreira pravougaonik
-				DlgRectangle dialog = frame.getDlgRectangle();
-				dialog.getTxtX().setText(String.valueOf(startPoint.getX())); // postavi x pocetku tacku
-				dialog.getTxtY().setText(String.valueOf(startPoint.getY())); // postavi y
-				dialog.getTxtWidth().setText(""); // prazno polje za sirinu
-				dialog.getTxtHeight().setText(""); // za visinu
-				dialog.getTxtX().setEnabled(false); // onemogui unos X
-				dialog.getTxtY().setEnabled(false); // onemogući unos Y
-				dialog.setVisible(true);
+			DlgRectangle dialog = frame.getDlgRectangle();
+			dialog.getTxtX().setText(String.valueOf(click.getX())); // postavi x pocetku tacku
+			dialog.getTxtY().setText(String.valueOf(click.getY())); // postavi y
+			dialog.getTxtWidth().setText(""); // prazno polje za sirinu
+			dialog.getTxtHeight().setText(""); // za visinu
+			dialog.getTxtX().setEnabled(false); // onemogui unos X
+			dialog.getTxtY().setEnabled(false); // onemogući unos Y
+			dialog.setVisible(true);
 
-				if (dialog.isConfirm()) {
-					// kada je korisnik potvrdio unos
-					Rectangle rectangle = dialog.makeRectangle(); // kreira pravougaonik iz dijaloga
-					shapes.add(rectangle); // doda pravougaonik u listu
-				}
-				startPoint = null; // resetuje pocetnu tacku
+			if (dialog.isConfirm()) {
+				// kada je korisnik potvrdio unos
+				Rectangle rectangle = dialog.makeRectangle(); // kreira pravougaonik iz dijaloga
+				shapes.add(rectangle); // doda pravougaonik u listu
 			}
+
 			repaint(); // osvezi panel
 			break;
 		}
@@ -141,22 +135,41 @@ public class PnlDrawing extends JPanel {
 		}
 
 		case "select": {
+			ListIterator<Shape> itShape = shapes.listIterator(shapes.size()); // kreiramo iterator koji prolazi unazad
+																				// kroz listu
+			boolean shapeSelected = false; // varijabla koja prati da li je neki oblik selektovan
 
-			ListIterator<Shape> itShape = shapes.listIterator(shapes.size()); // kreiramo list iterator koji prolazi
-																				// unazad kroz listu
-			boolean shapeSelected = false; // promenljiva koja prati da li je neki oblik selektovan
 			while (itShape.hasPrevious()) {
-				Shape temporary = itShape.previous(); // uzima sledeci (zapravo prethodni) oblik iz liste
-				if (temporary.contains(e.getX(), e.getY()) && !shapeSelected) {
-					System.out.println(temporary.toString());
-					temporary.setSelected(true); // selektujemo oblik
-					selectedShape = temporary; // trenutno selektovani oblik je selected shape
-					shapeSelected = true; // postavljamo da je oblik selektovan
-				} else if (temporary.isSelected()) {
-					temporary.setSelected(false); // deselektujemo sve ostale oblike
+				Shape temporary = itShape.previous(); // uzima prethodni oblik iz liste
+
+				if (temporary.contains(e.getX(), e.getY())) { // ako kliknuti oblik sadrži tačku klika
+					if (temporary.equals(selectedShape)) {
+						// ako je kliknuti oblik već selektova deselektuje ga
+						temporary.setSelected(false);
+						selectedShape = null; // ocisti referencu na trenutno selektovani oblik
+					} else {
+						// ako kliknuti oblik nije trenutno selektovani oblik
+						if (selectedShape != null) {
+							// deselektuje trenutno selektovani oblik
+							selectedShape.setSelected(false);
+						}
+						// selektuje novi oblik
+						temporary.setSelected(true);
+						selectedShape = temporary; // azurira referencu na selektovani oblik
+					}
+					shapeSelected = true; // oznacava da je neki oblik selektovan ili deselektovan
+					break;
 				}
 			}
-			repaint();
+
+			if (!shapeSelected && selectedShape != null) {
+				// ako nijedan oblik nije selektovan i neki oblik je ranije bio selektovan,
+				// deselektuje ga
+				selectedShape.setSelected(false);
+				selectedShape = null; // ocisti referencu na selektovani oblik
+			}
+
+			repaint(); 
 			break;
 		}
 
@@ -282,7 +295,7 @@ public class PnlDrawing extends JPanel {
 	public void delete() { // metoda za uklanjanje
 		if (selectedShape != null) {
 			int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the selected shape?",
-					"Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					"Confirm delete", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 			if (confirm == JOptionPane.YES_OPTION) {
 				shapes.remove(selectedShape); // uklanja selektovani oblik iz liste

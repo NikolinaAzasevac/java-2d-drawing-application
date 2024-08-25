@@ -57,10 +57,10 @@ public class DlgStack extends JDialog {
 		contentPanel.setBackground(new Color(255, 240, 245));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWidths = new int[] { 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblX = new JLabel("X:");
@@ -132,7 +132,7 @@ public class DlgStack extends JDialog {
 			txtRadius.setColumns(10);
 		}
 		{
-			
+
 			JLabel lblInnerRadius = new JLabel("Inner radius:");
 			lblInnerRadius.setForeground(new Color(219, 112, 147));
 			lblInnerRadius.setHorizontalAlignment(SwingConstants.CENTER);
@@ -143,9 +143,9 @@ public class DlgStack extends JDialog {
 			gbc_lblInnerRadius.gridx = 0;
 			gbc_lblInnerRadius.gridy = 3;
 			contentPanel.add(lblInnerRadius, gbc_lblInnerRadius);
-			
+
 		}
-		
+
 		{
 			txtInnerRadius = new JTextField();
 			txtInnerRadius.setColumns(10);
@@ -166,40 +166,47 @@ public class DlgStack extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try {
-				            if (txtX.getText().isEmpty() || txtY.getText().isEmpty() || txtRadius.getText().isEmpty() || txtInnerRadius.getText().isEmpty()) {
-				                JOptionPane.showMessageDialog(null, "Please enter a value for all fields.", "ERROR", JOptionPane.INFORMATION_MESSAGE);
-				            } else {
-				                int radius = Integer.parseInt(txtRadius.getText());
-				                int innerRadius = Integer.parseInt(txtInnerRadius.getText());
-				                
-				                if (innerRadius > 0 && radius > 0) {
-				                    if (innerRadius < radius) {
-				                        isOk = true; 
-				                    } else {
-				                        JOptionPane.showMessageDialog(null, "Outer radius must be greater than the inner radius!", "Error message", JOptionPane.ERROR_MESSAGE);
-				                    }
-				                } else {
-				                    JOptionPane.showMessageDialog(null, "Outer and inner radius must be greater than 0.", "Error message", JOptionPane.ERROR_MESSAGE);
-				                }
-				            }
-				        } catch (NumberFormatException e1) {
-				            JOptionPane.showMessageDialog(null, "Values must be integers!", "Error message", JOptionPane.ERROR_MESSAGE);
-				        }
-				        
-				        if (isOk) {
-				            setVisible(false); 
-				        }
-						
-				}
+							if (txtX.getText().isEmpty() || txtY.getText().isEmpty() || txtRadius.getText().isEmpty()
+									|| txtInnerRadius.getText().isEmpty()) {
+								JOptionPane.showMessageDialog(null, "Please enter a value for all fields.", "ERROR",
+										JOptionPane.INFORMATION_MESSAGE);
+							} else {
+								int radius = Integer.parseInt(txtRadius.getText());
+								int innerRadius = Integer.parseInt(txtInnerRadius.getText());
+
+								if (innerRadius > 0 && radius > 0) {
+									if (innerRadius < radius) {
+										isOk = true;
+									} else {
+										JOptionPane.showMessageDialog(null,
+												"Outer radius must be greater than the inner radius!", "Error message",
+												JOptionPane.ERROR_MESSAGE);
+									}
+								} else {
+									JOptionPane.showMessageDialog(null,
+											"Outer and inner radius must be greater than 0.", "Error message",
+											JOptionPane.ERROR_MESSAGE);
+								}
+							}
+						} catch (NumberFormatException e1) {
+							JOptionPane.showMessageDialog(null, "Values must be integers!", "Error message",
+									JOptionPane.ERROR_MESSAGE);
+						}
+
+						if (isOk) {
+							setVisible(false);
+						}
+
+					}
 				});
-				//okButton.setForeground(new Color(219, 112, 147));
+				// okButton.setForeground(new Color(219, 112, 147));
 				okButton.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
-				//setBackground(new Color(0,0,0));
+				// setBackground(new Color(0,0,0));
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
-			
+
 			{
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
@@ -207,13 +214,13 @@ public class DlgStack extends JDialog {
 						dispose();
 					}
 				});
-				//cancelButton.setForeground(new Color(219, 112, 147));
+				// cancelButton.setForeground(new Color(219, 112, 147));
 				cancelButton.setFont(new Font("Segoe UI Black", Font.PLAIN, 14));
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}
-		
+
 	}
 
 	public JTextField getTxtX() {
@@ -255,5 +262,5 @@ public class DlgStack extends JDialog {
 	public void setOk(boolean isOk) {
 		this.isOk = isOk;
 	}
-	
+
 }

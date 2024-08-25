@@ -106,10 +106,6 @@ public class Circle extends Shape {
 	public int getRadius() {
 		return radius;
 	}
-	/*
-	 * public void setRadius(int radius) throws Exception{ if(radius < 0) { throw
-	 * new Exception("Radius ne sme " + "biti negativna vrednost"); } }
-	 */
 
 	public void setRadius(int radius) {
 		this.radius = radius;
