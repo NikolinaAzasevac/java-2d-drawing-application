@@ -6,19 +6,20 @@ import javax.swing.JPanel;
 import geometry.Shape;
 
 public class DrawingView extends JPanel {
-    private DrawingModel model;
+	private DrawingModel model;
 
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        if (model == null) return;
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		if (model == null)
+			return;
 
-        for (Shape s : model.getShapes()) {
-            s.draw(g);
-        }
-    }
+		for (Shape s : model.getShapes()) {
+			s.draw(g);
+		}
+	}
 
-    public void setModel(DrawingModel model) {
-        this.model = model;
-    }
+	public void setModel(DrawingModel model) {
+		this.model = model;
+	}
 }
