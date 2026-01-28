@@ -5,11 +5,14 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JColorChooser;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 import drawing.DlgCircle;
 import drawing.DlgDonut;
@@ -23,6 +26,7 @@ public class DrawingFrame extends JFrame {
 
 	private final DrawingView view = new DrawingView();
 	private DrawingController controller;
+	private DrawingModel model;
 
 	private final ButtonGroup btnGroup = new ButtonGroup();
 
@@ -35,6 +39,9 @@ public class DrawingFrame extends JFrame {
 	private final JToggleButton tglbtnSelect = new JToggleButton("Select");
 	private final JToggleButton tglbtnModify = new JToggleButton("Modify");
 	private final JToggleButton tglbtnDelete = new JToggleButton("Delete");
+
+	private final JButton btnBorderColor = new JButton("Border");
+	private final JButton btnFillColor = new JButton("Fill");
 
 	private String choice = "point";
 
@@ -89,6 +96,9 @@ public class DrawingFrame extends JFrame {
 		pnlSouth.add(tglbtnSelect);
 		pnlSouth.add(tglbtnModify);
 		pnlSouth.add(tglbtnDelete);
+		pnlSouth.add(new JLabel(" "));
+		pnlSouth.add(btnBorderColor);
+		pnlSouth.add(btnFillColor);
 
 		// akcije - samo postavljaju choice
 		tglbtnPoint.addActionListener(e -> choice = "point");
@@ -119,6 +129,30 @@ public class DrawingFrame extends JFrame {
 			choice = "select";
 		});
 
+		btnBorderColor.addActionListener(e -> {
+			Color current = model != null ? model.getActiveBorderColor() : Color.BLACK;
+			Color chosen = JColorChooser.showDialog(this, "Choose border color", current);
+			if (chosen != null) {
+				if (model != null) {
+					model.setActiveBorderColor(chosen);
+				}
+				updateColorButtons();
+			}
+		});
+
+		btnFillColor.addActionListener(e -> {
+			Color current = model != null ? model.getActiveFillColor() : Color.WHITE;
+			Color chosen = JColorChooser.showDialog(this, "Choose fill color", current);
+			if (chosen != null) {
+				if (model != null) {
+					model.setActiveFillColor(chosen);
+				}
+				updateColorButtons();
+			}
+		});
+
+		updateColorButtons();
+
 		// dodavanje na frame
 		add(pnlNorth, BorderLayout.NORTH);
 		add(view, BorderLayout.CENTER);
@@ -140,6 +174,11 @@ public class DrawingFrame extends JFrame {
 
 	public void setController(DrawingController controller) {
 		this.controller = controller;
+	}
+
+	public void setModel(DrawingModel model) {
+		this.model = model;
+		updateColorButtons();
 	}
 
 	public String getChoice() {
@@ -165,5 +204,18 @@ public class DrawingFrame extends JFrame {
 
 	public DlgDonut getDlgDonut() {
 		return dlgDonut;
+	}
+
+	public void refreshActiveColors() {
+		updateColorButtons();
+	}
+
+	private void updateColorButtons() {
+		Color border = model != null ? model.getActiveBorderColor() : Color.BLACK;
+		Color fill = model != null ? model.getActiveFillColor() : Color.WHITE;
+		btnBorderColor.setBackground(border);
+		btnBorderColor.setOpaque(true);
+		btnFillColor.setBackground(fill);
+		btnFillColor.setOpaque(true);
 	}
 }

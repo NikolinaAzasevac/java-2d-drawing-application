@@ -34,6 +34,8 @@ public class DlgCircle extends JDialog {
 	private boolean confirm;
 	private Color color;
 	private Color borderColor;
+	private JButton btnInnerColor;
+	private JButton btnBorderColor;
 
 	/**
 	 * Launch the application.
@@ -138,7 +140,7 @@ public class DlgCircle extends JDialog {
 			contentPanel.add(lblChooseInner, gbc_lblChooseInner);
 		}
 		{
-			JButton btnInnerColor = new JButton("COLOR");
+			btnInnerColor = new JButton("COLOR");
 			btnInnerColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					color = JColorChooser.showDialog(null, "Choose inner color", Color.white);
@@ -164,7 +166,7 @@ public class DlgCircle extends JDialog {
 			contentPanel.add(lblChooseBorder, gbc_lblChooseBorder);
 		}
 		{
-			JButton btnBorderColor = new JButton("COLOR");
+			btnBorderColor = new JButton("COLOR");
 			btnBorderColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					borderColor = JColorChooser.showDialog(null, "Choose border color", Color.black);
@@ -285,5 +287,29 @@ public class DlgCircle extends JDialog {
 
 	public void setConfirm(boolean confirm) {
 		this.confirm = confirm;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+		if (btnInnerColor != null && color != null) {
+			btnInnerColor.setBackground(color);
+			btnInnerColor.setOpaque(true);
+		}
+	}
+
+	public Color getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(Color borderColor) {
+		this.borderColor = borderColor;
+		if (btnBorderColor != null && borderColor != null) {
+			btnBorderColor.setBackground(borderColor);
+			btnBorderColor.setOpaque(true);
+		}
 	}
 }

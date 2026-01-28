@@ -8,6 +8,7 @@ public class Application {
 
 		DrawingFrame frame = new DrawingFrame();
 		frame.getView().setModel(model);
+		frame.setModel(model);
 
 		DrawingController controller = new DrawingController(model, frame);
 		frame.setController(controller);

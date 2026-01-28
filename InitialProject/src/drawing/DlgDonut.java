@@ -36,6 +36,9 @@ public class DlgDonut extends JDialog {
 	private Color color;
 	private Color borderColor;
 	private Color innerColor;
+	private JButton btnInnerColor;
+	private JButton btnOutlineColor;
+	private JButton btnBorderColor;
 
 	/**
 	 * Launch the application.
@@ -159,7 +162,7 @@ public class DlgDonut extends JDialog {
 			contentPanel.add(lblChooseInner, gbc_lblChooseInner);
 		}
 		{
-			JButton btnInnerColor = new JButton("COLOR");
+			btnInnerColor = new JButton("COLOR");
 			btnInnerColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					innerColor = JColorChooser.showDialog(null, "Choose inner color", Color.white);
@@ -185,7 +188,7 @@ public class DlgDonut extends JDialog {
 			contentPanel.add(lblChooseOutline, gbc_lblChooseOutline);
 		}
 		{
-			JButton btnOutlineColor = new JButton("COLOR");
+			btnOutlineColor = new JButton("COLOR");
 			btnOutlineColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					color = JColorChooser.showDialog(null, "Choose outline color", Color.gray);
@@ -211,7 +214,7 @@ public class DlgDonut extends JDialog {
 			contentPanel.add(lblChooseBorder, gbc_lblChooseBorder);
 		}
 		{
-			JButton btnBorderColor = new JButton("COLOR");
+			btnBorderColor = new JButton("COLOR");
 			btnBorderColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					borderColor = JColorChooser.showDialog(null, "Choose border color", Color.black);
@@ -344,6 +347,42 @@ public class DlgDonut extends JDialog {
 
 	public void setConfirm(boolean confirm) {
 		this.confirm = confirm;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+		if (btnOutlineColor != null && color != null) {
+			btnOutlineColor.setBackground(color);
+			btnOutlineColor.setOpaque(true);
+		}
+	}
+
+	public Color getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(Color borderColor) {
+		this.borderColor = borderColor;
+		if (btnBorderColor != null && borderColor != null) {
+			btnBorderColor.setBackground(borderColor);
+			btnBorderColor.setOpaque(true);
+		}
+	}
+
+	public Color getInnerColor() {
+		return innerColor;
+	}
+
+	public void setInnerColor(Color innerColor) {
+		this.innerColor = innerColor;
+		if (btnInnerColor != null && innerColor != null) {
+			btnInnerColor.setBackground(innerColor);
+			btnInnerColor.setOpaque(true);
+		}
 	}
 
 }

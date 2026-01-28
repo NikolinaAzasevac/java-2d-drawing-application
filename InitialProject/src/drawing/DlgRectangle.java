@@ -34,6 +34,8 @@ public class DlgRectangle extends JDialog {
 	private Color color;
 	private Color borderColor;
 	private boolean confirm;
+	private JButton btnInnerColor;
+	private JButton btnBorderColor;
 
 	/**
 	 * Launch the application.
@@ -150,7 +152,7 @@ public class DlgRectangle extends JDialog {
 			contentPanel.add(lblChooseInner, gbc_lblChooseInner);
 		}
 		{
-			JButton btnInnerColor = new JButton("COLOR");
+			btnInnerColor = new JButton("COLOR");
 			btnInnerColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					color = JColorChooser.showDialog(null, "Choose inner color", Color.white);
@@ -176,7 +178,7 @@ public class DlgRectangle extends JDialog {
 			contentPanel.add(lblChooseBorder, gbc_lblChooseBorder);
 		}
 		{
-			JButton btnBorderColor = new JButton("COLOR");
+			btnBorderColor = new JButton("COLOR");
 			btnBorderColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					borderColor = JColorChooser.showDialog(null, "Choose border color", Color.black);
@@ -302,6 +304,30 @@ public class DlgRectangle extends JDialog {
 
 	public void setTxtWidth(JTextField txtWidth) {
 		this.txtWidth = txtWidth;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+		if (btnInnerColor != null && color != null) {
+			btnInnerColor.setBackground(color);
+			btnInnerColor.setOpaque(true);
+		}
+	}
+
+	public Color getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(Color borderColor) {
+		this.borderColor = borderColor;
+		if (btnBorderColor != null && borderColor != null) {
+			btnBorderColor.setBackground(borderColor);
+			btnBorderColor.setOpaque(true);
+		}
 	}
 
 }

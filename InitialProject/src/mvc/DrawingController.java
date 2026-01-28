@@ -34,6 +34,7 @@ public class DrawingController {
 
 		case "point": {
 			DlgPoint dialog = frame.getDlgPoint();
+			dialog.setColor(model.getActiveBorderColor());
 			dialog.writePoint(click);
 			dialog.getTxtX().setEnabled(false);
 			dialog.getTxtY().setEnabled(false);
@@ -42,6 +43,8 @@ public class DrawingController {
 			if (dialog.isConfirm()) {
 				Point point = dialog.makePoint();
 				model.add(point);
+				model.setActiveBorderColor(dialog.getColor());
+				frame.refreshActiveColors();
 			}
 			frame.repaint();
 			break;
@@ -56,6 +59,7 @@ public class DrawingController {
 				Line line = new Line(p1, p2);
 
 				DlgLine dialog = frame.getDlgLine();
+				dialog.setColor(model.getActiveBorderColor());
 				dialog.writeLine(line);
 				dialog.getTxtX1().setEnabled(false);
 				dialog.getTxtY1().setEnabled(false);
@@ -66,6 +70,8 @@ public class DrawingController {
 				if (dialog.isConfirm()) {
 					line.setColor(dialog.getColor());
 					model.add(line);
+					model.setActiveBorderColor(dialog.getColor());
+					frame.refreshActiveColors();
 				}
 				model.setStartPoint(null);
 			}
@@ -75,6 +81,8 @@ public class DrawingController {
 
 		case "rectangle": {
 			DlgRectangle dialog = frame.getDlgRectangle();
+			dialog.setColor(model.getActiveFillColor());
+			dialog.setBorderColor(model.getActiveBorderColor());
 			dialog.getTxtX().setText(String.valueOf(click.getX()));
 			dialog.getTxtY().setText(String.valueOf(click.getY()));
 			dialog.getTxtWidth().setText("");
@@ -86,6 +94,9 @@ public class DrawingController {
 			if (dialog.isConfirm()) {
 				Rectangle rectangle = dialog.makeRectangle();
 				model.add(rectangle);
+				model.setActiveFillColor(dialog.getColor());
+				model.setActiveBorderColor(dialog.getBorderColor());
+				frame.refreshActiveColors();
 			}
 
 			frame.repaint();
@@ -94,6 +105,8 @@ public class DrawingController {
 
 		case "circle": {
 			DlgCircle dialog = frame.getDlgCircle();
+			dialog.setColor(model.getActiveFillColor());
+			dialog.setBorderColor(model.getActiveBorderColor());
 			dialog.getTxtX().setText(String.valueOf(click.getX()));
 			dialog.getTxtY().setText(String.valueOf(click.getY()));
 			dialog.getTxtRadius().setText("");
@@ -104,6 +117,9 @@ public class DrawingController {
 			if (dialog.isConfirm()) {
 				Circle circle = dialog.makeCircle();
 				model.add(circle);
+				model.setActiveFillColor(dialog.getColor());
+				model.setActiveBorderColor(dialog.getBorderColor());
+				frame.refreshActiveColors();
 			}
 
 			frame.repaint();
@@ -112,6 +128,9 @@ public class DrawingController {
 
 		case "donut": {
 			DlgDonut dialog = frame.getDlgDonut();
+			dialog.setColor(model.getActiveFillColor());
+			dialog.setInnerColor(model.getActiveFillColor());
+			dialog.setBorderColor(model.getActiveBorderColor());
 			dialog.getTxtX().setText(String.valueOf(click.getX()));
 			dialog.getTxtY().setText(String.valueOf(click.getY()));
 			dialog.getTxtOuterRadius().setText("");
@@ -123,6 +142,9 @@ public class DrawingController {
 			if (dialog.isConfirm()) {
 				Donut donut = dialog.makeDonut();
 				model.add(donut);
+				model.setActiveFillColor(dialog.getColor());
+				model.setActiveBorderColor(dialog.getBorderColor());
+				frame.refreshActiveColors();
 			}
 
 			frame.repaint();
@@ -130,7 +152,7 @@ public class DrawingController {
 		}
 
 		case "select": {
-			// isti algoritam kao kod tebe (unazad kroz listu)
+			// isti algoritam unazad kroz listu
 			ListIterator<Shape> it = model.getShapes().listIterator(model.getShapes().size());
 			boolean shapeSelected = false;
 			Shape selectedShape = model.getSelectedShape();
@@ -180,6 +202,7 @@ public class DrawingController {
 
 		if (selectedShape instanceof Point) {
 			DlgPoint dialog = frame.getDlgPoint();
+			dialog.setColor(((Point) selectedShape).getColor());
 			dialog.writePoint((Point) selectedShape);
 			dialog.getTxtX().setEnabled(true);
 			dialog.getTxtY().setEnabled(true);
@@ -190,10 +213,13 @@ public class DrawingController {
 				((Point) selectedShape).setX(p.getX());
 				((Point) selectedShape).setY(p.getY());
 				((Point) selectedShape).setColor(p.getColor());
+				model.setActiveBorderColor(p.getColor());
+				frame.refreshActiveColors();
 			}
 
 		} else if (selectedShape instanceof Line) {
 			DlgLine dialog = frame.getDlgLine();
+			dialog.setColor(((Line) selectedShape).getColor());
 			dialog.writeLine((Line) selectedShape);
 			dialog.getTxtX1().setEnabled(true);
 			dialog.getTxtY1().setEnabled(true);
@@ -208,10 +234,14 @@ public class DrawingController {
 				((Line) selectedShape).getEndPoint().setX(l.getEndPoint().getX());
 				((Line) selectedShape).getEndPoint().setY(l.getEndPoint().getY());
 				((Line) selectedShape).setColor(dialog.getColor());
+				model.setActiveBorderColor(dialog.getColor());
+				frame.refreshActiveColors();
 			}
 
 		} else if (selectedShape instanceof Rectangle) {
 			DlgRectangle dialog = frame.getDlgRectangle();
+			dialog.setColor(((Rectangle) selectedShape).getColor());
+			dialog.setBorderColor(((Rectangle) selectedShape).getBorderColor());
 			dialog.writeRectangle((Rectangle) selectedShape);
 			dialog.getTxtX().setEnabled(true);
 			dialog.getTxtY().setEnabled(true);
@@ -225,10 +255,15 @@ public class DrawingController {
 				((Rectangle) selectedShape).setWidth(r.getWidth());
 				((Rectangle) selectedShape).setColor(r.getColor());
 				((Rectangle) selectedShape).setBorderColor(r.getBorderColor());
+				model.setActiveFillColor(r.getColor());
+				model.setActiveBorderColor(r.getBorderColor());
+				frame.refreshActiveColors();
 			}
 
 		} else if (selectedShape instanceof Circle && !(selectedShape instanceof Donut)) {
 			DlgCircle dialog = frame.getDlgCircle();
+			dialog.setColor(((Circle) selectedShape).getColor());
+			dialog.setBorderColor(((Circle) selectedShape).getBorderColor());
 			dialog.writeCircle((Circle) selectedShape);
 			dialog.getTxtX().setEnabled(true);
 			dialog.getTxtY().setEnabled(true);
@@ -241,10 +276,16 @@ public class DrawingController {
 				((Circle) selectedShape).setRadius(c.getRadius());
 				((Circle) selectedShape).setColor(c.getColor());
 				((Circle) selectedShape).setBorderColor(c.getBorderColor());
+				model.setActiveFillColor(c.getColor());
+				model.setActiveBorderColor(c.getBorderColor());
+				frame.refreshActiveColors();
 			}
 
 		} else if (selectedShape instanceof Donut) {
 			DlgDonut dialog = frame.getDlgDonut();
+			dialog.setColor(((Donut) selectedShape).getColor());
+			dialog.setBorderColor(((Donut) selectedShape).getBorderColor());
+			dialog.setInnerColor(((Donut) selectedShape).getInnerColor());
 			dialog.writeDonut((Donut) selectedShape);
 			dialog.getTxtX().setEnabled(true);
 			dialog.getTxtY().setEnabled(true);
@@ -259,6 +300,9 @@ public class DrawingController {
 				((Donut) selectedShape).setColor(d.getColor());
 				((Donut) selectedShape).setInnerColor(d.getInnerColor());
 				((Donut) selectedShape).setBorderColor(d.getBorderColor());
+				model.setActiveFillColor(d.getColor());
+				model.setActiveBorderColor(d.getBorderColor());
+				frame.refreshActiveColors();
 			}
 		}
 
@@ -285,4 +329,5 @@ public class DrawingController {
 			frame.repaint();
 		}
 	}
+
 }

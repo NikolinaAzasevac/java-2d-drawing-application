@@ -31,6 +31,7 @@ public class DlgPoint extends JDialog {
 	private Color color;
 	private boolean confirm;
 	private Point point;
+	private JButton btnColor;
 
 	/**
 	 * Launch the application.
@@ -110,7 +111,7 @@ public class DlgPoint extends JDialog {
 			contentPanel.add(lblChoose, gbc_lblChoose);
 		}
 		{
-			JButton btnColor = new JButton("COLOR");
+			btnColor = new JButton("COLOR");
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					color = JColorChooser.showDialog(null, "Choose color of point", Color.black);
@@ -216,6 +217,10 @@ public class DlgPoint extends JDialog {
 
 	public void setColor(Color color) {
 		this.color = color;
+		if (btnColor != null && color != null) {
+			btnColor.setBackground(color);
+			btnColor.setOpaque(true);
+		}
 	}
 
 	public boolean isConfirm() {

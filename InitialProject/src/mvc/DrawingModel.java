@@ -2,6 +2,7 @@ package mvc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.Color;
 
 import geometry.Point;
 import geometry.Shape;
@@ -10,6 +11,8 @@ public class DrawingModel {
 	private final List<Shape> shapes = new ArrayList<>();
 	private Shape selectedShape;
 	private Point startPoint;
+	private Color activeBorderColor = Color.BLACK;
+	private Color activeFillColor = Color.WHITE;
 
 	public void add(Shape s) {
 		shapes.add(s);
@@ -37,5 +40,21 @@ public class DrawingModel {
 
 	public void setStartPoint(Point startPoint) {
 		this.startPoint = startPoint;
+	}
+
+	public Color getActiveBorderColor() {
+		return activeBorderColor;
+	}
+
+	public void setActiveBorderColor(Color activeBorderColor) {
+		this.activeBorderColor = activeBorderColor;
+	}
+
+	public Color getActiveFillColor() {
+		return activeFillColor;
+	}
+
+	public void setActiveFillColor(Color activeFillColor) {
+		this.activeFillColor = activeFillColor;
 	}
 }
