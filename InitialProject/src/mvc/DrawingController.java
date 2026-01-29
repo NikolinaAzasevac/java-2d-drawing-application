@@ -2,6 +2,7 @@ package mvc;
 
 import java.awt.event.MouseEvent;
 import java.util.ListIterator;
+import java.util.Stack;
 
 import javax.swing.JOptionPane;
 
@@ -24,6 +25,8 @@ public class DrawingController {
 
 	private final DrawingModel model;
 	private final DrawingFrame frame;
+	private final Stack<Command> undoStack = new Stack<>();
+	private final Stack<Command> redoStack = new Stack<>();
 
 	public DrawingController(DrawingModel model, DrawingFrame frame) {
 		this.model = model;
@@ -46,7 +49,7 @@ public class DrawingController {
 			if (dialog.isConfirm()) {
 				Point point = dialog.makePoint();
 				Command cmd = new AddShapeCmd(model, point);
-			    cmd.execute();
+				executeCommand(cmd);
 				model.setActiveBorderColor(dialog.getColor());
 				frame.refreshActiveColors();
 			}
@@ -74,7 +77,7 @@ public class DrawingController {
 				if (dialog.isConfirm()) {
 					line.setColor(dialog.getColor());
 					Command cmd = new AddShapeCmd(model, line);
-					cmd.execute();
+					executeCommand(cmd);
 					model.setActiveBorderColor(dialog.getColor());
 					frame.refreshActiveColors();
 				}
@@ -99,7 +102,7 @@ public class DrawingController {
 			if (dialog.isConfirm()) {
 				Rectangle rectangle = dialog.makeRectangle();
 				Command cmd = new AddShapeCmd(model, rectangle);
-				cmd.execute();
+				executeCommand(cmd);
 				model.setActiveFillColor(dialog.getColor());
 				model.setActiveBorderColor(dialog.getBorderColor());
 				frame.refreshActiveColors();
@@ -123,7 +126,7 @@ public class DrawingController {
 			if (dialog.isConfirm()) {
 				Circle circle = dialog.makeCircle();
 				Command cmd = new AddShapeCmd(model, circle);
-				cmd.execute();
+				executeCommand(cmd);
 				model.setActiveFillColor(dialog.getColor());
 				model.setActiveBorderColor(dialog.getBorderColor());
 				frame.refreshActiveColors();
@@ -149,7 +152,7 @@ public class DrawingController {
 			if (dialog.isConfirm()) {
 				Donut donut = dialog.makeDonut();
 				Command cmd = new AddShapeCmd(model, donut);
-				cmd.execute();
+				executeCommand(cmd);
 				model.setActiveFillColor(dialog.getColor());
 				model.setActiveBorderColor(dialog.getBorderColor());
 				frame.refreshActiveColors();
@@ -333,10 +336,51 @@ public class DrawingController {
 
 		if (confirm == JOptionPane.YES_OPTION) {
 			Command cmd = new RemoveShapeCmd(model, selectedShape);
-			cmd.execute();
+			executeCommand(cmd);
 			model.setSelectedShape(null);
 			frame.repaint();
 		}
+	}
+
+	private void executeCommand(Command cmd) {
+		cmd.execute();
+		undoStack.push(cmd);
+		redoStack.clear(); // kad uradimo novu akciju posle undo, redo se brise
+		frame.updateUndoRedoButtons(!undoStack.isEmpty(), !redoStack.isEmpty());
+		frame.repaint();
+	}
+	
+	public void undo() {
+	    if (undoStack.isEmpty()) return;
+
+	    Command cmd = undoStack.pop();
+	    cmd.unexecute();
+	    redoStack.push(cmd);
+
+	    // (opciono) očisti selekciju da ne baguje posle undo
+	    if (model.getSelectedShape() != null) {
+	        model.getSelectedShape().setSelected(false);
+	        model.setSelectedShape(null);
+	    }
+
+	    frame.updateUndoRedoButtons(!undoStack.isEmpty(), !redoStack.isEmpty());
+	    frame.repaint();
+	}
+
+	public void redo() {
+	    if (redoStack.isEmpty()) return;
+
+	    Command cmd = redoStack.pop();
+	    cmd.execute();
+	    undoStack.push(cmd);
+
+	    if (model.getSelectedShape() != null) {
+	        model.getSelectedShape().setSelected(false);
+	        model.setSelectedShape(null);
+	    }
+
+	    frame.updateUndoRedoButtons(!undoStack.isEmpty(), !redoStack.isEmpty());
+	    frame.repaint();
 	}
 
 }

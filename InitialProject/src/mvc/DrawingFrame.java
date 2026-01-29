@@ -43,6 +43,9 @@ public class DrawingFrame extends JFrame {
 	private final JButton btnBorderColor = new JButton("Border");
 	private final JButton btnFillColor = new JButton("Fill");
 
+	private final JButton btnUndo = new JButton("Undo");
+	private final JButton btnRedo = new JButton("Redo");
+
 	private String choice = "point";
 
 	private final DlgPoint dlgPoint = new DlgPoint();
@@ -96,6 +99,9 @@ public class DrawingFrame extends JFrame {
 		pnlSouth.add(tglbtnSelect);
 		pnlSouth.add(tglbtnModify);
 		pnlSouth.add(tglbtnDelete);
+		pnlSouth.add(new JLabel(" "));
+		pnlSouth.add(btnUndo);
+		pnlSouth.add(btnRedo);
 		pnlSouth.add(new JLabel(" "));
 		pnlSouth.add(btnBorderColor);
 		pnlSouth.add(btnFillColor);
@@ -151,7 +157,18 @@ public class DrawingFrame extends JFrame {
 			}
 		});
 
+		btnUndo.addActionListener(e -> {
+			if (controller != null)
+				controller.undo();
+		});
+
+		btnRedo.addActionListener(e -> {
+			if (controller != null)
+				controller.redo();
+		});
+
 		updateColorButtons();
+		updateUndoRedoButtons(false, false);
 
 		// dodavanje na frame
 		add(pnlNorth, BorderLayout.NORTH);
@@ -179,6 +196,7 @@ public class DrawingFrame extends JFrame {
 	public void setModel(DrawingModel model) {
 		this.model = model;
 		updateColorButtons();
+		updateUndoRedoButtons(false, false);
 	}
 
 	public String getChoice() {
@@ -218,4 +236,10 @@ public class DrawingFrame extends JFrame {
 		btnFillColor.setBackground(fill);
 		btnFillColor.setOpaque(true);
 	}
+
+	public void updateUndoRedoButtons(boolean canUndo, boolean canRedo) {
+		btnUndo.setEnabled(canUndo);
+		btnRedo.setEnabled(canRedo);
+	}
+
 }
