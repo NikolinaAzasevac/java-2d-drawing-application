@@ -1,4 +1,4 @@
- package mvc;
+package mvc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ import geometry.Shape;
 
 public class DrawingModel {
 	private final List<Shape> shapes = new ArrayList<>();
+	private final List<String> commandLog = new ArrayList<>();
 	private Shape selectedShape;
 	private Point startPoint;
 	private Color activeBorderColor = Color.BLACK;
@@ -24,6 +25,14 @@ public class DrawingModel {
 
 	public List<Shape> getShapes() {
 		return shapes;
+	}
+
+	public void addLog(String entry) {
+		commandLog.add(entry);
+	}
+
+	public List<String> getLogEntries() {
+		return commandLog;
 	}
 
 	public Shape getSelectedShape() {

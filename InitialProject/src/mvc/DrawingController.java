@@ -175,11 +175,15 @@ public class DrawingController {
 					if (temporary.equals(selectedShape)) {
 						temporary.setSelected(false);
 						model.setSelectedShape(null);
+						log("Deselect " + temporary);
 					} else {
-						if (selectedShape != null)
+						if (selectedShape != null) {
 							selectedShape.setSelected(false);
+							log("Deselect " + selectedShape);
+						}
 						temporary.setSelected(true);
 						model.setSelectedShape(temporary);
+						log("Select " + temporary);
 					}
 					shapeSelected = true;
 					break;
@@ -187,8 +191,10 @@ public class DrawingController {
 			}
 
 			if (!shapeSelected && model.getSelectedShape() != null) {
-				model.getSelectedShape().setSelected(false);
+				Shape previouslySelected = model.getSelectedShape();
+				previouslySelected.setSelected(false);
 				model.setSelectedShape(null);
+				log("Deselect " + previouslySelected);
 			}
 
 			frame.repaint();
@@ -346,6 +352,7 @@ public class DrawingController {
 		cmd.execute();
 		undoStack.push(cmd);
 		redoStack.clear(); // kad uradimo novu akciju posle undo, redo se brise
+		log(describeCommand(cmd));
 		frame.updateUndoRedoButtons(!undoStack.isEmpty(), !redoStack.isEmpty());
 		frame.repaint();
 	}
@@ -356,6 +363,7 @@ public class DrawingController {
 	    Command cmd = undoStack.pop();
 	    cmd.unexecute();
 	    redoStack.push(cmd);
+	    log("Undo " + cmd);
 
 	    // (opciono) očisti selekciju da ne baguje posle undo
 	    if (model.getSelectedShape() != null) {
@@ -373,6 +381,7 @@ public class DrawingController {
 	    Command cmd = redoStack.pop();
 	    cmd.execute();
 	    undoStack.push(cmd);
+	    log("Redo " + cmd);
 
 	    if (model.getSelectedShape() != null) {
 	        model.getSelectedShape().setSelected(false);
@@ -381,6 +390,19 @@ public class DrawingController {
 
 	    frame.updateUndoRedoButtons(!undoStack.isEmpty(), !redoStack.isEmpty());
 	    frame.repaint();
+	}
+
+	private void log(String message) {
+		if (message == null || message.isEmpty())
+			return;
+		model.addLog(message);
+		frame.refreshLog();
+	}
+
+	private String describeCommand(Command cmd) {
+		if (cmd == null)
+			return "";
+		return cmd.toString();
 	}
 
 }

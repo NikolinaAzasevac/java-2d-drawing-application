@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import drawing.DlgCircle;
 import drawing.DlgDonut;
@@ -46,6 +48,8 @@ public class DrawingFrame extends JFrame {
 	private final JButton btnUndo = new JButton("Undo");
 	private final JButton btnRedo = new JButton("Redo");
 
+	private final JTextArea txtLog = new JTextArea(20, 20);
+
 	private String choice = "point";
 
 	private final DlgPoint dlgPoint = new DlgPoint();
@@ -64,6 +68,12 @@ public class DrawingFrame extends JFrame {
 		pnlNorth.setBackground(new Color(255, 224, 250));
 		JPanel pnlSouth = new JPanel();
 		pnlSouth.setBackground(new Color(255, 224, 250));
+
+		JPanel pnlEast = new JPanel(new BorderLayout());
+		pnlEast.setBackground(new Color(255, 224, 250));
+		txtLog.setEditable(false);
+		JScrollPane logScroll = new JScrollPane(txtLog);
+		pnlEast.add(logScroll, BorderLayout.CENTER);
 
 		// grupisanje
 		btnGroup.add(tglbtnPoint);
@@ -174,6 +184,7 @@ public class DrawingFrame extends JFrame {
 		add(pnlNorth, BorderLayout.NORTH);
 		add(view, BorderLayout.CENTER);
 		add(pnlSouth, BorderLayout.SOUTH);
+		add(pnlEast, BorderLayout.EAST);
 
 		// klik na view ide controlleru
 		view.addMouseListener(new MouseAdapter() {
@@ -197,6 +208,7 @@ public class DrawingFrame extends JFrame {
 		this.model = model;
 		updateColorButtons();
 		updateUndoRedoButtons(false, false);
+		refreshLog();
 	}
 
 	public String getChoice() {
@@ -226,6 +238,17 @@ public class DrawingFrame extends JFrame {
 
 	public void refreshActiveColors() {
 		updateColorButtons();
+	}
+
+	public void refreshLog() {
+		if (model == null)
+			return;
+		StringBuilder sb = new StringBuilder();
+		for (String entry : model.getLogEntries()) {
+			sb.append(entry).append("\n");
+		}
+		txtLog.setText(sb.toString());
+		txtLog.setCaretPosition(txtLog.getDocument().getLength());
 	}
 
 	private void updateColorButtons() {
