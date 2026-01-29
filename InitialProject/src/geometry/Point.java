@@ -127,6 +127,7 @@ public class Point extends Shape {
 	// isti potpis kao i u klasi oBject
 	// nakon redefinisanja vraca (10,15).
 	public String toString() {
-		return "(" + this.x + "," + this.y + ")";
+		return "Point(x=" + this.x + ", y=" + this.y + ", color=" + colorToHex(this.color) + ", selected="
+				+ this.selected + ")";
 	}
 }

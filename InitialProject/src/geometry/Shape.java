@@ -1,6 +1,7 @@
 package geometry;
 
 import java.awt.Graphics;
+import java.awt.Color;
 
 public abstract class Shape implements Moveable, Comparable {
 	protected boolean selected;
@@ -26,5 +27,12 @@ public abstract class Shape implements Moveable, Comparable {
 
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+
+	protected static String colorToHex(Color color) {
+		if (color == null) {
+			return "null";
+		}
+		return String.format("#%02X%02X%02X", color.getRed(), color.getGreen(), color.getBlue());
 	}
 }

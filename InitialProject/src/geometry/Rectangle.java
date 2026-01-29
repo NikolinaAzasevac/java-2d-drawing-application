@@ -145,7 +145,9 @@ public class Rectangle extends Shape {
 	}
 
 	public String toString() {
-		return "Upper left point: " + upperLeftPoint + ", width = " + width + ", height = " + height;
+		return "Rect(x=" + upperLeftPoint.getX() + ", y=" + upperLeftPoint.getY() + ", w=" + width + ", h=" + height
+				+ ", fill=" + colorToHex(color) + ", border=" + colorToHex(borderColor) + ", selected=" + selected
+				+ ")";
 	}
 
 }

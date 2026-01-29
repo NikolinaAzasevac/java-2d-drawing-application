@@ -112,6 +112,7 @@ public class Line extends Shape {
 	}
 
 	public String toString() {
-		return startPoint.toString() + "-->" + endPoint + ")"; // (xS, yS) --> (xE, yE)
+		return "Line(x1=" + startPoint.getX() + ", y1=" + startPoint.getY() + ", x2=" + endPoint.getX() + ", y2="
+				+ endPoint.getY() + ", color=" + colorToHex(color) + ", selected=" + selected + ")";
 	}
 }

@@ -128,6 +128,7 @@ public class Circle extends Shape {
 	}
 
 	public String toString() {
-		return "Center: " + center + ", radius = " + radius;
+		return "Circle(x=" + center.getX() + ", y=" + center.getY() + ", r=" + radius + ", fill="
+				+ colorToHex(color) + ", border=" + colorToHex(borderColor) + ", selected=" + selected + ")";
 	}
 }

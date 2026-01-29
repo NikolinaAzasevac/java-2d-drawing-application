@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Dimension;
 
 import javax.swing.JColorChooser;
 import javax.swing.ButtonGroup;
@@ -48,7 +49,7 @@ public class DrawingFrame extends JFrame {
 	private final JButton btnUndo = new JButton("Undo");
 	private final JButton btnRedo = new JButton("Redo");
 
-	private final JTextArea txtLog = new JTextArea(20, 20);
+	private final JTextArea txtLog = new JTextArea(30, 30);
 
 	private String choice = "point";
 
@@ -73,6 +74,7 @@ public class DrawingFrame extends JFrame {
 		pnlEast.setBackground(new Color(255, 224, 250));
 		txtLog.setEditable(false);
 		JScrollPane logScroll = new JScrollPane(txtLog);
+		logScroll.setPreferredSize(new Dimension(320, 0));
 		pnlEast.add(logScroll, BorderLayout.CENTER);
 
 		// grupisanje

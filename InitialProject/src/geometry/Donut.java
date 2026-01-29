@@ -113,9 +113,9 @@ public class Donut extends Circle {
 	// da ne postoji u circle redefinisao bi onu toString
 	// iz klase Object
 	public String toString() {
-		// ako kazemo toString() dobijamo rekurziju
-		// zato treba reci super.toString
-		return super.toString() + ", innerRadius = " + innerRadius;
+		return "Donut(x=" + getCenter().getX() + ", y=" + getCenter().getY() + ", r=" + getRadius() + ", rIn="
+				+ innerRadius + ", fill=" + colorToHex(getColor()) + ", border=" + colorToHex(getBorderColor())
+				+ ", inner=" + colorToHex(innerColor) + ", selected=" + selected + ")";
 	}
 
 }
