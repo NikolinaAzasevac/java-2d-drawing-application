@@ -8,9 +8,10 @@ public class AddShapeCmd implements Command {
 	private Shape shape;
 
 	
-	public AddShapeCmd() {
-
-	}
+	public AddShapeCmd(DrawingModel model, Shape shape) {
+		this.model = model;
+        this.shape = shape;
+    }
 
 	@Override
 	public void execute() {

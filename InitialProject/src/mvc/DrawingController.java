@@ -16,6 +16,9 @@ import geometry.Line;
 import geometry.Point;
 import geometry.Rectangle;
 import geometry.Shape;
+import command.Command;
+import command.RemoveShapeCmd;
+import command.AddShapeCmd;
 
 public class DrawingController {
 
@@ -42,7 +45,8 @@ public class DrawingController {
 			dialog.setVisible(true);
 			if (dialog.isConfirm()) {
 				Point point = dialog.makePoint();
-				model.add(point);
+				Command cmd = new AddShapeCmd(model, point);
+			    cmd.execute();
 				model.setActiveBorderColor(dialog.getColor());
 				frame.refreshActiveColors();
 			}
@@ -69,7 +73,8 @@ public class DrawingController {
 				dialog.setVisible(true);
 				if (dialog.isConfirm()) {
 					line.setColor(dialog.getColor());
-					model.add(line);
+					Command cmd = new AddShapeCmd(model, line);
+					cmd.execute();
 					model.setActiveBorderColor(dialog.getColor());
 					frame.refreshActiveColors();
 				}
@@ -93,7 +98,8 @@ public class DrawingController {
 			dialog.setVisible(true);
 			if (dialog.isConfirm()) {
 				Rectangle rectangle = dialog.makeRectangle();
-				model.add(rectangle);
+				Command cmd = new AddShapeCmd(model, rectangle);
+				cmd.execute();
 				model.setActiveFillColor(dialog.getColor());
 				model.setActiveBorderColor(dialog.getBorderColor());
 				frame.refreshActiveColors();
@@ -116,7 +122,8 @@ public class DrawingController {
 			dialog.setVisible(true);
 			if (dialog.isConfirm()) {
 				Circle circle = dialog.makeCircle();
-				model.add(circle);
+				Command cmd = new AddShapeCmd(model, circle);
+				cmd.execute();
 				model.setActiveFillColor(dialog.getColor());
 				model.setActiveBorderColor(dialog.getBorderColor());
 				frame.refreshActiveColors();
@@ -141,7 +148,8 @@ public class DrawingController {
 			dialog.setVisible(true);
 			if (dialog.isConfirm()) {
 				Donut donut = dialog.makeDonut();
-				model.add(donut);
+				Command cmd = new AddShapeCmd(model, donut);
+				cmd.execute();
 				model.setActiveFillColor(dialog.getColor());
 				model.setActiveBorderColor(dialog.getBorderColor());
 				frame.refreshActiveColors();
@@ -324,7 +332,8 @@ public class DrawingController {
 				"Confirm delete", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 		if (confirm == JOptionPane.YES_OPTION) {
-			model.remove(selectedShape);
+			Command cmd = new RemoveShapeCmd(model, selectedShape);
+			cmd.execute();
 			model.setSelectedShape(null);
 			frame.repaint();
 		}

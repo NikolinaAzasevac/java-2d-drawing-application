@@ -8,24 +8,21 @@ import geometry.Point;
 public class TestCommand {
 
 	public static void main(String[] args) {
-		// Dodavanje tačke
+		// Dodavanje tacke
 		DrawingModel model = new DrawingModel();
 		Point p1 = new Point(10, 10, Color.BLACK);
-		
-		AddPointCmd addPointCmd = new AddPointCmd(model, p1);
-		addPointCmd.execute();
-		
+
+		Command addCmd = new AddShapeCmd(model, p1);
+		addCmd.execute();
 		System.out.println(model.getShapes());
-		
+
 		// Brisanje tačke
-		RemovePointCmd removePointCmd = new RemovePointCmd(model, p1);
-		
-		removePointCmd.execute();	
+		Command removeCmd = new RemoveShapeCmd(model, p1);
+		removeCmd.execute();
 		System.out.println(model.getShapes());
-		
-		removePointCmd.unexecute();
+
+		removeCmd.unexecute();
 		System.out.println(model.getShapes());
-		
 
 	}
 
