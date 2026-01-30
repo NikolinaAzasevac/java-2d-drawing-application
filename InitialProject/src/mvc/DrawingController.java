@@ -143,7 +143,6 @@ public class DrawingController {
 		case "donut": {
 			DlgDonut dialog = frame.getDlgDonut();
 			dialog.setColor(model.getActiveFillColor());
-			dialog.setInnerColor(model.getActiveFillColor());
 			dialog.setBorderColor(model.getActiveBorderColor());
 			dialog.getTxtX().setText(String.valueOf(click.getX()));
 			dialog.getTxtY().setText(String.valueOf(click.getY()));
@@ -329,7 +328,6 @@ public class DrawingController {
 			DlgDonut dialog = frame.getDlgDonut();
 			dialog.setColor(((Donut) selectedShape).getColor());
 			dialog.setBorderColor(((Donut) selectedShape).getBorderColor());
-			dialog.setInnerColor(((Donut) selectedShape).getInnerColor());
 			dialog.writeDonut((Donut) selectedShape);
 			dialog.getTxtX().setEnabled(true);
 			dialog.getTxtY().setEnabled(true);
@@ -342,7 +340,6 @@ public class DrawingController {
 				((Donut) selectedShape).setInnerRadius(d.getInnerRadius());
 				((Donut) selectedShape).setRadius(d.getRadius());
 				((Donut) selectedShape).setColor(d.getColor());
-				((Donut) selectedShape).setInnerColor(d.getInnerColor());
 				((Donut) selectedShape).setBorderColor(d.getBorderColor());
 				model.setActiveFillColor(d.getColor());
 				model.setActiveBorderColor(d.getBorderColor());

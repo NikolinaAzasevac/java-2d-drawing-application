@@ -35,8 +35,6 @@ public class DlgDonut extends JDialog {
 	public Donut donut;
 	private Color color;
 	private Color borderColor;
-	private Color innerColor;
-	private JButton btnInnerColor;
 	private JButton btnOutlineColor;
 	private JButton btnBorderColor;
 
@@ -65,9 +63,9 @@ public class DlgDonut extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[] { 0, 0, 0 };
-		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_contentPanel.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
-		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblCenter = new JLabel("Center of the donut:");
@@ -154,44 +152,18 @@ public class DlgDonut extends JDialog {
 			txtInnerRadius.setColumns(10);
 		}
 		{
-			JLabel lblChooseInner = new JLabel("Choose inner:");
-			GridBagConstraints gbc_lblChooseInner = new GridBagConstraints();
-			gbc_lblChooseInner.insets = new Insets(0, 0, 5, 5);
-			gbc_lblChooseInner.gridx = 0;
-			gbc_lblChooseInner.gridy = 5;
-			contentPanel.add(lblChooseInner, gbc_lblChooseInner);
-		}
-		{
-			btnInnerColor = new JButton("COLOR");
-			btnInnerColor.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					innerColor = JColorChooser.showDialog(null, "Choose inner color", Color.white);
-					if (innerColor != null) {
-						btnInnerColor.setBackground(innerColor);
-						btnInnerColor.setOpaque(true);
-					}
-				}
-			});
-			GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
-			gbc_btnInnerColor.insets = new Insets(0, 0, 5, 0);
-			gbc_btnInnerColor.anchor = GridBagConstraints.WEST;
-			gbc_btnInnerColor.gridx = 1;
-			gbc_btnInnerColor.gridy = 5;
-			contentPanel.add(btnInnerColor, gbc_btnInnerColor);
-		}
-		{
-			JLabel lblChooseOutline = new JLabel("Choose outline:");
+			JLabel lblChooseOutline = new JLabel("Chooce inner color:");
 			GridBagConstraints gbc_lblChooseOutline = new GridBagConstraints();
 			gbc_lblChooseOutline.insets = new Insets(0, 0, 5, 5);
 			gbc_lblChooseOutline.gridx = 0;
-			gbc_lblChooseOutline.gridy = 6;
+			gbc_lblChooseOutline.gridy = 5;
 			contentPanel.add(lblChooseOutline, gbc_lblChooseOutline);
 		}
 		{
 			btnOutlineColor = new JButton("COLOR");
 			btnOutlineColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					color = JColorChooser.showDialog(null, "Choose outline color", Color.gray);
+					color = JColorChooser.showDialog(null, "Chooce inner color", Color.white);
 					if (color != null) {
 						btnOutlineColor.setBackground(color);
 						btnOutlineColor.setOpaque(true);
@@ -202,7 +174,7 @@ public class DlgDonut extends JDialog {
 			gbc_btnOutlineColor.anchor = GridBagConstraints.WEST;
 			gbc_btnOutlineColor.insets = new Insets(0, 0, 5, 0);
 			gbc_btnOutlineColor.gridx = 1;
-			gbc_btnOutlineColor.gridy = 6;
+			gbc_btnOutlineColor.gridy = 5;
 			contentPanel.add(btnOutlineColor, gbc_btnOutlineColor);
 		}
 		{
@@ -210,7 +182,7 @@ public class DlgDonut extends JDialog {
 			GridBagConstraints gbc_lblChooseBorder = new GridBagConstraints();
 			gbc_lblChooseBorder.insets = new Insets(0, 0, 0, 5);
 			gbc_lblChooseBorder.gridx = 0;
-			gbc_lblChooseBorder.gridy = 7;
+			gbc_lblChooseBorder.gridy = 6;
 			contentPanel.add(lblChooseBorder, gbc_lblChooseBorder);
 		}
 		{
@@ -227,7 +199,7 @@ public class DlgDonut extends JDialog {
 			GridBagConstraints gbc_btnBorderColor = new GridBagConstraints();
 			gbc_btnBorderColor.anchor = GridBagConstraints.WEST;
 			gbc_btnBorderColor.gridx = 1;
-			gbc_btnBorderColor.gridy = 7;
+			gbc_btnBorderColor.gridy = 6;
 			contentPanel.add(btnBorderColor, gbc_btnBorderColor);
 		}
 		{
@@ -305,7 +277,7 @@ public class DlgDonut extends JDialog {
 		int y = Integer.parseInt(txtY.getText());
 		int radius = Integer.parseInt(txtOuterRadius.getText());
 		int innerRadius = Integer.parseInt(txtInnerRadius.getText());
-		Donut donut = new Donut(new Point(x, y), radius, innerRadius, color, borderColor, innerColor);
+		Donut donut = new Donut(new Point(x, y), radius, innerRadius, color, borderColor);
 		return donut;
 	}
 
@@ -370,18 +342,6 @@ public class DlgDonut extends JDialog {
 		if (btnBorderColor != null && borderColor != null) {
 			btnBorderColor.setBackground(borderColor);
 			btnBorderColor.setOpaque(true);
-		}
-	}
-
-	public Color getInnerColor() {
-		return innerColor;
-	}
-
-	public void setInnerColor(Color innerColor) {
-		this.innerColor = innerColor;
-		if (btnInnerColor != null && innerColor != null) {
-			btnInnerColor.setBackground(innerColor);
-			btnInnerColor.setOpaque(true);
 		}
 	}
 

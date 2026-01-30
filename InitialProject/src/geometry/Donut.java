@@ -9,7 +9,6 @@ import java.awt.geom.Ellipse2D;
 public class Donut extends Circle {
 	// nasledjuse center, radius i selected od Circle
 	private int innerRadius;
-	private Color innerColor;
 
 	public Donut() {
 	}
@@ -30,10 +29,9 @@ public class Donut extends Circle {
 		this.innerRadius = innerRadius;
 	}
 
-	public Donut(Point center, int radius, int innerRadius, Color color, Color borderColor, Color innerColor) {
+	public Donut(Point center, int radius, int innerRadius, Color color, Color borderColor) {
 		super(center, radius, color, borderColor);
 		this.innerRadius = innerRadius;
-		this.innerColor = innerColor;
 	}
 
 	public double area() {
@@ -112,21 +110,13 @@ public class Donut extends Circle {
 		this.innerRadius = innerRadiusl;
 	}
 
-	public Color getInnerColor() {
-		return innerColor;
-	}
-
-	public void setInnerColor(Color innerColor) {
-		this.innerColor = innerColor;
-	}
-
 	// redefinise toString iz Circle
 	// da ne postoji u circle redefinisao bi onu toString
 	// iz klase Object
 	public String toString() {
 		return "Donut(x=" + getCenter().getX() + ", y=" + getCenter().getY() + ", r=" + getRadius() + ", rIn="
 				+ innerRadius + ", fill=" + colorToHex(getColor()) + ", border=" + colorToHex(getBorderColor())
-				+ ", inner=" + colorToHex(innerColor) + ", selected=" + selected + ")";
+				+ ", selected=" + selected + ")";
 	}
 
 }
