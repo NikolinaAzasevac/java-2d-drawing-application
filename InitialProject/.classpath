@@ -8,5 +8,10 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="com.miglayout.swing_11.3.0.jar"/>
 	<classpathentry kind="lib" path="com.miglayout.core_11.3.0.jar"/>
+	<classpathentry kind="lib" path="/Users/nikolinaazasevac/Desktop/MVC/IT9-2023-Nikolina-Azasevac/InitialProject/heksagon.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
