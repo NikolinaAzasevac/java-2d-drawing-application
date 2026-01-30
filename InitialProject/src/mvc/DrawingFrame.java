@@ -23,8 +23,9 @@ import drawing.DlgHexagon;
 import drawing.DlgLine;
 import drawing.DlgPoint;
 import drawing.DlgRectangle;
+import observer.Observer;
 
-public class DrawingFrame extends JFrame {
+public class DrawingFrame extends JFrame implements Observer {
 
 	private static final long serialVersionUID = 1L;
 
@@ -276,6 +277,12 @@ public class DrawingFrame extends JFrame {
 	public void updateUndoRedoButtons(boolean canUndo, boolean canRedo) {
 		btnUndo.setEnabled(canUndo);
 		btnRedo.setEnabled(canRedo);
+	}
+
+	@Override
+	public void update(int selectedCount) {
+		tglbtnDelete.setEnabled(selectedCount > 0);
+		tglbtnModify.setEnabled(selectedCount == 1);
 	}
 
 }

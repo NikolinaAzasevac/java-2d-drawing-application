@@ -6,10 +6,13 @@ import java.awt.Color;
 
 import geometry.Point;
 import geometry.Shape;
+import observer.Observable;
+import observer.Observer;
 
-public class DrawingModel {
+public class DrawingModel implements Observable {
 	private final List<Shape> shapes = new ArrayList<>();
 	private final List<String> commandLog = new ArrayList<>();
+	private final List<Observer> observers = new ArrayList<>();
 	private Shape selectedShape;
 	private Point startPoint;
 	private Color activeBorderColor = Color.BLACK;
@@ -65,5 +68,33 @@ public class DrawingModel {
 
 	public void setActiveFillColor(Color activeFillColor) {
 		this.activeFillColor = activeFillColor;
+	}
+
+	public int getSelectedCount() {
+		int count = 0;
+		for (Shape shape : shapes) {
+			if (shape.isSelected()) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void removeObserver(Observer observer) {
+		observers.remove(observer);
+	}
+
+	@Override
+	public void notifyObservers() {
+		int selectedCount = getSelectedCount();
+		for (Observer observer : observers) {
+			observer.update(selectedCount);
+		}
 	}
 }

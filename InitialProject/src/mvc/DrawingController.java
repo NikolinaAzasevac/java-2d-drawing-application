@@ -1,6 +1,8 @@
 package mvc;
 
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Stack;
 
@@ -192,21 +194,15 @@ public class DrawingController {
 			// isti algoritam unazad kroz listu
 			ListIterator<Shape> it = model.getShapes().listIterator(model.getShapes().size());
 			boolean shapeSelected = false;
-			Shape selectedShape = model.getSelectedShape();
 
 			while (it.hasPrevious()) {
 				Shape temporary = it.previous();
 
 				if (temporary.contains(e.getX(), e.getY())) {
-					if (temporary.equals(selectedShape)) {
+					if (temporary.isSelected()) {
 						temporary.setSelected(false);
-						model.setSelectedShape(null);
 						log("Deselect " + temporary);
 					} else {
-						if (selectedShape != null) {
-							selectedShape.setSelected(false);
-							log("Deselect " + selectedShape);
-						}
 						temporary.setSelected(true);
 						model.setSelectedShape(temporary);
 						log("Select " + temporary);
@@ -216,13 +212,17 @@ public class DrawingController {
 				}
 			}
 
-			if (!shapeSelected && model.getSelectedShape() != null) {
-				Shape previouslySelected = model.getSelectedShape();
-				previouslySelected.setSelected(false);
+			if (!shapeSelected) {
+				for (Shape shape : model.getShapes()) {
+					if (shape.isSelected()) {
+						shape.setSelected(false);
+						log("Deselect " + shape);
+					}
+				}
 				model.setSelectedShape(null);
-				log("Deselect " + previouslySelected);
 			}
 
+			model.notifyObservers();
 			frame.repaint();
 			break;
 		}
@@ -234,15 +234,16 @@ public class DrawingController {
 	}
 
 	public void modify() {
-		Shape selectedShape = model.getSelectedShape();
+		List<Shape> selectedShapes = getSelectedShapes();
 
-		if (selectedShape == null) {
+		if (selectedShapes.size() != 1) {
 			JOptionPane.showMessageDialog(frame,
-					"There is no selected shape! Please, select the shape you want to modify.", "Error Message",
+					"Please, select exactly one shape to modify.", "Error Message",
 					JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 
+		Shape selectedShape = selectedShapes.get(0);
 		if (selectedShape instanceof Point) {
 			DlgPoint dialog = frame.getDlgPoint();
 			dialog.setColor(((Point) selectedShape).getColor());
@@ -374,21 +375,24 @@ public class DrawingController {
 	}
 
 	public void delete() {
-		Shape selectedShape = model.getSelectedShape();
+		List<Shape> selectedShapes = getSelectedShapes();
 
-		if (selectedShape == null) {
-			JOptionPane.showMessageDialog(frame, "There is no selected shape. Select the shape you want to delete.",
+		if (selectedShapes.isEmpty()) {
+			JOptionPane.showMessageDialog(frame, "There is no selected shape. Select shapes you want to delete.",
 					"Error Message", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 
-		int confirm = JOptionPane.showConfirmDialog(frame, "Are you sure you want to delete the selected shape?",
+		int confirm = JOptionPane.showConfirmDialog(frame, "Are you sure you want to delete the selected shape(s)?",
 				"Confirm delete", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 		if (confirm == JOptionPane.YES_OPTION) {
-			Command cmd = new RemoveShapeCmd(model, selectedShape);
-			executeCommand(cmd);
+			for (Shape shape : selectedShapes) {
+				Command cmd = new RemoveShapeCmd(model, shape);
+				executeCommand(cmd);
+			}
 			model.setSelectedShape(null);
+			model.notifyObservers();
 			frame.repaint();
 		}
 	}
@@ -416,6 +420,7 @@ public class DrawingController {
 	        model.setSelectedShape(null);
 	    }
 
+	    model.notifyObservers();
 	    frame.updateUndoRedoButtons(!undoStack.isEmpty(), !redoStack.isEmpty());
 	    frame.repaint();
 	}
@@ -433,6 +438,7 @@ public class DrawingController {
 	        model.setSelectedShape(null);
 	    }
 
+	    model.notifyObservers();
 	    frame.updateUndoRedoButtons(!undoStack.isEmpty(), !redoStack.isEmpty());
 	    frame.repaint();
 	}
@@ -448,6 +454,16 @@ public class DrawingController {
 		if (cmd == null)
 			return "";
 		return cmd.toString();
+	}
+
+	private List<Shape> getSelectedShapes() {
+		List<Shape> selected = new ArrayList<>();
+		for (Shape shape : model.getShapes()) {
+			if (shape.isSelected()) {
+				selected.add(shape);
+			}
+		}
+		return selected;
 	}
 
 }
