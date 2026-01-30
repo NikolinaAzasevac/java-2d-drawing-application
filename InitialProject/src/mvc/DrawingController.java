@@ -370,8 +370,6 @@ public class DrawingController {
 			}
 		}
 
-		selectedShape.setSelected(false);
-		model.setSelectedShape(null);
 		frame.repaint();
 	}
 
