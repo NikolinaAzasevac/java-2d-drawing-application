@@ -8,9 +8,11 @@ import javax.swing.JOptionPane;
 
 import drawing.DlgCircle;
 import drawing.DlgDonut;
+import drawing.DlgHexagon;
 import drawing.DlgLine;
 import drawing.DlgPoint;
 import drawing.DlgRectangle;
+import adapter.HexagonAdapter;
 import geometry.Circle;
 import geometry.Donut;
 import geometry.Line;
@@ -154,6 +156,30 @@ public class DrawingController {
 				Command cmd = new AddShapeCmd(model, donut);
 				executeCommand(cmd);
 				model.setActiveFillColor(dialog.getColor());
+				model.setActiveBorderColor(dialog.getBorderColor());
+				frame.refreshActiveColors();
+			}
+
+			frame.repaint();
+			break;
+		}
+		
+		case "hexagon": {
+			DlgHexagon dialog = frame.getDlgHexagon();
+			dialog.setAreaColor(model.getActiveFillColor());
+			dialog.setBorderColor(model.getActiveBorderColor());
+			dialog.getTxtX().setText(String.valueOf(click.getX()));
+			dialog.getTxtY().setText(String.valueOf(click.getY()));
+			dialog.getTxtR().setText("");
+			dialog.getTxtX().setEnabled(false);
+			dialog.getTxtY().setEnabled(false);
+
+			dialog.setVisible(true);
+			if (dialog.isConfirm()) {
+				HexagonAdapter hexagon = dialog.makeHexagon();
+				Command cmd = new AddShapeCmd(model, hexagon);
+				executeCommand(cmd);
+				model.setActiveFillColor(dialog.getAreaColor());
 				model.setActiveBorderColor(dialog.getBorderColor());
 				frame.refreshActiveColors();
 			}
@@ -319,6 +345,27 @@ public class DrawingController {
 				((Donut) selectedShape).setBorderColor(d.getBorderColor());
 				model.setActiveFillColor(d.getColor());
 				model.setActiveBorderColor(d.getBorderColor());
+				frame.refreshActiveColors();
+			}
+		} else if (selectedShape instanceof HexagonAdapter) {
+			DlgHexagon dialog = frame.getDlgHexagon();
+			HexagonAdapter hexagon = (HexagonAdapter) selectedShape;
+			dialog.setAreaColor(hexagon.getAreaColor());
+			dialog.setBorderColor(hexagon.getBorderColor());
+			dialog.writeHexagon(hexagon);
+			dialog.getTxtX().setEnabled(true);
+			dialog.getTxtY().setEnabled(true);
+
+			dialog.setVisible(true);
+			if (dialog.isConfirm()) {
+				HexagonAdapter h = dialog.makeHexagon();
+				hexagon.setX(h.getX());
+				hexagon.setY(h.getY());
+				hexagon.setR(h.getR());
+				hexagon.setAreaColor(h.getAreaColor());
+				hexagon.setBorderColor(h.getBorderColor());
+				model.setActiveFillColor(h.getAreaColor());
+				model.setActiveBorderColor(h.getBorderColor());
 				frame.refreshActiveColors();
 			}
 		}

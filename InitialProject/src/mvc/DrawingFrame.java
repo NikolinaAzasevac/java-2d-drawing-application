@@ -19,6 +19,7 @@ import javax.swing.JTextArea;
 
 import drawing.DlgCircle;
 import drawing.DlgDonut;
+import drawing.DlgHexagon;
 import drawing.DlgLine;
 import drawing.DlgPoint;
 import drawing.DlgRectangle;
@@ -38,6 +39,7 @@ public class DrawingFrame extends JFrame {
 	private final JToggleButton tglbtnRectangle = new JToggleButton("Rectangle");
 	private final JToggleButton tglbtnCircle = new JToggleButton("Circle");
 	private final JToggleButton tglbtnDonut = new JToggleButton("Donut");
+	private final JToggleButton tglbtnHexagon = new JToggleButton("Hexagon");
 
 	private final JToggleButton tglbtnSelect = new JToggleButton("Select");
 	private final JToggleButton tglbtnModify = new JToggleButton("Modify");
@@ -58,6 +60,7 @@ public class DrawingFrame extends JFrame {
 	private final DlgRectangle dlgRectangle = new DlgRectangle();
 	private final DlgCircle dlgCircle = new DlgCircle();
 	private final DlgDonut dlgDonut = new DlgDonut();
+	private final DlgHexagon dlgHexagon = new DlgHexagon();
 
 	public DrawingFrame() {
 		setTitle("Nikolina Azasevac IT9/2023");
@@ -83,6 +86,7 @@ public class DrawingFrame extends JFrame {
 		btnGroup.add(tglbtnRectangle);
 		btnGroup.add(tglbtnCircle);
 		btnGroup.add(tglbtnDonut);
+		btnGroup.add(tglbtnHexagon);
 		btnGroup.add(tglbtnSelect);
 		btnGroup.add(tglbtnModify);
 		btnGroup.add(tglbtnDelete);
@@ -93,6 +97,7 @@ public class DrawingFrame extends JFrame {
 		tglbtnRectangle.setForeground(Color.PINK);
 		tglbtnCircle.setForeground(Color.PINK);
 		tglbtnDonut.setForeground(Color.PINK);
+		tglbtnHexagon.setForeground(Color.PINK);
 		tglbtnSelect.setForeground(Color.PINK);
 		tglbtnModify.setForeground(Color.PINK);
 		tglbtnDelete.setForeground(Color.PINK);
@@ -106,6 +111,7 @@ public class DrawingFrame extends JFrame {
 		pnlNorth.add(tglbtnRectangle);
 		pnlNorth.add(tglbtnCircle);
 		pnlNorth.add(tglbtnDonut);
+		pnlNorth.add(tglbtnHexagon);
 
 		// south
 		pnlSouth.add(tglbtnSelect);
@@ -124,6 +130,7 @@ public class DrawingFrame extends JFrame {
 		tglbtnRectangle.addActionListener(e -> choice = "rectangle");
 		tglbtnCircle.addActionListener(e -> choice = "circle");
 		tglbtnDonut.addActionListener(e -> choice = "donut");
+		tglbtnHexagon.addActionListener(e -> choice = "hexagon");
 		tglbtnSelect.addActionListener(e -> choice = "select");
 
 		// modify/delete pozivaju controller
@@ -236,6 +243,10 @@ public class DrawingFrame extends JFrame {
 
 	public DlgDonut getDlgDonut() {
 		return dlgDonut;
+	}
+	
+	public DlgHexagon getDlgHexagon() {
+		return dlgHexagon;
 	}
 
 	public void refreshActiveColors() {

@@ -74,18 +74,6 @@ public class HexagonAdapter extends Shape {
 	}
 
 	@Override
-	public void moveTo(int x, int y) {
-		hexagon.setX(x);
-		hexagon.setY(y);
-	}
-
-	@Override
-	public void moveBy(int x, int y) {
-		hexagon.setX(hexagon.getX() + x);
-		hexagon.setY(hexagon.getY() + y);
-	}
-
-	@Override
 	public int compareTo(Object o) {
 		if (o instanceof HexagonAdapter) {
 			return this.getR() - ((HexagonAdapter) o).getR();
@@ -116,5 +104,17 @@ public class HexagonAdapter extends Shape {
 	@Override
 	public void setSelected(boolean selected) {
 		hexagon.setSelected(selected);
+	}
+
+	@Override
+	public void moveTo(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveBy(int x, int y) {
+		// TODO Auto-generated method stub
+		
 	}
 }
