@@ -3,9 +3,9 @@ package command;
 import geometry.Line;
 
 public class UpdateLineCmd implements Command {
-	private Line line;
-	private Line newLine;
-	private Line original = new Line();
+	private final Line line;
+	private final Line newLine;
+	private Line original;
 
 	public UpdateLineCmd(Line line, Line newLine) {
 		this.line = line;
@@ -14,18 +14,13 @@ public class UpdateLineCmd implements Command {
 
 	@Override
 	public void execute() {
-		original.getStartPoint().setX(line.getStartPoint().getX());
-		original.getStartPoint().setY(line.getStartPoint().getY());
-		original.getEndPoint().setX(line.getEndPoint().getX());
-		original.getEndPoint().setY(line.getEndPoint().getY());
-		original.setColor(line.getColor());
-		
+		original = line.clone();
 		line.getStartPoint().setX(newLine.getStartPoint().getX());
 		line.getStartPoint().setY(newLine.getStartPoint().getY());
 		line.getEndPoint().setX(newLine.getEndPoint().getX());
 		line.getEndPoint().setY(newLine.getEndPoint().getY());
 		line.setColor(newLine.getColor());
-
+		line.setSelected(newLine.isSelected());
 	}
 
 	@Override
@@ -35,7 +30,12 @@ public class UpdateLineCmd implements Command {
 		line.getEndPoint().setX(original.getEndPoint().getX());
 		line.getEndPoint().setY(original.getEndPoint().getY());
 		line.setColor(original.getColor());
+		line.setSelected(original.isSelected());
+	}
 
+	@Override
+	public String toString() {
+		return "Update " + line;
 	}
 
 }

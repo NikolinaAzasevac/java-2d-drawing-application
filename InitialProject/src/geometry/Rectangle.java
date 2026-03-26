@@ -144,6 +144,17 @@ public class Rectangle extends Shape {
 		this.color = color;
 	}
 
+	public Rectangle clone() {
+		Rectangle rectangle = new Rectangle();
+		rectangle.setUpperLeftPoint(this.getUpperLeftPoint().clone());
+		rectangle.setWidth(this.getWidth());
+		rectangle.setHeight(this.getHeight());
+		rectangle.setColor(this.getColor());
+		rectangle.setBorderColor(this.getBorderColor());
+		rectangle.setSelected(this.isSelected());
+		return rectangle;
+	}
+
 	public String toString() {
 		return "Rect(x=" + upperLeftPoint.getX() + ", y=" + upperLeftPoint.getY() + ", w=" + width + ", h=" + height
 				+ ", fill=" + colorToHex(color) + ", border=" + colorToHex(borderColor) + ", selected=" + selected

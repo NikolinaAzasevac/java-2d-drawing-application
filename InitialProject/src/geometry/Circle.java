@@ -127,6 +127,16 @@ public class Circle extends Shape {
 		this.color = color;
 	}
 
+	public Circle clone() {
+		Circle circle = new Circle();
+		circle.setCenter(this.getCenter().clone());
+		circle.setRadius(this.getRadius());
+		circle.setColor(this.getColor());
+		circle.setBorderColor(this.getBorderColor());
+		circle.setSelected(this.isSelected());
+		return circle;
+	}
+
 	public String toString() {
 		return "Circle(x=" + center.getX() + ", y=" + center.getY() + ", r=" + radius + ", fill="
 				+ colorToHex(color) + ", border=" + colorToHex(borderColor) + ", selected=" + selected + ")";

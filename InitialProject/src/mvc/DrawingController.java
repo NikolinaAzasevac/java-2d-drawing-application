@@ -24,6 +24,12 @@ import geometry.Shape;
 import command.Command;
 import command.RemoveShapeCmd;
 import command.AddShapeCmd;
+import command.UpdateCircleCmd;
+import command.UpdateDonutCmd;
+import command.UpdateHexagonCmd;
+import command.UpdateLineCmd;
+import command.UpdatePointCmd;
+import command.UpdateRectangleCmd;
 
 public class DrawingController {
 
@@ -253,9 +259,9 @@ public class DrawingController {
 			dialog.setVisible(true);
 			if (dialog.isConfirm()) {
 				Point p = dialog.makePoint();
-				((Point) selectedShape).setX(p.getX());
-				((Point) selectedShape).setY(p.getY());
-				((Point) selectedShape).setColor(p.getColor());
+				p.setSelected(selectedShape.isSelected());
+				Command cmd = new UpdatePointCmd((Point) selectedShape, p);
+				executeCommand(cmd);
 				model.setActiveBorderColor(p.getColor());
 				frame.refreshActiveColors();
 			}
@@ -272,11 +278,9 @@ public class DrawingController {
 			dialog.setVisible(true);
 			if (dialog.isConfirm()) {
 				Line l = dialog.makeLine();
-				((Line) selectedShape).getStartPoint().setX(l.getStartPoint().getX());
-				((Line) selectedShape).getStartPoint().setY(l.getStartPoint().getY());
-				((Line) selectedShape).getEndPoint().setX(l.getEndPoint().getX());
-				((Line) selectedShape).getEndPoint().setY(l.getEndPoint().getY());
-				((Line) selectedShape).setColor(dialog.getColor());
+				l.setSelected(selectedShape.isSelected());
+				Command cmd = new UpdateLineCmd((Line) selectedShape, l);
+				executeCommand(cmd);
 				model.setActiveBorderColor(dialog.getColor());
 				frame.refreshActiveColors();
 			}
@@ -292,12 +296,9 @@ public class DrawingController {
 			dialog.setVisible(true);
 			if (dialog.isConfirm()) {
 				Rectangle r = dialog.makeRectangle();
-				((Rectangle) selectedShape).getUpperLeftPoint().setX(r.getUpperLeftPoint().getX());
-				((Rectangle) selectedShape).getUpperLeftPoint().setY(r.getUpperLeftPoint().getY());
-				((Rectangle) selectedShape).setHeight(r.getHeight());
-				((Rectangle) selectedShape).setWidth(r.getWidth());
-				((Rectangle) selectedShape).setColor(r.getColor());
-				((Rectangle) selectedShape).setBorderColor(r.getBorderColor());
+				r.setSelected(selectedShape.isSelected());
+				Command cmd = new UpdateRectangleCmd((Rectangle) selectedShape, r);
+				executeCommand(cmd);
 				model.setActiveFillColor(r.getColor());
 				model.setActiveBorderColor(r.getBorderColor());
 				frame.refreshActiveColors();
@@ -314,11 +315,9 @@ public class DrawingController {
 			dialog.setVisible(true);
 			if (dialog.isConfirm()) {
 				Circle c = dialog.makeCircle();
-				((Circle) selectedShape).getCenter().setX(c.getCenter().getX());
-				((Circle) selectedShape).getCenter().setY(c.getCenter().getY());
-				((Circle) selectedShape).setRadius(c.getRadius());
-				((Circle) selectedShape).setColor(c.getColor());
-				((Circle) selectedShape).setBorderColor(c.getBorderColor());
+				c.setSelected(selectedShape.isSelected());
+				Command cmd = new UpdateCircleCmd((Circle) selectedShape, c);
+				executeCommand(cmd);
 				model.setActiveFillColor(c.getColor());
 				model.setActiveBorderColor(c.getBorderColor());
 				frame.refreshActiveColors();
@@ -335,12 +334,9 @@ public class DrawingController {
 			dialog.setVisible(true);
 			if (dialog.isConfirm()) {
 				Donut d = dialog.makeDonut();
-				((Donut) selectedShape).getCenter().setX(d.getCenter().getX());
-				((Donut) selectedShape).getCenter().setY(d.getCenter().getY());
-				((Donut) selectedShape).setInnerRadius(d.getInnerRadius());
-				((Donut) selectedShape).setRadius(d.getRadius());
-				((Donut) selectedShape).setColor(d.getColor());
-				((Donut) selectedShape).setBorderColor(d.getBorderColor());
+				d.setSelected(selectedShape.isSelected());
+				Command cmd = new UpdateDonutCmd((Donut) selectedShape, d);
+				executeCommand(cmd);
 				model.setActiveFillColor(d.getColor());
 				model.setActiveBorderColor(d.getBorderColor());
 				frame.refreshActiveColors();
@@ -357,11 +353,9 @@ public class DrawingController {
 			dialog.setVisible(true);
 			if (dialog.isConfirm()) {
 				HexagonAdapter h = dialog.makeHexagon();
-				hexagon.setX(h.getX());
-				hexagon.setY(h.getY());
-				hexagon.setR(h.getR());
-				hexagon.setAreaColor(h.getAreaColor());
-				hexagon.setBorderColor(h.getBorderColor());
+				h.setSelected(selectedShape.isSelected());
+				Command cmd = new UpdateHexagonCmd(hexagon, h);
+				executeCommand(cmd);
 				model.setActiveFillColor(h.getAreaColor());
 				model.setActiveBorderColor(h.getBorderColor());
 				frame.refreshActiveColors();

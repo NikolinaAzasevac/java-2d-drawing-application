@@ -117,4 +117,10 @@ public class HexagonAdapter extends Shape {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public HexagonAdapter clone() {
+		HexagonAdapter hexagonAdapter = new HexagonAdapter(getX(), getY(), getR(), getBorderColor(), getAreaColor());
+		hexagonAdapter.setSelected(this.isSelected());
+		return hexagonAdapter;
+	}
 }

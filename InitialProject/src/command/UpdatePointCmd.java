@@ -3,9 +3,9 @@ package command;
 import geometry.Point;
 
 public class UpdatePointCmd implements Command {
-	private Point point;
-	private Point newState;
-	private Point original = new Point();
+	private final Point point;
+	private final Point newState;
+	private Point original;
 
 	public UpdatePointCmd(Point point, Point newState) {
 		this.point = point;
@@ -14,16 +14,11 @@ public class UpdatePointCmd implements Command {
 
 	@Override
 	public void execute() {
-		original.setX(point.getX());
-		original.setY(point.getY());
-		original.setColor(point.getColor());
-		
+		original = point.clone();
 		point.setX(newState.getX());
 		point.setY(newState.getY());
 		point.setColor(newState.getColor());
-		
-		//point = newState;
-
+		point.setSelected(newState.isSelected());
 	}
 
 	@Override
@@ -31,7 +26,12 @@ public class UpdatePointCmd implements Command {
 		point.setX(original.getX());
 		point.setY(original.getY());
 		point.setColor(original.getColor());
+		point.setSelected(original.isSelected());
+	}
 
+	@Override
+	public String toString() {
+		return "Update " + point;
 	}
 
 }

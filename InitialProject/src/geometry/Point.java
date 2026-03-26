@@ -124,6 +124,15 @@ public class Point extends Shape {
 		this.selected = selected;
 	}
 
+	public Point clone() {
+		Point point = new Point();
+		point.setX(this.getX());
+		point.setY(this.getY());
+		point.setColor(this.getColor());
+		point.setSelected(this.isSelected());
+		return point;
+	}
+
 	// isti potpis kao i u klasi oBject
 	// nakon redefinisanja vraca (10,15).
 	public String toString() {

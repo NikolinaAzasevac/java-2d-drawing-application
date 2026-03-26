@@ -111,6 +111,15 @@ public class Line extends Shape {
 		this.color = color;
 	}
 
+	public Line clone() {
+		Line line = new Line();
+		line.setStartPoint(this.getStartPoint().clone());
+		line.setEndPoint(this.getEndPoint().clone());
+		line.setColor(this.getColor());
+		line.setSelected(this.isSelected());
+		return line;
+	}
+
 	public String toString() {
 		return "Line(x1=" + startPoint.getX() + ", y1=" + startPoint.getY() + ", x2=" + endPoint.getX() + ", y2="
 				+ endPoint.getY() + ", color=" + colorToHex(color) + ", selected=" + selected + ")";

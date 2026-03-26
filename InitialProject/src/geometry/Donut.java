@@ -110,6 +110,17 @@ public class Donut extends Circle {
 		this.innerRadius = innerRadiusl;
 	}
 
+	public Donut clone() {
+		Donut donut = new Donut();
+		donut.setCenter(this.getCenter().clone());
+		donut.setRadius(this.getRadius());
+		donut.setInnerRadius(this.getInnerRadius());
+		donut.setColor(this.getColor());
+		donut.setBorderColor(this.getBorderColor());
+		donut.setSelected(this.isSelected());
+		return donut;
+	}
+
 	// redefinise toString iz Circle
 	// da ne postoji u circle redefinisao bi onu toString
 	// iz klase Object
