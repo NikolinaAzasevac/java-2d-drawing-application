@@ -58,6 +58,7 @@ public class DrawingFrame extends JFrame implements Observer {
 	private final JButton btnBringToFront = new JButton("Bring To Front");
 	private final JButton btnBringToBack = new JButton("Bring To Back");
 	private final JButton btnSaveLog = new JButton("Save Log");
+	private final JButton btnLoadLog = new JButton("Load Log");
 	private final JButton btnSaveDrawing = new JButton("Save Drawing");
 	private final JButton btnLoadDrawing = new JButton("Load Drawing");
 
@@ -150,9 +151,10 @@ public class DrawingFrame extends JFrame implements Observer {
 		pnlOrder.add(btnToBack);
 		pnlOrder.add(btnBringToFront);
 		pnlOrder.add(btnBringToBack);
+		pnlFile.add(btnSaveLog);
+		pnlFile.add(btnLoadLog);
 		pnlFile.add(btnSaveDrawing);
 		pnlFile.add(btnLoadDrawing);
-		pnlFile.add(btnSaveLog);
 		pnlColors.add(btnBorderColor);
 		pnlColors.add(btnFillColor);
 		pnlSouth.add(pnlSelection);
@@ -253,6 +255,17 @@ public class DrawingFrame extends JFrame implements Observer {
 			JFileChooser fileChooser = new JFileChooser();
 			if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 				controller.saveLog(fileChooser.getSelectedFile().getAbsolutePath());
+			}
+		});
+
+		btnLoadLog.addActionListener(e -> {
+			if (controller == null) {
+				return;
+			}
+
+			JFileChooser fileChooser = new JFileChooser();
+			if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+				controller.loadLog(fileChooser.getSelectedFile().getAbsolutePath());
 			}
 		});
 

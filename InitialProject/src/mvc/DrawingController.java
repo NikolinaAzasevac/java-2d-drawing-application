@@ -514,6 +514,12 @@ public class DrawingController {
 		fileManager.save(model, path);
 	}
 
+	public void loadLog(String path) {
+		FileManager fileManager = new FileManager(new LogFileStrategy());
+		fileManager.load(model, path);
+		frame.refreshLog();
+	}
+
 	public void saveDrawing(String path) {
 		FileManager fileManager = new FileManager(new DrawingFileStrategy());
 		fileManager.save(model, path);

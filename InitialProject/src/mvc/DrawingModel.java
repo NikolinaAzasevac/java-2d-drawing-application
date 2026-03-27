@@ -34,6 +34,10 @@ public class DrawingModel implements Observable {
 		commandLog.add(entry);
 	}
 
+	public void clearLog() {
+		commandLog.clear();
+	}
+
 	public List<String> getLogEntries() {
 		return commandLog;
 	}

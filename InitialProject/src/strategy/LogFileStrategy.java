@@ -1,6 +1,8 @@
 package strategy;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -22,6 +24,15 @@ public class LogFileStrategy implements FileStrategy {
 
 	@Override
 	public void load(DrawingModel model, String path) {
+		model.clearLog();
+		try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				model.addLog(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
