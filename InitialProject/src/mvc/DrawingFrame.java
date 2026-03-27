@@ -218,7 +218,7 @@ public class DrawingFrame extends JFrame implements Observer {
 
 		updateColorButtons();
 		updateUndoRedoButtons(false, false);
-		updateZOrderButtons(false);
+		updateZOrderButtons(false, false, false, false);
 
 		// dodavanje na frame
 		add(pnlNorth, BorderLayout.NORTH);
@@ -309,18 +309,39 @@ public class DrawingFrame extends JFrame implements Observer {
 		btnRedo.setEnabled(canRedo);
 	}
 
-	public void updateZOrderButtons(boolean enabled) {
-		btnToFront.setEnabled(enabled);
-		btnToBack.setEnabled(enabled);
-		btnBringToFront.setEnabled(enabled);
-		btnBringToBack.setEnabled(enabled);
+	public void updateZOrderButtons(boolean canToFront, boolean canToBack, boolean canBringToFront,
+			boolean canBringToBack) {
+		btnToFront.setEnabled(canToFront);
+		btnToBack.setEnabled(canToBack);
+		btnBringToFront.setEnabled(canBringToFront);
+		btnBringToBack.setEnabled(canBringToBack);
 	}
 
 	@Override
 	public void update(int selectedCount) {
 		tglbtnDelete.setEnabled(selectedCount > 0);
 		tglbtnModify.setEnabled(selectedCount == 1);
-		updateZOrderButtons(selectedCount == 1);
+
+		if (model == null || selectedCount != 1) {
+			updateZOrderButtons(false, false, false, false);
+			return;
+		}
+
+		int selectedIndex = -1;
+		int lastIndex = model.getShapes().size() - 1;
+		for (int i = 0; i < model.getShapes().size(); i++) {
+			if (model.getShapes().get(i).isSelected()) {
+				selectedIndex = i;
+				break;
+			}
+		}
+
+		if (selectedIndex == -1) {
+			updateZOrderButtons(false, false, false, false);
+			return;
+		}
+
+		updateZOrderButtons(selectedIndex < lastIndex, selectedIndex > 0, selectedIndex < lastIndex, selectedIndex > 0);
 	}
 
 }
