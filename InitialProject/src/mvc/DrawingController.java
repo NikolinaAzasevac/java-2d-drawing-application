@@ -35,6 +35,7 @@ import command.BringToFrontCmd;
 import command.ToFrontCmd;
 import command.ToBackCmd;
 import strategy.FileManager;
+import strategy.DrawingFileStrategy;
 import strategy.LogFileStrategy;
 
 public class DrawingController {
@@ -511,6 +512,24 @@ public class DrawingController {
 	public void saveLog(String path) {
 		FileManager fileManager = new FileManager(new LogFileStrategy());
 		fileManager.save(model, path);
+	}
+
+	public void saveDrawing(String path) {
+		FileManager fileManager = new FileManager(new DrawingFileStrategy());
+		fileManager.save(model, path);
+	}
+
+	public void loadDrawing(String path) {
+		FileManager fileManager = new FileManager(new DrawingFileStrategy());
+		fileManager.load(model, path);
+		undoStack.clear();
+		redoStack.clear();
+		model.setSelectedShape(null);
+		model.getLogEntries().clear();
+		model.notifyObservers();
+		frame.updateUndoRedoButtons(false, false);
+		frame.refreshLog();
+		frame.repaint();
 	}
 
 	private void log(String message) {

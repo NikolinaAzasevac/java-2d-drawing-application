@@ -1,9 +1,11 @@
 package geometry;
 
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.awt.Color;
 
-public abstract class Shape implements Moveable, Comparable {
+public abstract class Shape implements Moveable, Comparable, Serializable {
+	private static final long serialVersionUID = 1L;
 	protected boolean selected;
 
 	public Shape() {
