@@ -434,6 +434,18 @@ public class DrawingController {
 	    frame.repaint();
 	}
 
+	public void toFront() {
+	}
+
+	public void toBack() {
+	}
+
+	public void bringToFront() {
+	}
+
+	public void bringToBack() {
+	}
+
 	private void log(String message) {
 		if (message == null || message.isEmpty())
 			return;

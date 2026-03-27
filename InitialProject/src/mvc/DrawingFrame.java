@@ -51,6 +51,10 @@ public class DrawingFrame extends JFrame implements Observer {
 
 	private final JButton btnUndo = new JButton("Undo");
 	private final JButton btnRedo = new JButton("Redo");
+	private final JButton btnToFront = new JButton("To Front");
+	private final JButton btnToBack = new JButton("To Back");
+	private final JButton btnBringToFront = new JButton("Bring To Front");
+	private final JButton btnBringToBack = new JButton("Bring To Back");
 
 	private final JTextArea txtLog = new JTextArea(30, 30);
 
@@ -118,6 +122,11 @@ public class DrawingFrame extends JFrame implements Observer {
 		pnlSouth.add(tglbtnSelect);
 		pnlSouth.add(tglbtnModify);
 		pnlSouth.add(tglbtnDelete);
+		pnlSouth.add(new JLabel(" "));
+		pnlSouth.add(btnToBack);
+		pnlSouth.add(btnToFront);
+		pnlSouth.add(btnBringToBack);
+		pnlSouth.add(btnBringToFront);
 		pnlSouth.add(new JLabel(" "));
 		pnlSouth.add(btnUndo);
 		pnlSouth.add(btnRedo);
@@ -187,8 +196,29 @@ public class DrawingFrame extends JFrame implements Observer {
 				controller.redo();
 		});
 
+		btnToFront.addActionListener(e -> {
+			if (controller != null)
+				controller.toFront();
+		});
+
+		btnToBack.addActionListener(e -> {
+			if (controller != null)
+				controller.toBack();
+		});
+
+		btnBringToFront.addActionListener(e -> {
+			if (controller != null)
+				controller.bringToFront();
+		});
+
+		btnBringToBack.addActionListener(e -> {
+			if (controller != null)
+				controller.bringToBack();
+		});
+
 		updateColorButtons();
 		updateUndoRedoButtons(false, false);
+		updateZOrderButtons(false);
 
 		// dodavanje na frame
 		add(pnlNorth, BorderLayout.NORTH);
@@ -279,10 +309,18 @@ public class DrawingFrame extends JFrame implements Observer {
 		btnRedo.setEnabled(canRedo);
 	}
 
+	public void updateZOrderButtons(boolean enabled) {
+		btnToFront.setEnabled(enabled);
+		btnToBack.setEnabled(enabled);
+		btnBringToFront.setEnabled(enabled);
+		btnBringToBack.setEnabled(enabled);
+	}
+
 	@Override
 	public void update(int selectedCount) {
 		tglbtnDelete.setEnabled(selectedCount > 0);
 		tglbtnModify.setEnabled(selectedCount == 1);
+		updateZOrderButtons(selectedCount == 1);
 	}
 
 }
