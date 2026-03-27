@@ -57,10 +57,10 @@ public class DrawingFrame extends JFrame implements Observer {
 	private final JButton btnToBack = new JButton("To Back");
 	private final JButton btnBringToFront = new JButton("Bring To Front");
 	private final JButton btnBringToBack = new JButton("Bring To Back");
-	private final JButton btnSaveLog = new JButton("Save Log");
-	private final JButton btnLoadLog = new JButton("Load Log");
-	private final JButton btnSaveDrawing = new JButton("Save Drawing");
-	private final JButton btnLoadDrawing = new JButton("Load Drawing");
+	private final JButton btnSaveLog = new JButton("Log");
+	private final JButton btnLoadLog = new JButton("Load");
+	private final JButton btnSaveDrawing = new JButton("Save");
+	private final JButton btnLoadDrawing = new JButton("Open");
 
 	private final JTextArea txtLog = new JTextArea(30, 30);
 
@@ -81,13 +81,13 @@ public class DrawingFrame extends JFrame implements Observer {
 
 		JPanel pnlNorth = new JPanel(new FlowLayout(FlowLayout.CENTER, 8, 5));
 		pnlNorth.setBackground(new Color(255, 224, 250));
-		JPanel pnlSouth = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
+		JPanel pnlSouth = new JPanel(new FlowLayout(FlowLayout.CENTER, 6, 5));
 		pnlSouth.setBackground(new Color(255, 224, 250));
 		JPanel pnlSelection = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		pnlSelection.setBackground(new Color(255, 224, 250));
 		JPanel pnlOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		pnlOrder.setBackground(new Color(255, 224, 250));
-		JPanel pnlFile = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JPanel pnlFile = new JPanel(new FlowLayout(FlowLayout.CENTER, 3, 5));
 		pnlFile.setBackground(new Color(255, 224, 250));
 		JPanel pnlColors = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		pnlColors.setBackground(new Color(255, 224, 250));
