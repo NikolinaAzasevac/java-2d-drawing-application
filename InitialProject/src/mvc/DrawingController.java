@@ -30,6 +30,10 @@ import command.UpdateHexagonCmd;
 import command.UpdateLineCmd;
 import command.UpdatePointCmd;
 import command.UpdateRectangleCmd;
+import command.BringToBackCmd;
+import command.BringToFrontCmd;
+import command.ToFrontCmd;
+import command.ToBackCmd;
 
 public class DrawingController {
 
@@ -435,15 +439,71 @@ public class DrawingController {
 	}
 
 	public void toFront() {
+		List<Shape> selectedShapes = getSelectedShapes();
+
+		if (selectedShapes.size() != 1) {
+			return;
+		}
+
+		Shape selectedShape = selectedShapes.get(0);
+		if (model.getShapes().indexOf(selectedShape) == model.getShapes().size() - 1) {
+			return;
+		}
+
+		Command cmd = new ToFrontCmd(model, selectedShape);
+		executeCommand(cmd);
+		model.notifyObservers();
 	}
 
 	public void toBack() {
+		List<Shape> selectedShapes = getSelectedShapes();
+
+		if (selectedShapes.size() != 1) {
+			return;
+		}
+
+		Shape selectedShape = selectedShapes.get(0);
+		if (model.getShapes().indexOf(selectedShape) <= 0) {
+			return;
+		}
+
+		Command cmd = new ToBackCmd(model, selectedShape);
+		executeCommand(cmd);
+		model.notifyObservers();
 	}
 
 	public void bringToFront() {
+		List<Shape> selectedShapes = getSelectedShapes();
+
+		if (selectedShapes.size() != 1) {
+			return;
+		}
+
+		Shape selectedShape = selectedShapes.get(0);
+		if (model.getShapes().indexOf(selectedShape) == model.getShapes().size() - 1) {
+			return;
+		}
+
+		Command cmd = new BringToFrontCmd(model, selectedShape);
+		executeCommand(cmd);
+		model.notifyObservers();
 	}
 
 	public void bringToBack() {
+		List<Shape> selectedShapes = getSelectedShapes();
+
+		if (selectedShapes.size() != 1) {
+			return;
+		}
+
+		Shape selectedShape = selectedShapes.get(0);
+		if (model.getShapes().indexOf(selectedShape) <= 0) {
+			return;
+		}
+
+		Command cmd = new BringToBackCmd(model, selectedShape);
+		executeCommand(cmd);
+		model.notifyObservers();
 	}
 
 	private void log(String message) {
