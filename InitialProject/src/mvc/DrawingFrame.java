@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JFileChooser;
+import java.awt.FlowLayout;
 
 import drawing.DlgCircle;
 import drawing.DlgDonut;
@@ -77,10 +78,26 @@ public class DrawingFrame extends JFrame implements Observer {
 
 		getContentPane().setLayout(new BorderLayout());
 
-		JPanel pnlNorth = new JPanel();
+		JPanel pnlNorth = new JPanel(new FlowLayout(FlowLayout.CENTER, 8, 5));
 		pnlNorth.setBackground(new Color(255, 224, 250));
-		JPanel pnlSouth = new JPanel();
+		JPanel pnlSouth = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
 		pnlSouth.setBackground(new Color(255, 224, 250));
+		JPanel pnlSelection = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pnlSelection.setBackground(new Color(255, 224, 250));
+		JPanel pnlOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pnlOrder.setBackground(new Color(255, 224, 250));
+		JPanel pnlFile = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pnlFile.setBackground(new Color(255, 224, 250));
+		JPanel pnlColors = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pnlColors.setBackground(new Color(255, 224, 250));
+		JLabel lblNorthSeparator = new JLabel("|");
+		lblNorthSeparator.setForeground(new Color(230, 170, 205));
+		JLabel lblSouthSeparatorOne = new JLabel("|");
+		lblSouthSeparatorOne.setForeground(new Color(230, 170, 205));
+		JLabel lblSouthSeparatorTwo = new JLabel("|");
+		lblSouthSeparatorTwo.setForeground(new Color(230, 170, 205));
+		JLabel lblSouthSeparatorThree = new JLabel("|");
+		lblSouthSeparatorThree.setForeground(new Color(230, 170, 205));
 
 		JPanel pnlEast = new JPanel(new BorderLayout());
 		pnlEast.setBackground(new Color(255, 224, 250));
@@ -121,25 +138,30 @@ public class DrawingFrame extends JFrame implements Observer {
 		pnlNorth.add(tglbtnCircle);
 		pnlNorth.add(tglbtnDonut);
 		pnlNorth.add(tglbtnHexagon);
+		pnlNorth.add(lblNorthSeparator);
+		pnlNorth.add(btnUndo);
+		pnlNorth.add(btnRedo);
 
 		// south
-		pnlSouth.add(tglbtnSelect);
-		pnlSouth.add(tglbtnModify);
-		pnlSouth.add(tglbtnDelete);
-		pnlSouth.add(new JLabel(" "));
-		pnlSouth.add(btnToBack);
-		pnlSouth.add(btnToFront);
-		pnlSouth.add(btnBringToBack);
-		pnlSouth.add(btnBringToFront);
-		pnlSouth.add(new JLabel(" "));
-		pnlSouth.add(btnUndo);
-		pnlSouth.add(btnRedo);
-		pnlSouth.add(new JLabel(" "));
-		pnlSouth.add(btnSaveLog);
-		pnlSouth.add(btnSaveDrawing);
-		pnlSouth.add(btnLoadDrawing);
-		pnlSouth.add(btnBorderColor);
-		pnlSouth.add(btnFillColor);
+		pnlSelection.add(tglbtnSelect);
+		pnlSelection.add(tglbtnModify);
+		pnlSelection.add(tglbtnDelete);
+		pnlOrder.add(btnToFront);
+		pnlOrder.add(btnToBack);
+		pnlOrder.add(btnBringToFront);
+		pnlOrder.add(btnBringToBack);
+		pnlFile.add(btnSaveDrawing);
+		pnlFile.add(btnLoadDrawing);
+		pnlFile.add(btnSaveLog);
+		pnlColors.add(btnBorderColor);
+		pnlColors.add(btnFillColor);
+		pnlSouth.add(pnlSelection);
+		pnlSouth.add(lblSouthSeparatorOne);
+		pnlSouth.add(pnlOrder);
+		pnlSouth.add(lblSouthSeparatorTwo);
+		pnlSouth.add(pnlFile);
+		pnlSouth.add(lblSouthSeparatorThree);
+		pnlSouth.add(pnlColors);
 
 		// akcije - samo postavljaju choice
 		tglbtnPoint.addActionListener(e -> choice = "point");
