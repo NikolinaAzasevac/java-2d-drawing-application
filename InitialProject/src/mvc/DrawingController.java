@@ -34,6 +34,8 @@ import command.BringToBackCmd;
 import command.BringToFrontCmd;
 import command.ToFrontCmd;
 import command.ToBackCmd;
+import strategy.FileManager;
+import strategy.LogFileStrategy;
 
 public class DrawingController {
 
@@ -504,6 +506,11 @@ public class DrawingController {
 		Command cmd = new BringToBackCmd(model, selectedShape);
 		executeCommand(cmd);
 		model.notifyObservers();
+	}
+
+	public void saveLog(String path) {
+		FileManager fileManager = new FileManager(new LogFileStrategy());
+		fileManager.save(model, path);
 	}
 
 	private void log(String message) {

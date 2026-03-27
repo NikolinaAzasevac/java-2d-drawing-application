@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JFileChooser;
 
 import drawing.DlgCircle;
 import drawing.DlgDonut;
@@ -55,6 +56,7 @@ public class DrawingFrame extends JFrame implements Observer {
 	private final JButton btnToBack = new JButton("To Back");
 	private final JButton btnBringToFront = new JButton("Bring To Front");
 	private final JButton btnBringToBack = new JButton("Bring To Back");
+	private final JButton btnSaveLog = new JButton("Save Log");
 
 	private final JTextArea txtLog = new JTextArea(30, 30);
 
@@ -131,6 +133,7 @@ public class DrawingFrame extends JFrame implements Observer {
 		pnlSouth.add(btnUndo);
 		pnlSouth.add(btnRedo);
 		pnlSouth.add(new JLabel(" "));
+		pnlSouth.add(btnSaveLog);
 		pnlSouth.add(btnBorderColor);
 		pnlSouth.add(btnFillColor);
 
@@ -214,6 +217,17 @@ public class DrawingFrame extends JFrame implements Observer {
 		btnBringToBack.addActionListener(e -> {
 			if (controller != null)
 				controller.bringToBack();
+		});
+
+		btnSaveLog.addActionListener(e -> {
+			if (controller == null) {
+				return;
+			}
+
+			JFileChooser fileChooser = new JFileChooser();
+			if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+				controller.saveLog(fileChooser.getSelectedFile().getAbsolutePath());
+			}
 		});
 
 		updateColorButtons();
