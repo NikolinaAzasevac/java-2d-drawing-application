@@ -44,6 +44,7 @@ public class DrawingController {
 	private final DrawingFrame frame;
 	private final Stack<Command> undoStack = new Stack<>();
 	private final Stack<Command> redoStack = new Stack<>();
+	private final LogFileStrategy logParser = new LogFileStrategy();
 
 	public DrawingController(DrawingModel model, DrawingFrame frame) {
 		this.model = model;
@@ -517,7 +518,212 @@ public class DrawingController {
 	public void loadLog(String path) {
 		FileManager fileManager = new FileManager(new LogFileStrategy());
 		fileManager.load(model, path);
+		model.getShapes().clear();
+		clearSelections();
+		undoStack.clear();
+		redoStack.clear();
+		frame.updateUndoRedoButtons(false, false);
+
+		List<String> loadedEntries = new ArrayList<>(model.getLogEntries());
+		model.clearLog();
 		frame.refreshLog();
+
+		for (String entry : loadedEntries) {
+			int choice = JOptionPane.showConfirmDialog(frame, entry + "\n\nExecute this command?",
+					"Load Log", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (choice == JOptionPane.CANCEL_OPTION || choice == JOptionPane.CLOSED_OPTION) {
+				break;
+			}
+
+			if (choice == JOptionPane.YES_OPTION) {
+				replayLogEntry(entry);
+				model.addLog(entry);
+				model.notifyObservers();
+				frame.updateUndoRedoButtons(!undoStack.isEmpty(), !redoStack.isEmpty());
+				frame.refreshLog();
+				frame.repaint();
+			}
+		}
+
+		model.setSelectedShape(null);
+		model.notifyObservers();
+		frame.refreshLog();
+		frame.repaint();
+	}
+
+	private void replayLogEntry(String entry) {
+		if (entry.startsWith("Add ")) {
+			Shape shape = logParser.parseShape(entry);
+			if (shape != null) {
+				executeReplayCommand(new AddShapeCmd(model, shape));
+			}
+			return;
+		}
+
+		if (entry.startsWith("Select ")) {
+			Shape shape = findShapeByDescriptor(entry.substring("Select ".length()));
+			if (shape != null) {
+				shape.setSelected(true);
+				model.setSelectedShape(shape);
+			}
+			return;
+		}
+
+		if (entry.startsWith("Deselect ")) {
+			Shape shape = findShapeByDescriptor(entry.substring("Deselect ".length()));
+			if (shape != null) {
+				shape.setSelected(false);
+				if (model.getSelectedShape() == shape) {
+					model.setSelectedShape(null);
+				}
+			}
+			return;
+		}
+
+		if (entry.startsWith("Delete ")) {
+			Shape shape = findShapeByDescriptor(entry.substring("Delete ".length()));
+			if (shape != null) {
+				executeReplayCommand(new RemoveShapeCmd(model, shape));
+			}
+			return;
+		}
+
+		if (entry.startsWith("To front ")) {
+			Shape shape = findShapeByDescriptor(entry.substring("To front ".length()));
+			if (shape != null) {
+				executeReplayCommand(new ToFrontCmd(model, shape));
+			}
+			return;
+		}
+
+		if (entry.startsWith("To back ")) {
+			Shape shape = findShapeByDescriptor(entry.substring("To back ".length()));
+			if (shape != null) {
+				executeReplayCommand(new ToBackCmd(model, shape));
+			}
+			return;
+		}
+
+		if (entry.startsWith("Bring to front ")) {
+			Shape shape = findShapeByDescriptor(entry.substring("Bring to front ".length()));
+			if (shape != null) {
+				executeReplayCommand(new BringToFrontCmd(model, shape));
+			}
+			return;
+		}
+
+		if (entry.startsWith("Bring to back ")) {
+			Shape shape = findShapeByDescriptor(entry.substring("Bring to back ".length()));
+			if (shape != null) {
+				executeReplayCommand(new BringToBackCmd(model, shape));
+			}
+			return;
+		}
+
+		if (entry.startsWith("Update ")) {
+			replayUpdate(entry.substring("Update ".length()));
+			return;
+		}
+
+		if (entry.startsWith("Undo ")) {
+			replayUndo();
+			return;
+		}
+
+		if (entry.startsWith("Redo ")) {
+			replayRedo();
+		}
+	}
+
+	private void replayUpdate(String descriptor) {
+		Shape selectedShape = getSingleSelectedShape();
+		Shape newState = logParser.parseShape(descriptor);
+
+		if (selectedShape == null || newState == null) {
+			return;
+		}
+
+		Command cmd = null;
+		if (selectedShape instanceof Point && newState instanceof Point) {
+			cmd = new UpdatePointCmd((Point) selectedShape, (Point) newState);
+		} else if (selectedShape instanceof Line && newState instanceof Line) {
+			cmd = new UpdateLineCmd((Line) selectedShape, (Line) newState);
+		} else if (selectedShape instanceof Rectangle && newState instanceof Rectangle) {
+			cmd = new UpdateRectangleCmd((Rectangle) selectedShape, (Rectangle) newState);
+		} else if (selectedShape instanceof Circle && !(selectedShape instanceof Donut) && newState instanceof Circle) {
+			cmd = new UpdateCircleCmd((Circle) selectedShape, (Circle) newState);
+		} else if (selectedShape instanceof Donut && newState instanceof Donut) {
+			cmd = new UpdateDonutCmd((Donut) selectedShape, (Donut) newState);
+		} else if (selectedShape instanceof HexagonAdapter && newState instanceof HexagonAdapter) {
+			cmd = new UpdateHexagonCmd((HexagonAdapter) selectedShape, (HexagonAdapter) newState);
+		}
+
+		if (cmd != null) {
+			executeReplayCommand(cmd);
+		}
+	}
+
+	private void replayUndo() {
+		if (undoStack.isEmpty()) {
+			return;
+		}
+
+		Command cmd = undoStack.pop();
+		cmd.unexecute();
+		redoStack.push(cmd);
+		clearSelections();
+	}
+
+	private void replayRedo() {
+		if (redoStack.isEmpty()) {
+			return;
+		}
+
+		Command cmd = redoStack.pop();
+		cmd.execute();
+		undoStack.push(cmd);
+		clearSelections();
+	}
+
+	private void executeReplayCommand(Command cmd) {
+		cmd.execute();
+		undoStack.push(cmd);
+		redoStack.clear();
+	}
+
+	private Shape findShapeByDescriptor(String descriptor) {
+		Shape parsedShape = logParser.parseShape(descriptor);
+		if (parsedShape == null) {
+			return null;
+		}
+
+		String signature = normalizeShapeSignature(parsedShape.toString());
+		for (Shape shape : model.getShapes()) {
+			if (normalizeShapeSignature(shape.toString()).equals(signature)) {
+				return shape;
+			}
+		}
+		return null;
+	}
+
+	private String normalizeShapeSignature(String signature) {
+		return signature.replace(", selected=true", "").replace(", selected=false", "");
+	}
+
+	private Shape getSingleSelectedShape() {
+		List<Shape> selectedShapes = getSelectedShapes();
+		if (selectedShapes.size() == 1) {
+			return selectedShapes.get(0);
+		}
+		return null;
+	}
+
+	private void clearSelections() {
+		for (Shape shape : model.getShapes()) {
+			shape.setSelected(false);
+		}
+		model.setSelectedShape(null);
 	}
 
 	public void saveDrawing(String path) {
