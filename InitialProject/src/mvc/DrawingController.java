@@ -72,8 +72,6 @@ public class DrawingController {
 				Point point = dialog.makePoint();
 				Command cmd = new AddShapeCmd(model, point);
 				executeCommand(cmd);
-				model.setActiveBorderColor(dialog.getColor());
-				frame.refreshActiveColors();
 			}
 			frame.repaint();
 			break;
@@ -100,8 +98,6 @@ public class DrawingController {
 					line.setColor(dialog.getColor());
 					Command cmd = new AddShapeCmd(model, line);
 					executeCommand(cmd);
-					model.setActiveBorderColor(dialog.getColor());
-					frame.refreshActiveColors();
 				}
 				model.setStartPoint(null);
 			}
@@ -125,9 +121,6 @@ public class DrawingController {
 				Rectangle rectangle = dialog.makeRectangle();
 				Command cmd = new AddShapeCmd(model, rectangle);
 				executeCommand(cmd);
-				model.setActiveFillColor(dialog.getColor());
-				model.setActiveBorderColor(dialog.getBorderColor());
-				frame.refreshActiveColors();
 			}
 
 			frame.repaint();
@@ -149,9 +142,6 @@ public class DrawingController {
 				Circle circle = dialog.makeCircle();
 				Command cmd = new AddShapeCmd(model, circle);
 				executeCommand(cmd);
-				model.setActiveFillColor(dialog.getColor());
-				model.setActiveBorderColor(dialog.getBorderColor());
-				frame.refreshActiveColors();
 			}
 
 			frame.repaint();
@@ -174,9 +164,6 @@ public class DrawingController {
 				Donut donut = dialog.makeDonut();
 				Command cmd = new AddShapeCmd(model, donut);
 				executeCommand(cmd);
-				model.setActiveFillColor(dialog.getColor());
-				model.setActiveBorderColor(dialog.getBorderColor());
-				frame.refreshActiveColors();
 			}
 
 			frame.repaint();
@@ -198,9 +185,6 @@ public class DrawingController {
 				HexagonAdapter hexagon = dialog.makeHexagon();
 				Command cmd = new AddShapeCmd(model, hexagon);
 				executeCommand(cmd);
-				model.setActiveFillColor(dialog.getAreaColor());
-				model.setActiveBorderColor(dialog.getBorderColor());
-				frame.refreshActiveColors();
 			}
 
 			frame.repaint();
@@ -268,8 +252,6 @@ public class DrawingController {
 				p.setSelected(selectedShape.isSelected());
 				Command cmd = new UpdatePointCmd((Point) selectedShape, p);
 				executeCommand(cmd);
-				model.setActiveBorderColor(p.getColor());
-				frame.refreshActiveColors();
 			}
 
 		} else if (selectedShape instanceof Line) {
@@ -287,8 +269,6 @@ public class DrawingController {
 				l.setSelected(selectedShape.isSelected());
 				Command cmd = new UpdateLineCmd((Line) selectedShape, l);
 				executeCommand(cmd);
-				model.setActiveBorderColor(dialog.getColor());
-				frame.refreshActiveColors();
 			}
 
 		} else if (selectedShape instanceof Rectangle) {
@@ -305,9 +285,6 @@ public class DrawingController {
 				r.setSelected(selectedShape.isSelected());
 				Command cmd = new UpdateRectangleCmd((Rectangle) selectedShape, r);
 				executeCommand(cmd);
-				model.setActiveFillColor(r.getColor());
-				model.setActiveBorderColor(r.getBorderColor());
-				frame.refreshActiveColors();
 			}
 
 		} else if (selectedShape instanceof Circle && !(selectedShape instanceof Donut)) {
@@ -324,9 +301,6 @@ public class DrawingController {
 				c.setSelected(selectedShape.isSelected());
 				Command cmd = new UpdateCircleCmd((Circle) selectedShape, c);
 				executeCommand(cmd);
-				model.setActiveFillColor(c.getColor());
-				model.setActiveBorderColor(c.getBorderColor());
-				frame.refreshActiveColors();
 			}
 
 		} else if (selectedShape instanceof Donut) {
@@ -343,9 +317,6 @@ public class DrawingController {
 				d.setSelected(selectedShape.isSelected());
 				Command cmd = new UpdateDonutCmd((Donut) selectedShape, d);
 				executeCommand(cmd);
-				model.setActiveFillColor(d.getColor());
-				model.setActiveBorderColor(d.getBorderColor());
-				frame.refreshActiveColors();
 			}
 		} else if (selectedShape instanceof HexagonAdapter) {
 			DlgHexagon dialog = frame.getDlgHexagon();
@@ -362,9 +333,6 @@ public class DrawingController {
 				h.setSelected(selectedShape.isSelected());
 				Command cmd = new UpdateHexagonCmd(hexagon, h);
 				executeCommand(cmd);
-				model.setActiveFillColor(h.getAreaColor());
-				model.setActiveBorderColor(h.getBorderColor());
-				frame.refreshActiveColors();
 			}
 		}
 
