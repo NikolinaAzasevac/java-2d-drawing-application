@@ -6,6 +6,7 @@ import geometry.Shape;
 public class RemoveShapeCmd implements Command {
 	private DrawingModel model;
 	private Shape shape;
+	private int index;
 	
 	public RemoveShapeCmd(DrawingModel model, Shape shape) {
 		this.model = model;
@@ -14,13 +15,18 @@ public class RemoveShapeCmd implements Command {
 
 	@Override
 	public void execute() {
+		index = model.getShapes().indexOf(shape);
 		model.remove(shape);
 
 	}
 
 	@Override
 	public void unexecute() {
-		model.add(shape);
+		if (index >= 0 && index <= model.getShapes().size()) {
+			model.getShapes().add(index, shape);
+		} else {
+			model.add(shape);
+		}
 
 	}
 
