@@ -132,7 +132,7 @@ public class DlgCircle extends JDialog {
 			txtRadius.setColumns(10);
 		}
 		{
-			JLabel lblChooseInner = new JLabel("Choose inner: ");
+			JLabel lblChooseInner = new JLabel("Choose fill: ");
 			GridBagConstraints gbc_lblChooseInner = new GridBagConstraints();
 			gbc_lblChooseInner.insets = new Insets(0, 0, 5, 5);
 			gbc_lblChooseInner.gridx = 0;
@@ -143,7 +143,7 @@ public class DlgCircle extends JDialog {
 			btnInnerColor = new JButton("COLOR");
 			btnInnerColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					color = JColorChooser.showDialog(null, "Choose inner color", Color.white);
+					color = JColorChooser.showDialog(null, "Choose fill color", Color.white);
 					if (color != null) {
 						btnInnerColor.setBackground(color); 
 						btnInnerColor.setOpaque(true); 

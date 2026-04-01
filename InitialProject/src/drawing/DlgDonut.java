@@ -152,7 +152,7 @@ public class DlgDonut extends JDialog {
 			txtInnerRadius.setColumns(10);
 		}
 		{
-			JLabel lblChooseOutline = new JLabel("Chooce inner color:");
+			JLabel lblChooseOutline = new JLabel("Choose fill:");
 			GridBagConstraints gbc_lblChooseOutline = new GridBagConstraints();
 			gbc_lblChooseOutline.insets = new Insets(0, 0, 5, 5);
 			gbc_lblChooseOutline.gridx = 0;
@@ -163,7 +163,7 @@ public class DlgDonut extends JDialog {
 			btnOutlineColor = new JButton("COLOR");
 			btnOutlineColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					color = JColorChooser.showDialog(null, "Chooce inner color", Color.white);
+					color = JColorChooser.showDialog(null, "Choose fill", Color.white);
 					if (color != null) {
 						btnOutlineColor.setBackground(color);
 						btnOutlineColor.setOpaque(true);

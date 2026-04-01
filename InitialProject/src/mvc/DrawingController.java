@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Stack;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import drawing.DlgCircle;
@@ -45,6 +46,7 @@ public class DrawingController {
 	private final Stack<Command> undoStack = new Stack<>();
 	private final Stack<Command> redoStack = new Stack<>();
 	private final LogFileStrategy logParser = new LogFileStrategy();
+	private java.awt.Point replayDialogLocation;
 
 	public DrawingController(DrawingModel model, DrawingFrame frame) {
 		this.model = model;
@@ -529,27 +531,30 @@ public class DrawingController {
 		frame.refreshLog();
 
 		for (String entry : loadedEntries) {
-			int choice = JOptionPane.showConfirmDialog(frame, entry + "\n\nExecute this command?",
-					"Load Log", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-			if (choice == JOptionPane.CANCEL_OPTION || choice == JOptionPane.CLOSED_OPTION) {
-				break;
-			}
-
-			if (choice == JOptionPane.YES_OPTION) {
-				replayLogEntry(entry);
-				model.addLog(entry);
-				model.notifyObservers();
-				frame.updateUndoRedoButtons(!undoStack.isEmpty(), !redoStack.isEmpty());
-				frame.refreshLog();
-				frame.repaint();
-			}
+			showReplayDialog(entry);
+			replayLogEntry(entry);
+			model.addLog(entry);
+			model.notifyObservers();
+			frame.updateUndoRedoButtons(!undoStack.isEmpty(), !redoStack.isEmpty());
+			frame.refreshLog();
+			frame.repaint();
 		}
 
 		model.setSelectedShape(null);
 		model.notifyObservers();
 		frame.refreshLog();
 		frame.repaint();
+	}
+
+	private void showReplayDialog(String entry) {
+		JOptionPane optionPane = new JOptionPane(entry, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION);
+		JDialog dialog = optionPane.createDialog(frame, "Load Log");
+		dialog.setModal(true);
+		if (replayDialogLocation != null) {
+			dialog.setLocation(replayDialogLocation);
+		}
+		dialog.setVisible(true);
+		replayDialogLocation = dialog.getLocation();
 	}
 
 	private void replayLogEntry(String entry) {

@@ -112,7 +112,7 @@ public class DlgHexagon extends JDialog {
 			txtR.setColumns(10);
 		}
 		{
-			JLabel lblChooseInner = new JLabel("Choose inner:");
+			JLabel lblChooseInner = new JLabel("Choose fill:");
 			GridBagConstraints gbc_lblChooseInner = new GridBagConstraints();
 			gbc_lblChooseInner.insets = new Insets(0, 0, 5, 5);
 			gbc_lblChooseInner.anchor = GridBagConstraints.EAST;
@@ -124,7 +124,7 @@ public class DlgHexagon extends JDialog {
 			btnAreaColor = new JButton("COLOR");
 			btnAreaColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					areaColor = JColorChooser.showDialog(null, "Choose inner color", Color.white);
+					areaColor = JColorChooser.showDialog(null, "Choose fill color", Color.white);
 					if (areaColor != null) {
 						btnAreaColor.setBackground(areaColor);
 						btnAreaColor.setOpaque(true);
