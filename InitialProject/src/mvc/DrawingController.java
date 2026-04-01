@@ -33,6 +33,8 @@ import command.UpdatePointCmd;
 import command.UpdateRectangleCmd;
 import command.BringToBackCmd;
 import command.BringToFrontCmd;
+import command.DeselectShapeCmd;
+import command.SelectShapeCmd;
 import command.ToFrontCmd;
 import command.ToBackCmd;
 import strategy.FileManager;
@@ -206,37 +208,31 @@ public class DrawingController {
 		}
 
 		case "select": {
-			// isti algoritam unazad kroz listu
 			ListIterator<Shape> it = model.getShapes().listIterator(model.getShapes().size());
-			boolean shapeSelected = false;
+			boolean shapeHandled = false;
 
 			while (it.hasPrevious()) {
 				Shape temporary = it.previous();
 
 				if (temporary.contains(e.getX(), e.getY())) {
 					if (temporary.isSelected()) {
-						temporary.setSelected(false);
-						log("Deselect " + temporary);
+						executeSelectionCommand(new DeselectShapeCmd(temporary));
+						syncSelectedShapeWithSelection();
 					} else {
-						temporary.setSelected(true);
+						executeSelectionCommand(new SelectShapeCmd(temporary));
 						model.setSelectedShape(temporary);
-						log("Select " + temporary);
 					}
-					shapeSelected = true;
+					shapeHandled = true;
 					break;
 				}
 			}
 
-			if (!shapeSelected) {
-				for (Shape shape : model.getShapes()) {
-					if (shape.isSelected()) {
-						shape.setSelected(false);
-						log("Deselect " + shape);
-					}
+			if (!shapeHandled) {
+				for (Shape shape : new ArrayList<>(getSelectedShapes())) {
+					executeSelectionCommand(new DeselectShapeCmd(shape));
 				}
-				model.setSelectedShape(null);
+				syncSelectedShapeWithSelection();
 			}
-
 			model.notifyObservers();
 			frame.repaint();
 			break;
@@ -406,6 +402,15 @@ public class DrawingController {
 		frame.updateUndoRedoButtons(!undoStack.isEmpty(), !redoStack.isEmpty());
 		frame.repaint();
 	}
+
+	private void executeSelectionCommand(Command cmd) {
+		cmd.execute();
+		undoStack.push(cmd);
+		redoStack.clear();
+		log(describeCommand(cmd));
+		frame.updateUndoRedoButtons(!undoStack.isEmpty(), !redoStack.isEmpty());
+		frame.repaint();
+	}
 	
 	public void undo() {
 	    if (undoStack.isEmpty()) return;
@@ -414,12 +419,7 @@ public class DrawingController {
 	    cmd.unexecute();
 	    redoStack.push(cmd);
 	    log("Undo " + cmd);
-
-	    // (opciono) očisti selekciju da ne baguje posle undo
-	    if (model.getSelectedShape() != null) {
-	        model.getSelectedShape().setSelected(false);
-	        model.setSelectedShape(null);
-	    }
+	    syncSelectedShapeWithSelection();
 
 	    model.notifyObservers();
 	    frame.updateUndoRedoButtons(!undoStack.isEmpty(), !redoStack.isEmpty());
@@ -433,11 +433,7 @@ public class DrawingController {
 	    cmd.execute();
 	    undoStack.push(cmd);
 	    log("Redo " + cmd);
-
-	    if (model.getSelectedShape() != null) {
-	        model.getSelectedShape().setSelected(false);
-	        model.setSelectedShape(null);
-	    }
+	    syncSelectedShapeWithSelection();
 
 	    model.notifyObservers();
 	    frame.updateUndoRedoButtons(!undoStack.isEmpty(), !redoStack.isEmpty());
@@ -569,7 +565,7 @@ public class DrawingController {
 		if (entry.startsWith("Select ")) {
 			Shape shape = findShapeByDescriptor(entry.substring("Select ".length()));
 			if (shape != null) {
-				shape.setSelected(true);
+				executeReplayCommand(new SelectShapeCmd(shape));
 				model.setSelectedShape(shape);
 			}
 			return;
@@ -578,10 +574,8 @@ public class DrawingController {
 		if (entry.startsWith("Deselect ")) {
 			Shape shape = findShapeByDescriptor(entry.substring("Deselect ".length()));
 			if (shape != null) {
-				shape.setSelected(false);
-				if (model.getSelectedShape() == shape) {
-					model.setSelectedShape(null);
-				}
+				executeReplayCommand(new DeselectShapeCmd(shape));
+				syncSelectedShapeWithSelection();
 			}
 			return;
 		}
@@ -677,7 +671,7 @@ public class DrawingController {
 		Command cmd = undoStack.pop();
 		cmd.unexecute();
 		redoStack.push(cmd);
-		clearSelections();
+		syncSelectedShapeWithSelection();
 	}
 
 	private void replayRedo() {
@@ -688,7 +682,7 @@ public class DrawingController {
 		Command cmd = redoStack.pop();
 		cmd.execute();
 		undoStack.push(cmd);
-		clearSelections();
+		syncSelectedShapeWithSelection();
 	}
 
 	private void executeReplayCommand(Command cmd) {
@@ -729,6 +723,11 @@ public class DrawingController {
 			shape.setSelected(false);
 		}
 		model.setSelectedShape(null);
+	}
+
+	private void syncSelectedShapeWithSelection() {
+		List<Shape> selectedShapes = getSelectedShapes();
+		model.setSelectedShape(selectedShapes.isEmpty() ? null : selectedShapes.get(selectedShapes.size() - 1));
 	}
 
 	public void saveDrawing(String path) {
